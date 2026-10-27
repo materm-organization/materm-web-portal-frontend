@@ -1,0 +1,27 @@
+{
+  "success": true,
+  "data": [
+    {
+      "id": 1,
+      "key": "forest-photo-story",
+      "title": "The forest photo story",
+      "description": null,
+      "cover": {
+        "media_id": 18,
+        "alt": null
+      }
+    }
+  ],
+  "media": {
+    "18": {
+      "url": "/images/site/gallery/story-beneath-the-canopy.jpg",
+      "width": 1376,
+      "height": 768,
+      "mime": "image/jpeg",
+      "alt": "Looking up through tall rainforest trees to a bright patch of sky",
+      "blurhash": null,
+      "focal": null,
+      "variants": []
+    }
+  }
+}

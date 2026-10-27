@@ -1,0 +1,59 @@
+{
+  "success": true,
+  "data": {
+    "locale": "la",
+    "key": "main",
+    "items": [
+      {
+        "id": 1,
+        "label": "Home",
+        "aria_label": null,
+        "href": "/",
+        "icon": null,
+        "open_in_new_tab": false,
+        "rel": [],
+        "active_match": "exact"
+      },
+      {
+        "id": 2,
+        "label": "Our Path",
+        "aria_label": null,
+        "href": "/our-path",
+        "icon": null,
+        "open_in_new_tab": false,
+        "rel": [],
+        "active_match": "prefix"
+      },
+      {
+        "id": 3,
+        "label": "The Blog",
+        "aria_label": null,
+        "href": "/blog",
+        "icon": null,
+        "open_in_new_tab": false,
+        "rel": [],
+        "active_match": "prefix"
+      },
+      {
+        "id": 4,
+        "label": "Gallery",
+        "aria_label": null,
+        "href": "/gallery",
+        "icon": null,
+        "open_in_new_tab": false,
+        "rel": [],
+        "active_match": "prefix"
+      },
+      {
+        "id": 5,
+        "label": "Contact",
+        "aria_label": null,
+        "href": "/contact",
+        "icon": null,
+        "open_in_new_tab": false,
+        "rel": [],
+        "active_match": "prefix"
+      }
+    ]
+  }
+}

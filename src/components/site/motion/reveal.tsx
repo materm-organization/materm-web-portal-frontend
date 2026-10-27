@@ -23,6 +23,8 @@ type RevealTag =
 
 interface RevealProps {
   as?: RevealTag;
+  /** DOM id of the element (section anchors / `aria-labelledby` targets). */
+  id?: string;
   /** Seconds. Use `revealDelay(i)` to stagger siblings. */
   delay?: number;
   /** Start offset in px (translateY). Default 24. */
@@ -40,6 +42,7 @@ interface RevealProps {
 // matches the client (no hydration mismatch).
 export function Reveal({
   as = "div",
+  id,
   delay = 0,
   y = 24,
   once = true,
@@ -54,6 +57,7 @@ export function Reveal({
   return (
     <Tag
       ref={ref as React.RefObject<HTMLDivElement>}
+      id={id}
       className={cn("site-reveal", className)}
       data-revealed={inView ? "true" : "false"}
       style={

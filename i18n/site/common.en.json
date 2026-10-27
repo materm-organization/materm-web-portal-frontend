@@ -46,5 +46,24 @@
       "facebook": "Facebook",
       "twitter": "Twitter"
     }
+  },
+  "gallery": {
+    "rowLabel": "Gallery highlights",
+    "cardLabel": "Open the gallery ({index} of {total})"
+  },
+  "notFound": {
+    "title": "Page not found",
+    "description": "The page you are looking for does not exist or has moved.",
+    "action": "Back to the home page"
+  },
+  "error": {
+    "title": "Something went wrong",
+    "description": "We could not show this page. Please try again.",
+    "retry": "Try again"
+  },
+  "preview": {
+    "banner": "Preview mode: you are viewing unpublished content",
+    "exit": "Exit preview",
+    "expired": "This preview link has expired. Ask the editor for a new one."
   }
 }

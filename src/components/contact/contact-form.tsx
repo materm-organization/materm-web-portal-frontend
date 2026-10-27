@@ -14,10 +14,10 @@ import {
 
 import { submitContact } from "@/app/(public)/contact/actions";
 import { ContactField } from "@/components/contact/contact-field";
+import type { FormMessageCode, ResolvedForm } from "@/components/sections/types";
 import {
   CONTACT_INITIAL_STATE,
   CONTACT_LIMITS,
-  CONTACT_TOPICS,
   firstInvalidField,
   sanitizeContactValues,
   validateContact,
@@ -35,6 +35,10 @@ import { cn } from "@/lib/utils";
 
 // Contact form panel. Needs the server-only env var CONTACT_ENDPOINT to deliver
 // messages (see contact-validation.ts and the README "Contact form" section).
+//
+// All visible text arrives in the `form` prop (a resolved form definition, doc/08
+// section 2.3.4). Error texts come from `form.messages` first and fall back to the
+// shared `forms.errors.*` bundle (FR-FORM-06).
 
 const PANEL_CLASS =
   "rounded-site-card border border-site-line bg-white p-6 sm:p-8 lg:p-10";
@@ -47,8 +51,13 @@ function readValues(form: HTMLFormElement) {
   );
 }
 
-function SuccessView({ onReset }: { onReset: () => void }) {
-  const t = useTranslations("contact");
+function SuccessView({
+  success,
+  onReset,
+}: {
+  success: ResolvedForm["success"];
+  onReset: () => void;
+}) {
   const headingRef = useRef<HTMLHeadingElement>(null);
 
   useEffect(() => {
@@ -63,23 +72,23 @@ function SuccessView({ onReset }: { onReset: () => void }) {
         tabIndex={-1}
         className={cn(TITLE_CLASS, "focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-site-green-700")}
       >
-        {t("form.success.title")}
+        {success.title}
       </h3>
-      <p className="text-base text-site-ink sm:text-lg">{t("form.success.description")}</p>
+      <p className="text-base text-site-ink sm:text-lg">{success.description}</p>
       <Button
         type="button"
         variant="link"
         onClick={onReset}
         className="h-auto rounded-none p-0 text-base font-semibold text-site-green-700 underline hover:text-site-green-600"
       >
-        {t("form.success.again")}
+        {success.againLabel}
       </Button>
     </div>
   );
 }
 
-function ContactFormPanel({ onReset }: { onReset: () => void }) {
-  const t = useTranslations("contact");
+function ContactFormPanel({ form, onReset }: { form: ResolvedForm; onReset: () => void }) {
+  const tf = useTranslations("forms");
   const baseId = useId();
   const formRef = useRef<HTMLFormElement>(null);
   const [state, formAction, pending] = useActionState(submitContact, CONTACT_INITIAL_STATE);
@@ -99,6 +108,15 @@ function ContactFormPanel({ onReset }: { onReset: () => void }) {
 
   const id = (name: string) => `${baseId}-${name}`;
 
+  const fieldDef = (key: string) => form.fields.find((f) => f.key === key);
+  const labelOf = (key: string) => fieldDef(key)?.label ?? "";
+  const placeholderOf = (key: string) => fieldDef(key)?.placeholder ?? undefined;
+  const topicOptions = fieldDef("topic")?.options ?? [];
+  const message = (code: FormMessageCode) => {
+    const key = `errors.${code}`;
+    return form.messages[code] ?? (tf.has(key) ? tf(key) : tf("errors.required"));
+  };
+
   const focusField = (field: ContactFieldName) => {
     formRef.current?.querySelector<HTMLElement>(`[name="${field}"]`)?.focus();
   };
@@ -110,12 +128,7 @@ function ContactFormPanel({ onReset }: { onReset: () => void }) {
     if (first) focusField(first);
   }, [state]);
 
-  const errorText = (code: ContactFieldError | undefined) => {
-    if (!code) return undefined;
-    const key = `form.errors.${code}`;
-    // `phone` has no dedicated copy in older message files: fall back to "required".
-    return t.has(key) ? t(key) : t("form.errors.required");
-  };
+  const errorText = (code: ContactFieldError | undefined) => (code ? message(code) : undefined);
 
   const setFieldError = (field: ContactFieldName, error: ContactFieldError | undefined) => {
     setErrors((prev) => {
@@ -162,13 +175,13 @@ function ContactFormPanel({ onReset }: { onReset: () => void }) {
     errors[field] ? `${id(field)}-error` : undefined;
 
   const hasErrors = Object.keys(errors).length > 0;
-  const banner = serverCode ? t(`form.errors.${serverCode}`) : undefined;
+  const banner = serverCode ? message(serverCode) : undefined;
   const values = state.values;
 
   if (state.status === "success") {
     return (
       <div className={PANEL_CLASS}>
-        <SuccessView onReset={onReset} />
+        <SuccessView success={form.success} onReset={onReset} />
       </div>
     );
   }
@@ -177,9 +190,11 @@ function ContactFormPanel({ onReset }: { onReset: () => void }) {
     <div className={PANEL_CLASS}>
       <div className="flex flex-col gap-3">
         <h3 id={id("title")} className={TITLE_CLASS}>
-          {t("form.title")}
+          {form.title}
         </h3>
-        <p className="text-base text-site-ink sm:text-lg">{t("form.description")}</p>
+        {form.description ? (
+          <p className="text-base text-site-ink sm:text-lg">{form.description}</p>
+        ) : null}
       </div>
 
       <form
@@ -193,7 +208,7 @@ function ContactFormPanel({ onReset }: { onReset: () => void }) {
       >
         {showSummary && hasErrors ? (
           <p role="alert" className="border border-destructive p-4 text-base text-destructive">
-            {t("form.errors.summary")}
+            {message("summary")}
           </p>
         ) : null}
         {banner ? (
@@ -202,14 +217,14 @@ function ContactFormPanel({ onReset }: { onReset: () => void }) {
           </p>
         ) : null}
 
-        <ContactField id={id("name")} label={t("form.fields.name.label")} error={errorText(errors.name)}>
+        <ContactField id={id("name")} label={labelOf("name")} error={errorText(errors.name)}>
           <Input
             id={id("name")}
             name="name"
             type="text"
             autoComplete="name"
             maxLength={CONTACT_LIMITS.nameMax}
-            placeholder={t("form.fields.name.placeholder")}
+            placeholder={placeholderOf("name")}
             defaultValue={values?.name ?? ""}
             aria-required="true"
             aria-invalid={errors.name ? true : undefined}
@@ -219,7 +234,7 @@ function ContactFormPanel({ onReset }: { onReset: () => void }) {
           />
         </ContactField>
 
-        <ContactField id={id("email")} label={t("form.fields.email.label")} error={errorText(errors.email)}>
+        <ContactField id={id("email")} label={labelOf("email")} error={errorText(errors.email)}>
           <Input
             id={id("email")}
             name="email"
@@ -228,7 +243,7 @@ function ContactFormPanel({ onReset }: { onReset: () => void }) {
             autoComplete="email"
             spellCheck={false}
             maxLength={CONTACT_LIMITS.emailMax}
-            placeholder={t("form.fields.email.placeholder")}
+            placeholder={placeholderOf("email")}
             defaultValue={values?.email ?? ""}
             aria-required="true"
             aria-invalid={errors.email ? true : undefined}
@@ -238,7 +253,7 @@ function ContactFormPanel({ onReset }: { onReset: () => void }) {
           />
         </ContactField>
 
-        <ContactField id={id("phone")} label={t("form.fields.phone.label")} error={errorText(errors.phone)}>
+        <ContactField id={id("phone")} label={labelOf("phone")} error={errorText(errors.phone)}>
           <Input
             id={id("phone")}
             name="phone"
@@ -246,7 +261,7 @@ function ContactFormPanel({ onReset }: { onReset: () => void }) {
             inputMode="tel"
             autoComplete="tel"
             maxLength={CONTACT_LIMITS.phoneMax}
-            placeholder={t("form.fields.phone.placeholder")}
+            placeholder={placeholderOf("phone")}
             defaultValue={values?.phone ?? ""}
             aria-invalid={errors.phone ? true : undefined}
             aria-describedby={describedBy("phone")}
@@ -257,16 +272,16 @@ function ContactFormPanel({ onReset }: { onReset: () => void }) {
 
         <div className="flex flex-col gap-2">
           <span id={id("topic-label")} className={labelClassName}>
-            {t("form.fields.topic.label")}
+            {labelOf("topic")}
           </span>
           <RadioGroup
             name="topic"
             required
-            defaultValue={values?.topic || "booking"}
+            defaultValue={values?.topic || topicOptions[0]?.value}
             aria-labelledby={id("topic-label")}
             className="grid grid-cols-2 gap-3"
           >
-            {CONTACT_TOPICS.map((topic) => (
+            {topicOptions.map(({ value: topic, label: topicLabel }) => (
               <label
                 key={topic}
                 htmlFor={id(`topic-${topic}`)}
@@ -277,7 +292,7 @@ function ContactFormPanel({ onReset }: { onReset: () => void }) {
                   value={topic}
                   className="focus-visible:outline-0 data-[state=checked]:border-white"
                 />
-                {t(`form.fields.topic.options.${topic}`)}
+                {topicLabel}
               </label>
             ))}
           </RadioGroup>
@@ -285,14 +300,14 @@ function ContactFormPanel({ onReset }: { onReset: () => void }) {
 
         <ContactField
           id={id("message")}
-          label={t("form.fields.message.label")}
+          label={labelOf("message")}
           error={errorText(errors.message)}
         >
           <Textarea
             id={id("message")}
             name="message"
             maxLength={CONTACT_LIMITS.messageMax}
-            placeholder={t("form.fields.message.placeholder")}
+            placeholder={placeholderOf("message")}
             defaultValue={values?.message ?? ""}
             aria-required="true"
             aria-invalid={errors.message ? true : undefined}
@@ -315,7 +330,7 @@ function ContactFormPanel({ onReset }: { onReset: () => void }) {
             disabled={pending}
             className="w-full sm:h-[61px] sm:w-[294px]"
           >
-            {pending ? t("form.sending") : t("form.submit")}
+            {pending ? form.sendingLabel : form.submitLabel}
           </Button>
         </div>
       </form>
@@ -323,8 +338,8 @@ function ContactFormPanel({ onReset }: { onReset: () => void }) {
   );
 }
 
-export function ContactForm() {
+export function ContactForm({ form }: { form: ResolvedForm }) {
   // Bumping the key remounts the panel, which resets `useActionState` to idle.
   const [formKey, setFormKey] = useState(0);
-  return <ContactFormPanel key={formKey} onReset={() => setFormKey((k) => k + 1)} />;
+  return <ContactFormPanel key={formKey} form={form} onReset={() => setFormKey((k) => k + 1)} />;
 }

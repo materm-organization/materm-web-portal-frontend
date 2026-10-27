@@ -13,6 +13,7 @@ const SRC_EXT = /\.(ts|tsx|css)$/;
 const DIRS = [
   "src/app",
   "src/components/site",
+  "src/components/sections",
   "src/components/home",
   "src/components/our-path",
   "src/components/blog",

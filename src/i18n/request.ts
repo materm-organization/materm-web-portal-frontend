@@ -18,6 +18,7 @@ type Messages = Record<string, unknown>;
 //   i18n/site/blog.{en,la}.json     -> `blog`
 //   i18n/site/gallery.{en,la}.json  -> `gallery`
 //   i18n/site/contact.{en,la}.json  -> `contact`
+//   i18n/site/forms.{en,la}.json    -> `forms`    (form error defaults, shared by every form)
 // To add a namespace, add a line here, create both locale files and a
 // `case` in `loadSiteFile` below (static paths keep the bundler happy).
 const SITE_NAMESPACES = {
@@ -27,6 +28,7 @@ const SITE_NAMESPACES = {
   blog: "blog",
   gallery: "gallery",
   contact: "contact",
+  forms: "forms",
 } as const;
 
 type SiteFile = (typeof SITE_NAMESPACES)[keyof typeof SITE_NAMESPACES];
@@ -45,6 +47,8 @@ async function loadSiteFile(file: SiteFile, locale: LocaleCode): Promise<Message
       return (await import(`../../i18n/site/gallery.${locale}.json`)).default;
     case "contact":
       return (await import(`../../i18n/site/contact.${locale}.json`)).default;
+    case "forms":
+      return (await import(`../../i18n/site/forms.${locale}.json`)).default;
   }
 }
 

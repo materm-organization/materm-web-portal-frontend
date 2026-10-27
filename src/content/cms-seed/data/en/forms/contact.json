@@ -1,0 +1,110 @@
+{
+  "success": true,
+  "data": {
+    "slug": "contact",
+    "resolved_locale": "en",
+    "title": "Send a message",
+    "description": "We usually reply within two working days.",
+    "submit_label": "Send message",
+    "sending_label": "Sending…",
+    "success": {
+      "title": "Thank you!",
+      "description": "Your message is on its way. We'll reply as soon as we can.",
+      "again_label": "Send another message"
+    },
+    "messages": {
+      "required": "This field is required",
+      "email": "Enter a valid email address",
+      "messageShort": "Please write at least 10 characters",
+      "phone": "Enter a valid phone number",
+      "generic": "Something went wrong. Please try again.",
+      "summary": "Please check the highlighted fields."
+    },
+    "honeypot_field": "company",
+    "fields": [
+      {
+        "key": "name",
+        "required": true,
+        "schema": {
+          "type": "string",
+          "minLength": 2,
+          "maxLength": 100
+        },
+        "label": "Full name",
+        "placeholder": "Your name",
+        "help": null
+      },
+      {
+        "key": "email",
+        "required": true,
+        "schema": {
+          "type": "string",
+          "format": "email",
+          "maxLength": 254
+        },
+        "label": "Email",
+        "placeholder": "you@example.com",
+        "help": null
+      },
+      {
+        "key": "phone",
+        "required": false,
+        "schema": {
+          "type": "string",
+          "maxLength": 30,
+          "pattern": "^[0-9 +()\\-.]+$"
+        },
+        "label": "Phone (optional)",
+        "placeholder": "+856 20 0000 0000",
+        "help": null
+      },
+      {
+        "key": "topic",
+        "required": true,
+        "schema": {
+          "type": "string",
+          "enum": [
+            "booking",
+            "events",
+            "camping",
+            "other"
+          ]
+        },
+        "label": "What is it about?",
+        "placeholder": null,
+        "help": null,
+        "options": [
+          {
+            "value": "booking",
+            "label": "Booking & stays"
+          },
+          {
+            "value": "events",
+            "label": "Music nights & events"
+          },
+          {
+            "value": "camping",
+            "label": "Camping & treks"
+          },
+          {
+            "value": "other",
+            "label": "Something else"
+          }
+        ]
+      },
+      {
+        "key": "message",
+        "required": true,
+        "schema": {
+          "type": "string",
+          "minLength": 10,
+          "maxLength": 2000
+        },
+        "label": "Message",
+        "placeholder": "Tell us how we can help…",
+        "help": null
+      }
+    ],
+    "success_redirect_url": null
+  }
+}

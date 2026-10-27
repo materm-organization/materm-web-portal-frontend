@@ -8,7 +8,15 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "check:shadows": "node scripts/check-no-shadows.mjs"
+    "check:shadows": "node scripts/check-no-shadows.mjs",
+    "check:i18n": "node scripts/i18n/check-parity.mjs",
+    "cms:export": "node scripts/cms/export-media-manifest.mjs && node scripts/cms/export-ui-strings.mjs && node scripts/cms/build-seed.mjs",
+    "cms:check": "node scripts/cms/export-media-manifest.mjs --check && node scripts/cms/export-ui-strings.mjs --check && node scripts/cms/build-seed.mjs --check && node scripts/cms/validate-seed.mjs",
+    "cms:check:strict": "node scripts/cms/export-ui-strings.mjs --strict --check && npm run cms:check",
+    "cms:validate": "node scripts/cms/validate-seed.mjs",
+    "cms:mock": "node scripts/cms/mock-api.mjs",
+    "cms:selftest": "node scripts/cms/selftest.mjs",
+    "cms:sync-doc": "node scripts/cms/sync-from-doc.mjs"
   },
   "dependencies": {
     "@tanstack/react-query": "^5.103.2",

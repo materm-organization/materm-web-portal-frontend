@@ -2,18 +2,18 @@ import Image from "next/image";
 
 import { Reveal, revealDelay } from "@/components/site/motion";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
-import type { AboutBlockData } from "@/lib/site/our-path-data";
 import { cn } from "@/lib/utils";
 
 import "./our-path.css";
 
 interface AboutBlockProps {
-  date: string;
+  date: string | null;
   title: string;
   paragraphs: readonly string[];
-  imageAlt: string;
-  image: AboutBlockData["image"];
-  imageSide: AboutBlockData["imageSide"];
+  image: { src: string; alt: string };
+  /** Width / height of the photo frame at the 1728 design (e.g. 712 / 478). */
+  ratio: number;
+  imageSide: "left" | "right";
   inset?: boolean;
   className?: string;
 }
@@ -26,8 +26,8 @@ export function AboutBlock({
   date,
   title,
   paragraphs,
-  imageAlt,
   image,
+  ratio,
   imageSide,
   inset = false,
   className,
@@ -53,12 +53,14 @@ export function AboutBlock({
         )}
       >
         <div className="flex flex-col gap-4">
-          <Reveal
-            as="p"
-            className="font-site-manrope text-base font-medium tracking-[0.02em] text-site-nav-chip uppercase md:text-lg"
-          >
-            {date}
-          </Reveal>
+          {date ? (
+            <Reveal
+              as="p"
+              className="font-site-manrope text-base font-medium tracking-[0.02em] text-site-nav-chip uppercase md:text-lg"
+            >
+              {date}
+            </Reveal>
+          ) : null}
           <Reveal
             as="h3"
             delay={revealDelay(1)}
@@ -81,10 +83,10 @@ export function AboutBlock({
         y={32}
         className={cn("order-first min-w-0", photoLeft ? "lg:order-first" : "lg:order-last")}
       >
-        <AspectRatio ratio={image.ratio} className="overflow-hidden">
+        <AspectRatio ratio={ratio} className="overflow-hidden">
           <Image
             src={image.src}
-            alt={imageAlt}
+            alt={image.alt}
             fill
             sizes={
               inset

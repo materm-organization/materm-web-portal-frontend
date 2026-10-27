@@ -1,0 +1,306 @@
+{
+  "main": {
+    "key": "main",
+    "name": "Main navigation",
+    "items": [
+      {
+        "sort_order": 1,
+        "link_type": "page",
+        "page_id": 1,
+        "url": null,
+        "icon": null,
+        "open_in_new_tab": false,
+        "active_match": "exact",
+        "is_visible": true,
+        "translations": [
+          {
+            "locale_code": "la",
+            "label": "Home",
+            "aria_label": null
+          },
+          {
+            "locale_code": "en",
+            "label": "Home",
+            "aria_label": null
+          }
+        ]
+      },
+      {
+        "sort_order": 2,
+        "link_type": "page",
+        "page_id": 2,
+        "url": null,
+        "icon": null,
+        "open_in_new_tab": false,
+        "active_match": "prefix",
+        "is_visible": true,
+        "translations": [
+          {
+            "locale_code": "la",
+            "label": "Our Path",
+            "aria_label": null
+          },
+          {
+            "locale_code": "en",
+            "label": "Our Path",
+            "aria_label": null
+          }
+        ]
+      },
+      {
+        "sort_order": 3,
+        "link_type": "page",
+        "page_id": 3,
+        "url": null,
+        "icon": null,
+        "open_in_new_tab": false,
+        "active_match": "prefix",
+        "is_visible": true,
+        "translations": [
+          {
+            "locale_code": "la",
+            "label": "The Blog",
+            "aria_label": null
+          },
+          {
+            "locale_code": "en",
+            "label": "The Blog",
+            "aria_label": null
+          }
+        ]
+      },
+      {
+        "sort_order": 4,
+        "link_type": "page",
+        "page_id": 4,
+        "url": null,
+        "icon": null,
+        "open_in_new_tab": false,
+        "active_match": "prefix",
+        "is_visible": true,
+        "translations": [
+          {
+            "locale_code": "la",
+            "label": "Gallery",
+            "aria_label": null
+          },
+          {
+            "locale_code": "en",
+            "label": "Gallery",
+            "aria_label": null
+          }
+        ]
+      },
+      {
+        "sort_order": 5,
+        "link_type": "page",
+        "page_id": 5,
+        "url": null,
+        "icon": null,
+        "open_in_new_tab": false,
+        "active_match": "prefix",
+        "is_visible": true,
+        "translations": [
+          {
+            "locale_code": "la",
+            "label": "Contact",
+            "aria_label": null
+          },
+          {
+            "locale_code": "en",
+            "label": "Contact",
+            "aria_label": null
+          }
+        ]
+      }
+    ]
+  },
+  "footer": {
+    "key": "footer",
+    "name": "Footer navigation",
+    "items": [
+      {
+        "sort_order": 1,
+        "link_type": "page",
+        "page_id": 1,
+        "url": null,
+        "icon": null,
+        "open_in_new_tab": false,
+        "active_match": "exact",
+        "is_visible": true,
+        "translations": [
+          {
+            "locale_code": "la",
+            "label": "Home",
+            "aria_label": null
+          },
+          {
+            "locale_code": "en",
+            "label": "Home",
+            "aria_label": null
+          }
+        ]
+      },
+      {
+        "sort_order": 2,
+        "link_type": "page",
+        "page_id": 2,
+        "url": null,
+        "icon": null,
+        "open_in_new_tab": false,
+        "active_match": "prefix",
+        "is_visible": true,
+        "translations": [
+          {
+            "locale_code": "la",
+            "label": "Our Path",
+            "aria_label": null
+          },
+          {
+            "locale_code": "en",
+            "label": "Our Path",
+            "aria_label": null
+          }
+        ]
+      },
+      {
+        "sort_order": 3,
+        "link_type": "page",
+        "page_id": 3,
+        "url": null,
+        "icon": null,
+        "open_in_new_tab": false,
+        "active_match": "prefix",
+        "is_visible": true,
+        "translations": [
+          {
+            "locale_code": "la",
+            "label": "Blog",
+            "aria_label": null
+          },
+          {
+            "locale_code": "en",
+            "label": "Blog",
+            "aria_label": null
+          }
+        ]
+      },
+      {
+        "sort_order": 4,
+        "link_type": "page",
+        "page_id": 5,
+        "url": null,
+        "icon": null,
+        "open_in_new_tab": false,
+        "active_match": "prefix",
+        "is_visible": true,
+        "translations": [
+          {
+            "locale_code": "la",
+            "label": "Contact",
+            "aria_label": null
+          },
+          {
+            "locale_code": "en",
+            "label": "Contact",
+            "aria_label": null
+          }
+        ]
+      }
+    ]
+  },
+  "social": {
+    "key": "social",
+    "name": "Social links",
+    "items": [
+      {
+        "sort_order": 1,
+        "link_type": "url",
+        "page_id": null,
+        "url": "https://www.instagram.com/",
+        "icon": "instagram",
+        "open_in_new_tab": true,
+        "active_match": "prefix",
+        "is_visible": true,
+        "translations": [
+          {
+            "locale_code": "la",
+            "label": "Instagram",
+            "aria_label": null
+          },
+          {
+            "locale_code": "en",
+            "label": "Instagram",
+            "aria_label": null
+          }
+        ]
+      },
+      {
+        "sort_order": 2,
+        "link_type": "url",
+        "page_id": null,
+        "url": "https://www.youtube.com/",
+        "icon": "youtube",
+        "open_in_new_tab": true,
+        "active_match": "prefix",
+        "is_visible": true,
+        "translations": [
+          {
+            "locale_code": "la",
+            "label": "YouTube",
+            "aria_label": null
+          },
+          {
+            "locale_code": "en",
+            "label": "YouTube",
+            "aria_label": null
+          }
+        ]
+      },
+      {
+        "sort_order": 3,
+        "link_type": "url",
+        "page_id": null,
+        "url": "https://www.facebook.com/",
+        "icon": "facebook",
+        "open_in_new_tab": true,
+        "active_match": "prefix",
+        "is_visible": true,
+        "translations": [
+          {
+            "locale_code": "la",
+            "label": "Facebook",
+            "aria_label": null
+          },
+          {
+            "locale_code": "en",
+            "label": "Facebook",
+            "aria_label": null
+          }
+        ]
+      },
+      {
+        "sort_order": 4,
+        "link_type": "url",
+        "page_id": null,
+        "url": "https://twitter.com/",
+        "icon": "twitter",
+        "open_in_new_tab": true,
+        "active_match": "prefix",
+        "is_visible": true,
+        "translations": [
+          {
+            "locale_code": "la",
+            "label": "Twitter",
+            "aria_label": null
+          },
+          {
+            "locale_code": "en",
+            "label": "Twitter",
+            "aria_label": null
+          }
+        ]
+      }
+    ]
+  }
+}

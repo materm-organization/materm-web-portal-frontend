@@ -1,0 +1,57 @@
+{
+  "success": true,
+  "data": [
+    {
+      "code": "la",
+      "name": "Lao",
+      "native_name": "ລາວ",
+      "short_label": "LAO",
+      "flag": "🇱🇦",
+      "is_default": true,
+      "fallback_code": null,
+      "date_formats": {
+        "short": "{month}. {day}.{year}",
+        "months": [
+          "Jan",
+          "Feb",
+          "Mar",
+          "Apr",
+          "May",
+          "Jun",
+          "Jul",
+          "Aug",
+          "Sep",
+          "Oct",
+          "Nov",
+          "Dec"
+        ]
+      }
+    },
+    {
+      "code": "en",
+      "name": "English",
+      "native_name": "English",
+      "short_label": "EN",
+      "flag": "🇬🇧",
+      "is_default": false,
+      "fallback_code": "la",
+      "date_formats": {
+        "short": "{month}. {day}.{year}",
+        "months": [
+          "Jan",
+          "Feb",
+          "Mar",
+          "Apr",
+          "May",
+          "Jun",
+          "Jul",
+          "Aug",
+          "Sep",
+          "Oct",
+          "Nov",
+          "Dec"
+        ]
+      }
+    }
+  ]
+}

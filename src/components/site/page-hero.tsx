@@ -33,6 +33,10 @@ interface PageHeroProps {
    */
   animateIn?: boolean;
   priority?: boolean;
+  /** `brand` only: show the white logo above the title (default true). */
+  showLogo?: boolean;
+  /** DOM id of the hero `<section>` (section anchor). */
+  id?: string;
   className?: string;
 }
 
@@ -57,6 +61,8 @@ export function PageHero({
   children,
   animateIn = false,
   priority = true,
+  showLogo = true,
+  id,
   className,
 }: PageHeroProps) {
   const metaItems = (meta ?? []).filter((item): item is string =>
@@ -79,6 +85,7 @@ export function PageHero({
 
   return (
     <Root
+      id={id}
       className={cn(
         "relative isolate flex w-full flex-col overflow-hidden bg-site-green-900 text-white",
         variant === "brand"
@@ -100,17 +107,19 @@ export function PageHero({
 
       {variant === "brand" ? (
         <Content className="flex w-full max-w-[933px] flex-col items-center gap-6 sm:gap-8">
-          <Image
-            src="/images/site/materm-logo-white.svg"
-            alt=""
-            width={285}
-            height={245}
-            priority={priority}
-            className={cn(
-              "h-auto w-40 sm:w-52 lg:w-[285px]",
-              animated && ENTER,
-            )}
-          />
+          {showLogo ? (
+            <Image
+              src="/images/site/materm-logo-white.svg"
+              alt=""
+              width={285}
+              height={245}
+              priority={priority}
+              className={cn(
+                "h-auto w-40 sm:w-52 lg:w-[285px]",
+                animated && ENTER,
+              )}
+            />
+          ) : null}
           <div className="flex w-full flex-col items-center gap-2">
             <h1
               className={cn(

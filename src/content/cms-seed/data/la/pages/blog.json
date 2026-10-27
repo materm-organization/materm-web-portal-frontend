@@ -1,0 +1,112 @@
+{
+  "success": true,
+  "data": {
+    "locale": "la",
+    "page": {
+      "id": 3,
+      "public_id": "0192e5a0-a9fd-7be5-8f71-bf0cd1016a64",
+      "key": "blog",
+      "template": "blog_index",
+      "path": "/blog",
+      "is_home": false,
+      "resolved_locale": "la",
+      "is_fallback": false,
+      "title": "The Blog",
+      "updated_at": "2026-01-01T00:00:00Z",
+      "seo": {
+        "title": "The Blog",
+        "title_absolute": false,
+        "description": "Stories, recaps and field notes from Materm at Phou Khao Khouay.",
+        "og_image": {
+          "media_id": 15
+        },
+        "canonical": "https://materm.example/blog",
+        "noindex": false
+      }
+    },
+    "sections": [
+      {
+        "id": "0192e5a0-282b-7f68-8bc2-d3ece1606347",
+        "key": "hero_article",
+        "version": 1,
+        "variant": null,
+        "anchor_id": null,
+        "is_fallback": false,
+        "props": {
+          "title": "The Blog",
+          "meta_items": [
+            {
+              "text": "Stories and recaps from the slope of Phou Khao Khouay"
+            }
+          ],
+          "background": {
+            "media_id": 15,
+            "alt": "",
+            "decorative": true
+          },
+          "animate_in": true
+        },
+        "resolved": {}
+      },
+      {
+        "id": "0192e5a0-25f2-7a66-8557-12b44e123d07",
+        "key": "post_list",
+        "version": 1,
+        "variant": null,
+        "anchor_id": null,
+        "is_fallback": false,
+        "props": {
+          "show_category_tabs": true,
+          "show_all_tab": true,
+          "page_size": 12
+        },
+        "resolved": {
+          "categories": [
+            {
+              "key": "music",
+              "name": "Music",
+              "slug": "music",
+              "sort_order": 1
+            },
+            {
+              "key": "camping",
+              "name": "Camping",
+              "slug": "camping",
+              "sort_order": 2
+            },
+            {
+              "key": "outdoor",
+              "name": "Outdoor",
+              "slug": "outdoor",
+              "sort_order": 3
+            },
+            {
+              "key": "avenger",
+              "name": "Avenger",
+              "slug": "avenger",
+              "sort_order": 4
+            },
+            {
+              "key": "hiking",
+              "name": "Hiking",
+              "slug": "hiking",
+              "sort_order": 5
+            }
+          ]
+        }
+      }
+    ],
+    "media": {
+      "15": {
+        "url": "/images/site/hero-forest-stream.jpg",
+        "width": 3456,
+        "height": 1902,
+        "mime": "image/jpeg",
+        "alt": "Rainforest stream flowing past ferns",
+        "blurhash": null,
+        "focal": null,
+        "variants": []
+      }
+    }
+  }
+}

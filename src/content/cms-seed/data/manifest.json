@@ -1,0 +1,77 @@
+{
+  "schema_version": 1,
+  "source": "seed",
+  "api_base": null,
+  "counts": {
+    "locales": 2,
+    "pages": 5,
+    "sections": 17,
+    "posts": 1,
+    "albums": 1,
+    "faq_groups": 1,
+    "forms": 1,
+    "media": 24,
+    "ui_strings": 39
+  },
+  "default_locale": "la",
+  "locales": [
+    "la",
+    "en"
+  ],
+  "pages": {
+    "/": "home",
+    "/our-path": "our-path",
+    "/blog": "blog",
+    "/gallery": "gallery",
+    "/contact": "contact"
+  },
+  "posts": [
+    {
+      "id": 1,
+      "slugs": {
+        "la": "music-night-under-the-stars",
+        "en": "music-night-under-the-stars"
+      }
+    }
+  ],
+  "albums": [
+    "forest-photo-story"
+  ],
+  "faq_groups": [
+    "contact"
+  ],
+  "forms": [
+    "contact"
+  ],
+  "menus": [
+    "main",
+    "footer",
+    "social"
+  ],
+  "source_checksums": {
+    "src/content/cms-seed/exports/media-manifest.json": "9290075ca18b07998fd8fb4dd6cb60de6a2802ecf8c97bdc658b69cfb74eb10e",
+    "src/content/cms-seed/exports/ui-strings.json": "feae7df3d1aa9927c96876c941460eb7b1197b653528c12ad32ed8cd888d2c53",
+    "src/content/cms-seed/schemas/about_blocks.json": "61d4c21e0da61890b04c46e8b09c643e123566385851583fe564f86b587f4e0d",
+    "src/content/cms-seed/schemas/blog_strip.json": "8b8601f48bb4de5d0fdb2409849b10890b6851a74be001bdf1566cee4dc571b2",
+    "src/content/cms-seed/schemas/contact_section.json": "54cd5496ff1a69d3342b3639eb8a3f219af3344d834c9a89e1b72d5203e0bcce",
+    "src/content/cms-seed/schemas/faq.json": "a60f9432512ce501108953773e731f9da62b66ab0e118576f0ba4c63087bcf73",
+    "src/content/cms-seed/schemas/gallery_cards.json": "8838479690536b1ddf7856b8b26410b5c073461b360213f8fb3f9f30c31bbfe2",
+    "src/content/cms-seed/schemas/hero_article.json": "dffb4cd757bd8c7de24c2338074aaa3f6b9f57ce09efbf8de60b33bcf9550865",
+    "src/content/cms-seed/schemas/hero_brand.json": "0bf83bb8134f7a3d5d649082cd1295acb41bd8c4c3b7b971d407c56706b1cd9b",
+    "src/content/cms-seed/schemas/intro_heading.json": "de4ca04ac2f66a9bc0ca4bbc698b8e001c13f7988f6d1354a7493bbbe2b8a94f",
+    "src/content/cms-seed/schemas/intro_text.json": "9465656f532f8456b1a675d9c5fb8e3d18a488d303ea663439bfdbe3ca6dadce",
+    "src/content/cms-seed/schemas/photo_story.json": "06d3580ea1acd85a04a8f11dbd471d5561554a73b25c7a729e5d96230fa34d33",
+    "src/content/cms-seed/schemas/post_list.json": "7939f508c51bc02f8aadb2379d7917477e666e651f7f8bf3741f5cc5ae4f6bed",
+    "src/content/cms-seed/schemas/teaser_collage.json": "bdae1bc70f70291a25e57781b5a6a0705214a41dc639c1bd0d19a9d15d81fb9d",
+    "src/content/cms-seed/source/album.forest-photo-story.json": "22b10982ccb4fa0ef3b1739ab4b8c6d134310e462cd094f145e87467365cecfd",
+    "src/content/cms-seed/source/media-manifest.json": "50149db043f025269c8433c9c16ec180e4d5a7a67f8ba808dba8204b7f4404b4",
+    "src/content/cms-seed/source/menus.json": "3ca6071ac6c8f88f61e68ba51013cc062b50d6e94e4af29bab5831e60cd004ce",
+    "src/content/cms-seed/source/page.blog.json": "c2cdf2093ee8bdc1512079b1f86bdacd764e4910db958f67f0f89cda592de1b8",
+    "src/content/cms-seed/source/page.contact.json": "32470b185d306a6b8fcfe6f9d6dc019e6425d3af09d4b45764cf6b8b6487c643",
+    "src/content/cms-seed/source/page.gallery.json": "c9c908cdfea71fd0aaa9b15f1c4d3520c174b06ddbfa5f46afdb1d15b35c7071",
+    "src/content/cms-seed/source/page.home.json": "b7212dc2bfcea36c0517d9a4d40786968a532418a1725f3ec73d9da576531f8a",
+    "src/content/cms-seed/source/page.our-path.json": "a70b8cf3b344c4e2bdd9332fb630ecc5d9f16f3f2f17600f93cc80dd9a9ab329",
+    "src/content/cms-seed/source/post.music-night-under-the-stars.json": "6f9b7b886177cea2dedd2faa77e5d7b2e478e78b6f08257fa85fa170994ba5e2",
+    "src/content/cms-seed/source/reference.json": "cf76f3020d87048a623b77d6fa256fad092ad26d8288a0c870b6c507584d5222"
+  }
+}

@@ -1,0 +1,61 @@
+{
+  "success": true,
+  "data": {
+    "locale": "la",
+    "key": "social",
+    "items": [
+      {
+        "id": 1,
+        "label": "Instagram",
+        "aria_label": null,
+        "href": "https://www.instagram.com/",
+        "icon": "instagram",
+        "open_in_new_tab": true,
+        "rel": [
+          "noopener",
+          "noreferrer"
+        ],
+        "active_match": "prefix"
+      },
+      {
+        "id": 2,
+        "label": "YouTube",
+        "aria_label": null,
+        "href": "https://www.youtube.com/",
+        "icon": "youtube",
+        "open_in_new_tab": true,
+        "rel": [
+          "noopener",
+          "noreferrer"
+        ],
+        "active_match": "prefix"
+      },
+      {
+        "id": 3,
+        "label": "Facebook",
+        "aria_label": null,
+        "href": "https://www.facebook.com/",
+        "icon": "facebook",
+        "open_in_new_tab": true,
+        "rel": [
+          "noopener",
+          "noreferrer"
+        ],
+        "active_match": "prefix"
+      },
+      {
+        "id": 4,
+        "label": "Twitter",
+        "aria_label": null,
+        "href": "https://twitter.com/",
+        "icon": "twitter",
+        "open_in_new_tab": true,
+        "rel": [
+          "noopener",
+          "noreferrer"
+        ],
+        "active_match": "prefix"
+      }
+    ]
+  }
+}

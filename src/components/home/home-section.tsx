@@ -2,7 +2,9 @@ import { cn } from "@/lib/utils";
 
 interface HomeSectionProps {
   children: React.ReactNode;
-  /** id of the element that names the region (a visible or sr-only h2). */
+  /** DOM id of the `<section>` (section anchor). */
+  id?: string;
+  /** id of the element that names the region (a visible or sr-only h2); derive it from the section's DOM id. */
   labelledBy: string;
   className?: string;
   /** Extra classes for the 1368px content column. */
@@ -11,9 +13,10 @@ interface HomeSectionProps {
 
 // White teaser section: Figma pads every teaser 168px / 180px (content column
 // 1368px at 1728). Fluid below that.
-export function HomeSection({ children, labelledBy, className, columnClassName }: HomeSectionProps) {
+export function HomeSection({ children, id, labelledBy, className, columnClassName }: HomeSectionProps) {
   return (
     <section
+      id={id}
       aria-labelledby={labelledBy}
       className={cn("bg-white px-6 py-12 md:px-12 md:py-24 xl:px-[180px] xl:py-[168px]", className)}
     >

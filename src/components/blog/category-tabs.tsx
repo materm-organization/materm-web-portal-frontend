@@ -1,12 +1,17 @@
 import { useTranslations } from "next-intl";
 import Link from "next/link";
 
-import { BLOG_CATEGORIES, type BlogCategory } from "@/lib/site/blog-posts";
+import { BLOG_CATEGORIES } from "@/lib/site/blog-posts";
 import { cn } from "@/lib/utils";
 
 interface CategoryTabsProps {
-  /** Highlighted category. On the index, `undefined` + `showAll` highlights "All". */
-  active?: BlogCategory;
+  /** Highlighted category key. On the index, `undefined` + `showAll` highlights "All". */
+  active?: string;
+  /**
+   * Tabs in order (`key` goes into `/blog?category=<key>`). Omitted = the static
+   * `BLOG_CATEGORIES` with their `blog.categories.*` labels (article page).
+   */
+  categories?: readonly { key: string; label: string }[];
   /** Adds an "All" tab (index only; the article design has exactly five tabs). */
   showAll?: boolean;
   className?: string;
@@ -23,17 +28,19 @@ const ALL = "all";
 // Component the trigger's child reaches Radix's Slot as a lazy RSC element on
 // client-side navigation ("Primitive.button failed to slot onto its children")
 // and the whole /blog page crashes, while a hard load works.
-export function CategoryTabs({ active, showAll = false, className }: CategoryTabsProps) {
+export function CategoryTabs({ active, categories, showAll = false, className }: CategoryTabsProps) {
   const t = useTranslations("blog");
   const value = active ?? (showAll ? ALL : "");
 
   const items: { value: string; href: string; label: string }[] = [
     ...(showAll ? [{ value: ALL, href: "/blog", label: t("categories.all") }] : []),
-    ...BLOG_CATEGORIES.map((category) => ({
-      value: category,
-      href: `/blog?category=${category}`,
-      label: t(`categories.${category}`),
-    })),
+    ...(categories ?? BLOG_CATEGORIES.map((key) => ({ key, label: t(`categories.${key}`) }))).map(
+      ({ key, label }) => ({
+        value: key,
+        href: `/blog?category=${key}`,
+        label,
+      }),
+    ),
   ];
 
   return (

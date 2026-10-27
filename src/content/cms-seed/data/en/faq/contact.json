@@ -1,0 +1,82 @@
+{
+  "success": true,
+  "data": {
+    "locale": "en",
+    "group_key": "contact",
+    "resolved_locale": "en",
+    "items": [
+      {
+        "id": 1,
+        "question": "How do I get to Materm?",
+        "answer": {
+          "type": "doc",
+          "content": [
+            {
+              "type": "paragraph",
+              "content": [
+                {
+                  "type": "text",
+                  "text": "Materm is inside Phou Khao Khouay National Park in Vientiane Province. Send us a message and we'll share directions and help you plan the journey."
+                }
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "id": 2,
+        "question": "What are the check-in and opening times?",
+        "answer": {
+          "type": "doc",
+          "content": [
+            {
+              "type": "paragraph",
+              "content": [
+                {
+                  "type": "text",
+                  "text": "We are open every day from 08:00 to 18:00. Check-in and check-out times depend on your stay, so we'll confirm them when you book."
+                }
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "id": 3,
+        "question": "Do you host music nights and events?",
+        "answer": {
+          "type": "doc",
+          "content": [
+            {
+              "type": "paragraph",
+              "content": [
+                {
+                  "type": "text",
+                  "text": "Yes, we hold music evenings and small gatherings from time to time. Ask us about upcoming dates before you plan your visit."
+                }
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "id": 4,
+        "question": "Can you arrange for groups or special requests?",
+        "answer": {
+          "type": "doc",
+          "content": [
+            {
+              "type": "paragraph",
+              "content": [
+                {
+                  "type": "text",
+                  "text": "We're happy to help with groups, celebrations and special requirements. Tell us what you have in mind and we'll see how we can make it work."
+                }
+              ]
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

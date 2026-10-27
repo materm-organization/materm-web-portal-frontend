@@ -19,7 +19,7 @@ export type ContactTopic = (typeof CONTACT_TOPICS)[number];
 export const CONTACT_FIELDS = ["name", "email", "phone", "topic", "message"] as const;
 export type ContactField = (typeof CONTACT_FIELDS)[number];
 
-/** Keys of `contact.form.errors.*`; `phone` falls back to `required` in the UI if the key is missing. */
+/** Codes of `forms.errors.*` (the form's own `messages` win over the bundle). */
 export type ContactFieldError = "required" | "email" | "messageShort" | "phone";
 export type ContactErrors = Partial<Record<ContactField, ContactFieldError>>;
 

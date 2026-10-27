@@ -1,0 +1,122 @@
+{
+  "album": {
+    "id": 1,
+    "key": "forest-photo-story",
+    "cover_media_id": 18,
+    "status": "published"
+  },
+  "translations": [
+    {
+      "locale_code": "la",
+      "title": "The forest photo story",
+      "description": null
+    },
+    {
+      "locale_code": "en",
+      "title": "The forest photo story",
+      "description": null
+    }
+  ],
+  "items": [
+    {
+      "id": 1,
+      "media_id": 18,
+      "sort_order": 1,
+      "layout_hint": null,
+      "translations": [
+        {
+          "locale_code": "la",
+          "caption_title": "Beneath the canopy",
+          "caption_description": "Layers of green, reaching towards the light.",
+          "alt": "Looking up through tall rainforest trees to a bright patch of sky"
+        },
+        {
+          "locale_code": "en",
+          "caption_title": "Beneath the canopy",
+          "caption_description": "Layers of green, reaching towards the light.",
+          "alt": "Looking up through tall rainforest trees to a bright patch of sky"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "media_id": 19,
+      "sort_order": 2,
+      "layout_hint": null,
+      "translations": [
+        {
+          "locale_code": "la",
+          "caption_title": "A small unfolding",
+          "caption_description": "The quiet geometry of a fern.",
+          "alt": "Close-up of a fern frond unfurling"
+        },
+        {
+          "locale_code": "en",
+          "caption_title": "A small unfolding",
+          "caption_description": "The quiet geometry of a fern.",
+          "alt": "Close-up of a fern frond unfurling"
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "media_id": 20,
+      "sort_order": 3,
+      "layout_hint": null,
+      "translations": [
+        {
+          "locale_code": "la",
+          "caption_title": "Water over stone",
+          "caption_description": "Moss, ripples and the shapes left by the current.",
+          "alt": "Clear stream running over mossy stones"
+        },
+        {
+          "locale_code": "en",
+          "caption_title": "Water over stone",
+          "caption_description": "Moss, ripples and the shapes left by the current.",
+          "alt": "Clear stream running over mossy stones"
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "media_id": 21,
+      "sort_order": 4,
+      "layout_hint": null,
+      "translations": [
+        {
+          "locale_code": "la",
+          "caption_title": "A softer path",
+          "caption_description": "An invitation to wander a little further.",
+          "alt": "Narrow misty forest path between tall trees"
+        },
+        {
+          "locale_code": "en",
+          "caption_title": "A softer path",
+          "caption_description": "An invitation to wander a little further.",
+          "alt": "Narrow misty forest path between tall trees"
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "media_id": 22,
+      "sort_order": 5,
+      "layout_hint": null,
+      "translations": [
+        {
+          "locale_code": "la",
+          "caption_title": "When the light comes through",
+          "caption_description": "The forest changes, one sunbeam at a time.",
+          "alt": "Sunbeams filtering through the misty forest"
+        },
+        {
+          "locale_code": "en",
+          "caption_title": "When the light comes through",
+          "caption_description": "The forest changes, one sunbeam at a time.",
+          "alt": "Sunbeams filtering through the misty forest"
+        }
+      ]
+    }
+  ]
+}

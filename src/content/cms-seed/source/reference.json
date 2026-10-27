@@ -1,0 +1,523 @@
+{
+  "_comment": "Reference data for the bundled seed that is NOT in doc/content-schemas/examples: authored from doc/sql/seeds 001_locales, 004_settings_menus_pages, 005_taxonomy_faq_forms (+ media ids 23/24 for the brand SVGs, see media-manifest.json). 'la' carries the English copy (doc 02). Feeds scripts/cms/build-seed.mjs; T1.2.5 (admin seed) can consume it too.",
+  "timezone_offset_minutes": 420,
+  "locales": [
+    {
+      "code": "la",
+      "name": "Lao",
+      "native_name": "ລາວ",
+      "short_label": "LAO",
+      "flag": "🇱🇦",
+      "is_default": true,
+      "is_active": true,
+      "fallback_code": null,
+      "date_formats": {
+        "short": "{month}. {day}.{year}",
+        "months": [
+          "Jan",
+          "Feb",
+          "Mar",
+          "Apr",
+          "May",
+          "Jun",
+          "Jul",
+          "Aug",
+          "Sep",
+          "Oct",
+          "Nov",
+          "Dec"
+        ]
+      },
+      "sort_order": 1
+    },
+    {
+      "code": "en",
+      "name": "English",
+      "native_name": "English",
+      "short_label": "EN",
+      "flag": "🇬🇧",
+      "is_default": false,
+      "is_active": true,
+      "fallback_code": "la",
+      "date_formats": {
+        "short": "{month}. {day}.{year}",
+        "months": [
+          "Jan",
+          "Feb",
+          "Mar",
+          "Apr",
+          "May",
+          "Jun",
+          "Jul",
+          "Aug",
+          "Sep",
+          "Oct",
+          "Nov",
+          "Dec"
+        ]
+      },
+      "sort_order": 2
+    }
+  ],
+  "settings": [
+    {
+      "group": "brand",
+      "key": "name",
+      "value_type": "string",
+      "localized": false,
+      "value": "MATERM"
+    },
+    {
+      "group": "brand",
+      "key": "logo_alt",
+      "value_type": "string",
+      "localized": true,
+      "value": {
+        "la": "MATERM logo",
+        "en": "MATERM logo"
+      }
+    },
+    {
+      "group": "brand",
+      "key": "emblem_alt",
+      "value_type": "string",
+      "localized": true,
+      "value": {
+        "la": "MATERM emblem",
+        "en": "MATERM emblem"
+      }
+    },
+    {
+      "group": "brand",
+      "key": "statement",
+      "value_type": "text",
+      "localized": true,
+      "value": {
+        "la": "Forging wild paths across the untamed earth. Led by expert survivalists and certified wilderness rescue guides.",
+        "en": "Forging wild paths across the untamed earth. Led by expert survivalists and certified wilderness rescue guides."
+      }
+    },
+    {
+      "group": "brand",
+      "key": "logo_media_id",
+      "value_type": "media",
+      "localized": false,
+      "value": 23
+    },
+    {
+      "group": "brand",
+      "key": "emblem_media_id",
+      "value_type": "media",
+      "localized": false,
+      "value": 24
+    },
+    {
+      "group": "brand",
+      "key": "favicon_media_id",
+      "value_type": "media",
+      "localized": false,
+      "value": null
+    },
+    {
+      "group": "footer",
+      "key": "copyright",
+      "value_type": "string",
+      "localized": true,
+      "value": {
+        "la": "© 2026 Outdoor Avenger Ltd. All Wilderness Permits Reserved.",
+        "en": "© 2026 Outdoor Avenger Ltd. All Wilderness Permits Reserved."
+      }
+    },
+    {
+      "group": "seo",
+      "key": "site_name",
+      "value_type": "string",
+      "localized": false,
+      "value": "Materm"
+    },
+    {
+      "group": "seo",
+      "key": "title_template",
+      "value_type": "string",
+      "localized": false,
+      "value": "%s | Materm"
+    },
+    {
+      "group": "seo",
+      "key": "default_description",
+      "value_type": "text",
+      "localized": true,
+      "value": {
+        "la": "Materm - treehouse and camping at Phou Khao Khouay, Laos.",
+        "en": "Materm - treehouse and camping at Phou Khao Khouay, Laos."
+      }
+    },
+    {
+      "group": "seo",
+      "key": "default_og_media_id",
+      "value_type": "media",
+      "localized": false,
+      "value": null
+    },
+    {
+      "group": "site",
+      "key": "base_url",
+      "value_type": "url",
+      "localized": false,
+      "value": "https://materm.example"
+    },
+    {
+      "group": "contact",
+      "key": "address",
+      "value_type": "text",
+      "localized": true,
+      "value": {
+        "la": "Phou Khao Khouay National Park, Vientiane Province, Lao PDR",
+        "en": "Phou Khao Khouay National Park, Vientiane Province, Lao PDR"
+      }
+    },
+    {
+      "group": "contact",
+      "key": "phone",
+      "value_type": "phone",
+      "localized": false,
+      "value": "+856200000000"
+    },
+    {
+      "group": "contact",
+      "key": "phone_display",
+      "value_type": "string",
+      "localized": false,
+      "value": "+856 20 0000 0000"
+    },
+    {
+      "group": "contact",
+      "key": "map_url",
+      "value_type": "url",
+      "localized": false,
+      "value": null
+    },
+    {
+      "group": "contact",
+      "key": "email",
+      "value_type": "email",
+      "localized": false,
+      "value": "hello@materm.example"
+    },
+    {
+      "group": "contact",
+      "key": "hours",
+      "value_type": "string",
+      "localized": true,
+      "value": {
+        "la": "Every day, 08:00 – 18:00",
+        "en": "Every day, 08:00 – 18:00"
+      }
+    }
+  ],
+  "categories": [
+    {
+      "key": "music",
+      "sort_order": 1,
+      "translations": {
+        "la": {
+          "name": "Music",
+          "slug": "music"
+        },
+        "en": {
+          "name": "Music",
+          "slug": "music"
+        }
+      }
+    },
+    {
+      "key": "camping",
+      "sort_order": 2,
+      "translations": {
+        "la": {
+          "name": "Camping",
+          "slug": "camping"
+        },
+        "en": {
+          "name": "Camping",
+          "slug": "camping"
+        }
+      }
+    },
+    {
+      "key": "outdoor",
+      "sort_order": 3,
+      "translations": {
+        "la": {
+          "name": "Outdoor",
+          "slug": "outdoor"
+        },
+        "en": {
+          "name": "Outdoor",
+          "slug": "outdoor"
+        }
+      }
+    },
+    {
+      "key": "avenger",
+      "sort_order": 4,
+      "translations": {
+        "la": {
+          "name": "Avenger",
+          "slug": "avenger"
+        },
+        "en": {
+          "name": "Avenger",
+          "slug": "avenger"
+        }
+      }
+    },
+    {
+      "key": "hiking",
+      "sort_order": 5,
+      "translations": {
+        "la": {
+          "name": "Hiking",
+          "slug": "hiking"
+        },
+        "en": {
+          "name": "Hiking",
+          "slug": "hiking"
+        }
+      }
+    }
+  ],
+  "tags": [],
+  "faq_groups": [
+    {
+      "key": "contact",
+      "name": "Contact page FAQ",
+      "items": [
+        {
+          "id": 1,
+          "sort_order": 1,
+          "translations": {
+            "la": {
+              "question": "How do I get to Materm?",
+              "answer": "Materm is inside Phou Khao Khouay National Park in Vientiane Province. Send us a message and we'll share directions and help you plan the journey."
+            },
+            "en": {
+              "question": "How do I get to Materm?",
+              "answer": "Materm is inside Phou Khao Khouay National Park in Vientiane Province. Send us a message and we'll share directions and help you plan the journey."
+            }
+          }
+        },
+        {
+          "id": 2,
+          "sort_order": 2,
+          "translations": {
+            "la": {
+              "question": "What are the check-in and opening times?",
+              "answer": "We are open every day from 08:00 to 18:00. Check-in and check-out times depend on your stay, so we'll confirm them when you book."
+            },
+            "en": {
+              "question": "What are the check-in and opening times?",
+              "answer": "We are open every day from 08:00 to 18:00. Check-in and check-out times depend on your stay, so we'll confirm them when you book."
+            }
+          }
+        },
+        {
+          "id": 3,
+          "sort_order": 3,
+          "translations": {
+            "la": {
+              "question": "Do you host music nights and events?",
+              "answer": "Yes, we hold music evenings and small gatherings from time to time. Ask us about upcoming dates before you plan your visit."
+            },
+            "en": {
+              "question": "Do you host music nights and events?",
+              "answer": "Yes, we hold music evenings and small gatherings from time to time. Ask us about upcoming dates before you plan your visit."
+            }
+          }
+        },
+        {
+          "id": 4,
+          "sort_order": 4,
+          "translations": {
+            "la": {
+              "question": "Can you arrange for groups or special requests?",
+              "answer": "We're happy to help with groups, celebrations and special requirements. Tell us what you have in mind and we'll see how we can make it work."
+            },
+            "en": {
+              "question": "Can you arrange for groups or special requests?",
+              "answer": "We're happy to help with groups, celebrations and special requirements. Tell us what you have in mind and we'll see how we can make it work."
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "forms": [
+    {
+      "slug": "contact",
+      "honeypot_field": "company",
+      "field_order": [
+        "name",
+        "email",
+        "phone",
+        "topic",
+        "message"
+      ],
+      "json_schema": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "name",
+          "email",
+          "topic",
+          "message"
+        ],
+        "properties": {
+          "name": {
+            "type": "string",
+            "minLength": 2,
+            "maxLength": 100,
+            "x-pii": true
+          },
+          "email": {
+            "type": "string",
+            "format": "email",
+            "maxLength": 254,
+            "x-pii": true
+          },
+          "phone": {
+            "type": "string",
+            "maxLength": 30,
+            "pattern": "^[0-9 +()\\-.]+$",
+            "x-pii": true
+          },
+          "topic": {
+            "type": "string",
+            "enum": [
+              "booking",
+              "events",
+              "camping",
+              "other"
+            ]
+          },
+          "message": {
+            "type": "string",
+            "minLength": 10,
+            "maxLength": 2000,
+            "x-pii": true
+          }
+        }
+      },
+      "success_redirect_url": null,
+      "translations": {
+        "la": {
+          "title": "Send a message",
+          "description": "We usually reply within two working days.",
+          "submit_label": "Send message",
+          "sending_label": "Sending…",
+          "success_title": "Thank you!",
+          "success_description": "Your message is on its way. We'll reply as soon as we can.",
+          "success_again_label": "Send another message",
+          "messages": {
+            "required": "This field is required",
+            "email": "Enter a valid email address",
+            "messageShort": "Please write at least 10 characters",
+            "phone": "Enter a valid phone number",
+            "generic": "Something went wrong. Please try again.",
+            "summary": "Please check the highlighted fields."
+          }
+        },
+        "en": {
+          "title": "Send a message",
+          "description": "We usually reply within two working days.",
+          "submit_label": "Send message",
+          "sending_label": "Sending…",
+          "success_title": "Thank you!",
+          "success_description": "Your message is on its way. We'll reply as soon as we can.",
+          "success_again_label": "Send another message",
+          "messages": {
+            "required": "This field is required",
+            "email": "Enter a valid email address",
+            "messageShort": "Please write at least 10 characters",
+            "phone": "Enter a valid phone number",
+            "generic": "Something went wrong. Please try again.",
+            "summary": "Please check the highlighted fields."
+          }
+        }
+      },
+      "field_translations": {
+        "name": {
+          "la": {
+            "label": "Full name",
+            "placeholder": "Your name",
+            "option_labels": {}
+          },
+          "en": {
+            "label": "Full name",
+            "placeholder": "Your name",
+            "option_labels": {}
+          }
+        },
+        "email": {
+          "la": {
+            "label": "Email",
+            "placeholder": "you@example.com",
+            "option_labels": {}
+          },
+          "en": {
+            "label": "Email",
+            "placeholder": "you@example.com",
+            "option_labels": {}
+          }
+        },
+        "phone": {
+          "la": {
+            "label": "Phone (optional)",
+            "placeholder": "+856 20 0000 0000",
+            "option_labels": {}
+          },
+          "en": {
+            "label": "Phone (optional)",
+            "placeholder": "+856 20 0000 0000",
+            "option_labels": {}
+          }
+        },
+        "topic": {
+          "la": {
+            "label": "What is it about?",
+            "placeholder": null,
+            "option_labels": {
+              "booking": "Booking & stays",
+              "events": "Music nights & events",
+              "camping": "Camping & treks",
+              "other": "Something else"
+            }
+          },
+          "en": {
+            "label": "What is it about?",
+            "placeholder": null,
+            "option_labels": {
+              "booking": "Booking & stays",
+              "events": "Music nights & events",
+              "camping": "Camping & treks",
+              "other": "Something else"
+            }
+          }
+        },
+        "message": {
+          "la": {
+            "label": "Message",
+            "placeholder": "Tell us how we can help…",
+            "option_labels": {}
+          },
+          "en": {
+            "label": "Message",
+            "placeholder": "Tell us how we can help…",
+            "option_labels": {}
+          }
+        }
+      }
+    }
+  ]
+}

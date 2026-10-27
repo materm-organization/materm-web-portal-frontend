@@ -1,0 +1,139 @@
+{
+  "success": true,
+  "data": {
+    "locale": "la",
+    "id": 1,
+    "public_id": "0192e5a0-326d-7eb7-86e5-4d450fb819b9",
+    "slug": "music-night-under-the-stars",
+    "href": "/blog/music-night-under-the-stars",
+    "resolved_locale": "la",
+    "is_fallback": false,
+    "title": "Music Night Under the Stars — a recap",
+    "excerpt": "On one weekend night in September, the slope of Phou Khao Khouay where Materm’s treehouses sit turned into an impromptu music stage. Three local bands took turns playing. A familiar place became a place to listen.",
+    "label": "Music Night",
+    "location_label": "Phou Khao Khouay · Community journal",
+    "date": "Sep. 05.2026",
+    "date_time": "2026-09-05T00:00:00Z",
+    "category": {
+      "key": "music",
+      "name": "Music"
+    },
+    "author": null,
+    "image": {
+      "media_id": 16,
+      "alt": "Snow-capped mountains above a forest lake under heavy clouds"
+    },
+    "is_featured": false,
+    "body": {
+      "type": "doc",
+      "content": [
+        {
+          "type": "lead",
+          "content": [
+            {
+              "type": "text",
+              "text": "On one weekend night in September, the slope of Phou Khao Khouay where Materm’s treehouses sit turned into an impromptu music stage. Three local bands took turns playing. A familiar place became a place to listen."
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "content": [
+            {
+              "type": "text",
+              "text": "Music Night belongs to the same story as the treehouses: a reason to come together, with the landscape still at the centre. This recap is a reflection on that meeting of music, community and place — and on what it means to make room for something shared, outdoors."
+            }
+          ]
+        }
+      ]
+    },
+    "hero": {
+      "media_id": 16,
+      "alt": "Snow-capped mountains above a forest lake under heavy clouds"
+    },
+    "gallery": {
+      "heading": "A visual walk-through is coming",
+      "description": "What started as a small treehouse site in 2020 has grown into a place where campers, musicians, food lovers, and first-time visitors return to share the same slope of Phou Khao Khouay. Read the full story of how Materm came together.",
+      "items": [
+        {
+          "media_id": 17,
+          "alt": "Music Night photo 1 of 9: a forest stream with ferns and small waterfalls",
+          "caption": null
+        },
+        {
+          "media_id": 17,
+          "alt": "Music Night photo 2 of 9: a forest stream with ferns and small waterfalls",
+          "caption": null
+        },
+        {
+          "media_id": 17,
+          "alt": "Music Night photo 3 of 9: a forest stream with ferns and small waterfalls",
+          "caption": null
+        },
+        {
+          "media_id": 17,
+          "alt": "Music Night photo 4 of 9: a forest stream with ferns and small waterfalls",
+          "caption": null
+        },
+        {
+          "media_id": 17,
+          "alt": "Music Night photo 5 of 9: a forest stream with ferns and small waterfalls",
+          "caption": null
+        },
+        {
+          "media_id": 17,
+          "alt": "Music Night photo 6 of 9: a forest stream with ferns and small waterfalls",
+          "caption": null
+        },
+        {
+          "media_id": 17,
+          "alt": "Music Night photo 7 of 9: a forest stream with ferns and small waterfalls",
+          "caption": null
+        },
+        {
+          "media_id": 17,
+          "alt": "Music Night photo 8 of 9: a forest stream with ferns and small waterfalls",
+          "caption": null
+        },
+        {
+          "media_id": 17,
+          "alt": "Music Night photo 9 of 9: a forest stream with ferns and small waterfalls",
+          "caption": null
+        }
+      ]
+    },
+    "tags": [],
+    "seo": {
+      "title": "Music Night Under the Stars — a recap",
+      "description": "On one weekend night in September, the slope of Phou Khao Khouay where Materm’s treehouses sit turned into an impromptu music stage. Three local bands took turns playing. A familiar place became a place to listen.",
+      "og_image": {
+        "media_id": 16
+      },
+      "canonical": "https://materm.example/blog/music-night-under-the-stars",
+      "noindex": false
+    },
+    "updated_at": "2026-09-05T00:00:00Z",
+    "media": {
+      "16": {
+        "url": "/images/site/blog/blog-article-hero-mountains.jpg",
+        "width": 1264,
+        "height": 848,
+        "mime": "image/jpeg",
+        "alt": "Snow-capped mountains above a forest lake under heavy clouds",
+        "blurhash": null,
+        "focal": null,
+        "variants": []
+      },
+      "17": {
+        "url": "/images/site/blog/blog-gallery-rainforest-stream.jpg",
+        "width": 1200,
+        "height": 896,
+        "mime": "image/jpeg",
+        "alt": "Music Night photo 1 of 9: a forest stream with ferns and small waterfalls",
+        "blurhash": null,
+        "focal": null,
+        "variants": []
+      }
+    }
+  }
+}

@@ -1,0 +1,47 @@
+{
+  "success": true,
+  "data": [
+    {
+      "id": 1,
+      "public_id": "0192e5a0-326d-7eb7-86e5-4d450fb819b9",
+      "slug": "music-night-under-the-stars",
+      "href": "/blog/music-night-under-the-stars",
+      "resolved_locale": "la",
+      "is_fallback": false,
+      "title": "Music Night Under the Stars — a recap",
+      "excerpt": "On one weekend night in September, the slope of Phou Khao Khouay where Materm’s treehouses sit turned into an impromptu music stage. Three local bands took turns playing. A familiar place became a place to listen.",
+      "label": "Music Night",
+      "location_label": "Phou Khao Khouay · Community journal",
+      "date": "Sep. 05.2026",
+      "date_time": "2026-09-05T00:00:00Z",
+      "category": {
+        "key": "music",
+        "name": "Music"
+      },
+      "author": null,
+      "image": {
+        "media_id": 16,
+        "alt": "Snow-capped mountains above a forest lake under heavy clouds"
+      },
+      "is_featured": false
+    }
+  ],
+  "meta": {
+    "total": 1,
+    "page": 1,
+    "limit": 12,
+    "total_page": 1
+  },
+  "media": {
+    "16": {
+      "url": "/images/site/blog/blog-article-hero-mountains.jpg",
+      "width": 1264,
+      "height": 848,
+      "mime": "image/jpeg",
+      "alt": "Snow-capped mountains above a forest lake under heavy clouds",
+      "blurhash": null,
+      "focal": null,
+      "variants": []
+    }
+  }
+}

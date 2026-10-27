@@ -1,0 +1,399 @@
+{
+  "success": true,
+  "data": {
+    "locale": "la",
+    "page": {
+      "id": 1,
+      "public_id": "0192e5a0-4219-7937-8dfe-2874dab71fbd",
+      "key": "home",
+      "template": "home",
+      "path": "/",
+      "is_home": true,
+      "resolved_locale": "la",
+      "is_fallback": false,
+      "title": "Home",
+      "updated_at": "2026-01-01T00:00:00Z",
+      "seo": {
+        "title": "Materm",
+        "title_absolute": true,
+        "description": "Materm - treehouse and camping at Phou Khao Khouay, Laos.",
+        "og_image": {
+          "media_id": 1
+        },
+        "canonical": "https://materm.example/",
+        "noindex": false
+      }
+    },
+    "sections": [
+      {
+        "id": "0192e5a0-fb37-7814-8922-e7f3915ae482",
+        "key": "hero_brand",
+        "version": 1,
+        "variant": "normal",
+        "anchor_id": null,
+        "is_fallback": false,
+        "props": {
+          "title": "Discover the Wild\nWithin Your Own Journey",
+          "description": "Travel is all about connecting with the raw beauty of nature. The MATERM logo draws inspiration from majestic mountain peaks, evergreen pine forests, and bold, grounded lines—symbolizing the courage to explore. We invite you to step off the beaten path and immerse yourself in the tranquility, adventure, and freedom of the great outdoors. Start your next adventure with MATERM today.",
+          "cta": {
+            "label": "Explore Expeditions",
+            "href": "/our-path",
+            "open_in_new_tab": false,
+            "rel": []
+          },
+          "background": {
+            "media_id": 1,
+            "alt": "",
+            "decorative": true
+          },
+          "show_logo": true,
+          "animate_in": true
+        },
+        "resolved": {}
+      },
+      {
+        "id": "0192e5a0-eca0-72d6-8642-9131141f9ddb",
+        "key": "teaser_collage",
+        "version": 1,
+        "variant": null,
+        "anchor_id": null,
+        "is_fallback": false,
+        "props": {
+          "eyebrow": "Our Path",
+          "title": "From a treehouse idea to a gathering community",
+          "body": "What started as a small treehouse site in 2020 has grown into a place where campers, musicians, food lovers, and first-time visitors return to share the same slope of Phou Khao Khouay. Read the full story of how Materm came together.",
+          "cta": {
+            "label": "View more",
+            "href": "/our-path",
+            "open_in_new_tab": false,
+            "rel": []
+          },
+          "images": [
+            {
+              "media_id": 2,
+              "alt": "Two climbers with ice axes ascending a blue glacier crevasse below snow-capped peaks",
+              "decorative": false
+            },
+            {
+              "media_id": 3,
+              "alt": "A hiker with an orange backpack standing on a rocky ridge at sunset above a mountain valley",
+              "decorative": false
+            },
+            {
+              "media_id": 4,
+              "alt": "A woman rock climbing a steep granite wall high above a mountain valley",
+              "decorative": false
+            }
+          ]
+        },
+        "resolved": {}
+      },
+      {
+        "id": "0192e5a0-7a76-7b82-83fa-305c9b561537",
+        "key": "blog_strip",
+        "version": 1,
+        "variant": null,
+        "anchor_id": null,
+        "is_fallback": false,
+        "props": {
+          "eyebrow": "From the Blog",
+          "title": "Latest from the community",
+          "description": "What started as a small treehouse site in 2020 has grown into a place where campers, musicians, food lovers, and first-time visitors return to share the same slope of Phou Khao Khouay. Read the full story of how Materm came together.",
+          "cta": {
+            "label": "View more",
+            "href": "/blog",
+            "open_in_new_tab": false,
+            "rel": []
+          },
+          "source": "manual",
+          "items": [
+            {
+              "post_id": 1,
+              "image": {
+                "media_id": 5,
+                "alt": "Snow-capped mountains above a forest lake under storm clouds",
+                "decorative": false
+              },
+              "excerpt": "On one weekend night in September, the slope of Phou Khao Khouay where Materm's treehouses sit turned into an impromptu music stage. Three local bands took turns playing around the"
+            },
+            {
+              "post_id": 1,
+              "image": {
+                "media_id": 6,
+                "alt": "Hikers climbing a volcanic ridge trail",
+                "decorative": false
+              },
+              "excerpt": "On one weekend night in September, the slope of Phou Khao Khouay where Materm's treehouses sit turned into an impromptu music stage. Three local bands took turns playing around the"
+            },
+            {
+              "post_id": 1,
+              "image": {
+                "media_id": 7,
+                "alt": "Misty forest trail between tall trees",
+                "decorative": false
+              },
+              "excerpt": "On one weekend night in September, the slope of Phou Khao Khouay where Materm's treehouses sit turned into an impromptu music stage. Three local bands took turns playing around the"
+            },
+            {
+              "post_id": 1,
+              "image": {
+                "media_id": 8,
+                "alt": "Orange backpack resting in a rainy forest",
+                "decorative": false
+              },
+              "excerpt": "On one weekend night in September, the slope of Phou Khao Khouay where Materm's treehouses sit turned into an impromptu music stage. Three local bands took turns playing around the"
+            }
+          ]
+        },
+        "resolved": {
+          "posts": [
+            {
+              "post_id": 1,
+              "href": "/blog/music-night-under-the-stars",
+              "label": "Music Night",
+              "title": "Music Night Under the Stars — a recap",
+              "date": "Sep. 05.2026",
+              "date_time": "2026-09-05T00:00:00Z",
+              "excerpt": "On one weekend night in September, the slope of Phou Khao Khouay where Materm's treehouses sit turned into an impromptu music stage. Three local bands took turns playing around the",
+              "image": {
+                "media_id": 5,
+                "alt": "Snow-capped mountains above a forest lake under storm clouds"
+              }
+            },
+            {
+              "post_id": 1,
+              "href": "/blog/music-night-under-the-stars",
+              "label": "Music Night",
+              "title": "Music Night Under the Stars — a recap",
+              "date": "Sep. 05.2026",
+              "date_time": "2026-09-05T00:00:00Z",
+              "excerpt": "On one weekend night in September, the slope of Phou Khao Khouay where Materm's treehouses sit turned into an impromptu music stage. Three local bands took turns playing around the",
+              "image": {
+                "media_id": 6,
+                "alt": "Hikers climbing a volcanic ridge trail"
+              }
+            },
+            {
+              "post_id": 1,
+              "href": "/blog/music-night-under-the-stars",
+              "label": "Music Night",
+              "title": "Music Night Under the Stars — a recap",
+              "date": "Sep. 05.2026",
+              "date_time": "2026-09-05T00:00:00Z",
+              "excerpt": "On one weekend night in September, the slope of Phou Khao Khouay where Materm's treehouses sit turned into an impromptu music stage. Three local bands took turns playing around the",
+              "image": {
+                "media_id": 7,
+                "alt": "Misty forest trail between tall trees"
+              }
+            },
+            {
+              "post_id": 1,
+              "href": "/blog/music-night-under-the-stars",
+              "label": "Music Night",
+              "title": "Music Night Under the Stars — a recap",
+              "date": "Sep. 05.2026",
+              "date_time": "2026-09-05T00:00:00Z",
+              "excerpt": "On one weekend night in September, the slope of Phou Khao Khouay where Materm's treehouses sit turned into an impromptu music stage. Three local bands took turns playing around the",
+              "image": {
+                "media_id": 8,
+                "alt": "Orange backpack resting in a rainy forest"
+              }
+            }
+          ]
+        }
+      },
+      {
+        "id": "0192e5a0-c1e9-718b-8cf1-176d20bf4f2f",
+        "key": "gallery_cards",
+        "version": 1,
+        "variant": "home",
+        "anchor_id": null,
+        "is_fallback": false,
+        "props": {
+          "eyebrow": "Gallery",
+          "title": "A visual walk-through is coming",
+          "description": "What started as a small treehouse site in 2020 has grown into a place where campers, musicians, food lovers, and first-time visitors return to share the same slope of Phou Khao Khouay. Read the full story of how Materm came together.",
+          "cta": {
+            "label": "View more",
+            "href": "/gallery",
+            "open_in_new_tab": false,
+            "rel": []
+          },
+          "source": "manual",
+          "cards_link": {
+            "href": "/gallery",
+            "open_in_new_tab": false,
+            "rel": []
+          },
+          "cards": [
+            {
+              "image": {
+                "media_id": 9,
+                "alt": "Jungle waterfall and stream surrounded by palms and tropical trees",
+                "decorative": false
+              },
+              "caption": {
+                "date": "SEP. 05.2026",
+                "title": "THE ORIGIN STORY, SINCE 2020"
+              }
+            },
+            {
+              "image": {
+                "media_id": 9,
+                "alt": "",
+                "decorative": true
+              },
+              "caption": {
+                "date": "SEP. 05.2026",
+                "title": "THE ORIGIN STORY, SINCE 2020"
+              }
+            },
+            {
+              "image": {
+                "media_id": 9,
+                "alt": "",
+                "decorative": true
+              },
+              "caption": {
+                "date": "SEP. 05.2026",
+                "title": "THE ORIGIN STORY, SINCE 2020"
+              }
+            }
+          ]
+        },
+        "resolved": {
+          "cards": [
+            {
+              "image": {
+                "media_id": 9,
+                "alt": "Jungle waterfall and stream surrounded by palms and tropical trees",
+                "decorative": false
+              },
+              "caption": {
+                "date": "SEP. 05.2026",
+                "title": "THE ORIGIN STORY, SINCE 2020"
+              },
+              "href": "/gallery"
+            },
+            {
+              "image": {
+                "media_id": 9,
+                "alt": "",
+                "decorative": true
+              },
+              "caption": {
+                "date": "SEP. 05.2026",
+                "title": "THE ORIGIN STORY, SINCE 2020"
+              },
+              "href": "/gallery"
+            },
+            {
+              "image": {
+                "media_id": 9,
+                "alt": "",
+                "decorative": true
+              },
+              "caption": {
+                "date": "SEP. 05.2026",
+                "title": "THE ORIGIN STORY, SINCE 2020"
+              },
+              "href": "/gallery"
+            }
+          ]
+        }
+      }
+    ],
+    "media": {
+      "1": {
+        "url": "/images/site/home/hero-bg.png",
+        "width": 2048,
+        "height": 1080,
+        "mime": "image/png",
+        "alt": null,
+        "blurhash": null,
+        "focal": null,
+        "variants": []
+      },
+      "2": {
+        "url": "/images/site/home/our-path-photo-1.jpg",
+        "width": 1024,
+        "height": 1024,
+        "mime": "image/jpeg",
+        "alt": "Two climbers with ice axes ascending a blue glacier crevasse below snow-capped peaks",
+        "blurhash": null,
+        "focal": null,
+        "variants": []
+      },
+      "3": {
+        "url": "/images/site/home/our-path-photo-2.jpg",
+        "width": 848,
+        "height": 1264,
+        "mime": "image/jpeg",
+        "alt": "A hiker with an orange backpack standing on a rocky ridge at sunset above a mountain valley",
+        "blurhash": null,
+        "focal": null,
+        "variants": []
+      },
+      "4": {
+        "url": "/images/site/home/our-path-photo-3.jpg",
+        "width": 1024,
+        "height": 1024,
+        "mime": "image/jpeg",
+        "alt": "A woman rock climbing a steep granite wall high above a mountain valley",
+        "blurhash": null,
+        "focal": null,
+        "variants": []
+      },
+      "5": {
+        "url": "/images/site/home/blog-card-1.jpg",
+        "width": 1264,
+        "height": 848,
+        "mime": "image/jpeg",
+        "alt": "Snow-capped mountains above a forest lake under storm clouds",
+        "blurhash": null,
+        "focal": null,
+        "variants": []
+      },
+      "6": {
+        "url": "/images/site/home/blog-card-2.jpg",
+        "width": 1264,
+        "height": 848,
+        "mime": "image/jpeg",
+        "alt": "Hikers climbing a volcanic ridge trail",
+        "blurhash": null,
+        "focal": null,
+        "variants": []
+      },
+      "7": {
+        "url": "/images/site/home/blog-card-3.jpg",
+        "width": 1264,
+        "height": 848,
+        "mime": "image/jpeg",
+        "alt": "Misty forest trail between tall trees",
+        "blurhash": null,
+        "focal": null,
+        "variants": []
+      },
+      "8": {
+        "url": "/images/site/home/blog-card-4.jpg",
+        "width": 1376,
+        "height": 768,
+        "mime": "image/jpeg",
+        "alt": "Orange backpack resting in a rainy forest",
+        "blurhash": null,
+        "focal": null,
+        "variants": []
+      },
+      "9": {
+        "url": "/images/site/gallery-card-forest-stream.png",
+        "width": 1200,
+        "height": 896,
+        "mime": "image/jpeg",
+        "alt": "Jungle waterfall and stream surrounded by palms and tropical trees",
+        "blurhash": null,
+        "focal": null,
+        "variants": []
+      }
+    }
+  }
+}

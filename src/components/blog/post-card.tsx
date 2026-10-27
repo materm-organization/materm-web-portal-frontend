@@ -1,13 +1,13 @@
 import Image from "next/image";
 import Link from "next/link";
 
-import type { LocalizedBlogPost } from "@/components/blog/localize-post";
+import type { PostCardData } from "@/components/sections/types";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardDescription, CardTitle } from "@/components/ui/card";
 
 interface PostCardProps {
-  post: LocalizedBlogPost;
+  post: PostCardData;
   /** Hero image of the first cards can be eager-loaded by the caller. */
   priority?: boolean;
 }
@@ -21,8 +21,8 @@ export function PostCard({ post, priority }: PostCardProps) {
     <Card className="group relative h-full gap-0 overflow-hidden rounded-site-card border-site-line bg-white py-0 has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-offset-2 has-[:focus-visible]:outline-site-green-700">
       <AspectRatio ratio={16 / 9} className="bg-site-line">
         <Image
-          src={post.heroImage.src}
-          alt={post.heroImage.alt}
+          src={post.image.url}
+          alt={post.image.alt}
           fill
           priority={priority}
           sizes="(min-width: 1432px) 430px, (min-width: 1024px) 30vw, (min-width: 768px) 45vw, 100vw"
@@ -42,19 +42,19 @@ export function PostCard({ post, priority }: PostCardProps) {
           className="text-xl leading-[1.2] font-bold text-site-ink uppercase lg:text-[22px]"
         >
           <Link
-            href={`/blog/${post.slug}`}
+            href={post.href}
             className="outline-none after:absolute after:inset-0 after:content-['']"
           >
             {post.title}
           </Link>
         </CardTitle>
         <CardDescription className="text-base text-site-muted">
-          <time dateTime={post.isoDate}>{post.displayDate}</time>
+          <time dateTime={post.dateTime}>{post.date}</time>
           <span aria-hidden="true"> | </span>
           {post.location}
         </CardDescription>
         <p className="line-clamp-3 font-site-manrope text-base leading-[1.7] text-site-ink-strong/85">
-          {post.intro[0]}
+          {post.excerpt}
         </p>
       </CardContent>
     </Card>

@@ -51,15 +51,6 @@
     },
     "submit": "Send message",
     "sending": "Sending…",
-    "errors": {
-      "required": "This field is required",
-      "email": "Enter a valid email address",
-      "messageShort": "Please write at least 10 characters",
-      "phone": "Enter a valid phone number",
-      "unconfigured": "Messages can't be sent from this site yet. Please email us directly.",
-      "generic": "Something went wrong. Please try again.",
-      "summary": "Please check the highlighted fields."
-    },
     "success": {
       "title": "Thank you!",
       "description": "Your message is on its way. We'll reply as soon as we can.",

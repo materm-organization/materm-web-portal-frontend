@@ -1,0 +1,334 @@
+{
+  "success": true,
+  "data": {
+    "locale": "la",
+    "page": {
+      "id": 2,
+      "public_id": "0192e5a0-45e8-7eab-8719-60a0555c4774",
+      "key": "our-path",
+      "template": "standard",
+      "path": "/our-path",
+      "is_home": false,
+      "resolved_locale": "la",
+      "is_fallback": false,
+      "title": "Our Path",
+      "updated_at": "2026-01-01T00:00:00Z",
+      "seo": {
+        "title": "Our Path",
+        "title_absolute": false,
+        "description": "From a treehouse idea to a gathering community: the story of Materm at Phou Khao Khouay.",
+        "og_image": {
+          "media_id": 10
+        },
+        "canonical": "https://materm.example/our-path",
+        "noindex": false
+      }
+    },
+    "sections": [
+      {
+        "id": "0192e5a0-aedf-77df-8360-631a1d6a8e2a",
+        "key": "hero_brand",
+        "version": 1,
+        "variant": "wide",
+        "anchor_id": null,
+        "is_fallback": false,
+        "props": {
+          "title": "Our Path",
+          "description": "Travel is all about connecting with the raw beauty of nature. The MATERM logo draws inspiration from majestic mountain peaks, evergreen pine forests, and bold, grounded lines—symbolizing the courage to explore. We invite you to step off the beaten path and immerse yourself in the tranquility, adventure, and freedom of the great outdoors. Start your next adventure with MATERM today.",
+          "background": {
+            "media_id": 10,
+            "alt": "",
+            "decorative": true
+          },
+          "show_logo": true,
+          "animate_in": true
+        },
+        "resolved": {}
+      },
+      {
+        "id": "0192e5a0-7551-7cfc-8359-9a18a2de7a1a",
+        "key": "intro_heading",
+        "version": 1,
+        "variant": null,
+        "anchor_id": null,
+        "is_fallback": false,
+        "props": {
+          "eyebrow": "Our Path",
+          "title": "From a treehouse idea to a gathering community",
+          "description": "What started as a small treehouse site in 2020 has grown into a place where campers, musicians, food lovers, and first-time visitors return to share the same slope of Phou Khao Khouay. Read the full story of how Materm came together."
+        },
+        "resolved": {}
+      },
+      {
+        "id": "0192e5a0-f7a3-797d-8421-0716cf3d1a33",
+        "key": "about_blocks",
+        "version": 1,
+        "variant": "soft",
+        "anchor_id": null,
+        "is_fallback": false,
+        "props": {
+          "items": [
+            {
+              "date_label": "12.02.2026",
+              "title": "We are the guardians of the great unknown",
+              "body": {
+                "type": "doc",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "Outdoor Avenger was founded on a simple, raw premise: modern life is too quiet. We believe that to truly find yourself, you must first get comfortably lost in nature."
+                      }
+                    ]
+                  },
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "Our logo and craft draw inspiration from the majestic mountain peaks, evergreen pine forests, and bold, grounded lines of the wilderness — symbolizing the courage to explore. We invite you to step off the beaten path and immerse yourself in the adventure and freedom of the deep wild."
+                      }
+                    ]
+                  }
+                ]
+              },
+              "image": {
+                "media_id": 11,
+                "alt": "Two kayakers paddling through whitewater rapids between red canyon walls",
+                "decorative": false
+              },
+              "image_side": "right",
+              "layout": "standard",
+              "image_ratio": "wide"
+            },
+            {
+              "date_label": "12.02.2026",
+              "title": "We are the guardians of the great unknown",
+              "body": {
+                "type": "doc",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "Outdoor Avenger was founded on a simple, raw premise: modern life is too quiet. We believe that to truly find yourself, you must first get comfortably lost in nature."
+                      }
+                    ]
+                  },
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "Our logo and craft draw inspiration from the majestic mountain peaks, evergreen pine forests, and bold, grounded lines of the wilderness — symbolizing the courage to explore. We invite you to step off the beaten path and immerse yourself in the adventure and freedom of the deep wild."
+                      }
+                    ]
+                  }
+                ]
+              },
+              "image": {
+                "media_id": 12,
+                "alt": "Ice climbers ascending a glacier crevasse",
+                "decorative": false
+              },
+              "image_side": "left",
+              "layout": "inset",
+              "image_ratio": "pair"
+            },
+            {
+              "date_label": "12.02.2026",
+              "title": "We are the guardians of the great unknown",
+              "body": {
+                "type": "doc",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "Outdoor Avenger was founded on a simple, raw premise: modern life is too quiet. We believe that to truly find yourself, you must first get comfortably lost in nature."
+                      }
+                    ]
+                  },
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "Our logo and craft draw inspiration from the majestic mountain peaks, evergreen pine forests, and bold, grounded lines of the wilderness — symbolizing the courage to explore. We invite you to step off the beaten path and immerse yourself in the adventure and freedom of the deep wild."
+                      }
+                    ]
+                  }
+                ]
+              },
+              "image": {
+                "media_id": 13,
+                "alt": "Rock climber scaling a steep granite wall above a mountain valley",
+                "decorative": false
+              },
+              "image_side": "right",
+              "layout": "standard",
+              "image_ratio": "tall"
+            }
+          ]
+        },
+        "resolved": {}
+      },
+      {
+        "id": "0192e5a0-13af-774b-8f3b-fa16b572bff8",
+        "key": "gallery_cards",
+        "version": 1,
+        "variant": "standard",
+        "anchor_id": null,
+        "is_fallback": false,
+        "props": {
+          "eyebrow": "Gallery",
+          "title": "A visual walk-through is coming",
+          "description": "What started as a small treehouse site in 2020 has grown into a place where campers, musicians, food lovers, and first-time visitors return to share the same slope of Phou Khao Khouay. Read the full story of how Materm came together.",
+          "cta": {
+            "label": "View more",
+            "href": "/gallery",
+            "open_in_new_tab": false,
+            "rel": []
+          },
+          "source": "manual",
+          "cards_link": {
+            "href": "/gallery",
+            "open_in_new_tab": false,
+            "rel": []
+          },
+          "cards": [
+            {
+              "image": {
+                "media_id": 14,
+                "alt": "Jungle stream flowing over rocks beneath tropical ferns (preview 1 of 3)",
+                "decorative": false
+              },
+              "caption": {
+                "date": "SEP. 05.2026",
+                "title": "THE ORIGIN STORY, SINCE 2020"
+              }
+            },
+            {
+              "image": {
+                "media_id": 14,
+                "alt": "Jungle stream flowing over rocks beneath tropical ferns (preview 2 of 3)",
+                "decorative": false
+              },
+              "caption": {
+                "date": "SEP. 05.2026",
+                "title": "THE ORIGIN STORY, SINCE 2020"
+              }
+            },
+            {
+              "image": {
+                "media_id": 14,
+                "alt": "Jungle stream flowing over rocks beneath tropical ferns (preview 3 of 3)",
+                "decorative": false
+              },
+              "caption": {
+                "date": "SEP. 05.2026",
+                "title": "THE ORIGIN STORY, SINCE 2020"
+              }
+            }
+          ]
+        },
+        "resolved": {
+          "cards": [
+            {
+              "image": {
+                "media_id": 14,
+                "alt": "Jungle stream flowing over rocks beneath tropical ferns (preview 1 of 3)",
+                "decorative": false
+              },
+              "caption": {
+                "date": "SEP. 05.2026",
+                "title": "THE ORIGIN STORY, SINCE 2020"
+              },
+              "href": "/gallery"
+            },
+            {
+              "image": {
+                "media_id": 14,
+                "alt": "Jungle stream flowing over rocks beneath tropical ferns (preview 2 of 3)",
+                "decorative": false
+              },
+              "caption": {
+                "date": "SEP. 05.2026",
+                "title": "THE ORIGIN STORY, SINCE 2020"
+              },
+              "href": "/gallery"
+            },
+            {
+              "image": {
+                "media_id": 14,
+                "alt": "Jungle stream flowing over rocks beneath tropical ferns (preview 3 of 3)",
+                "decorative": false
+              },
+              "caption": {
+                "date": "SEP. 05.2026",
+                "title": "THE ORIGIN STORY, SINCE 2020"
+              },
+              "href": "/gallery"
+            }
+          ]
+        }
+      }
+    ],
+    "media": {
+      "10": {
+        "url": "/images/site/our-path/hero-bg-forest.jpg",
+        "width": 2048,
+        "height": 1080,
+        "mime": "image/jpeg",
+        "alt": null,
+        "blurhash": null,
+        "focal": null,
+        "variants": []
+      },
+      "11": {
+        "url": "/images/site/our-path/about-1-kayak.jpg",
+        "width": 1264,
+        "height": 848,
+        "mime": "image/jpeg",
+        "alt": "Two kayakers paddling through whitewater rapids between red canyon walls",
+        "blurhash": null,
+        "focal": null,
+        "variants": []
+      },
+      "12": {
+        "url": "/images/site/our-path/about-2-glacier-climbers.jpg",
+        "width": 1024,
+        "height": 1024,
+        "mime": "image/jpeg",
+        "alt": "Ice climbers ascending a glacier crevasse",
+        "blurhash": null,
+        "focal": null,
+        "variants": []
+      },
+      "13": {
+        "url": "/images/site/our-path/about-3-rock-climber.jpg",
+        "width": 1024,
+        "height": 1024,
+        "mime": "image/jpeg",
+        "alt": "Rock climber scaling a steep granite wall above a mountain valley",
+        "blurhash": null,
+        "focal": null,
+        "variants": []
+      },
+      "14": {
+        "url": "/images/site/our-path/gallery-jungle-stream.jpg",
+        "width": 1200,
+        "height": 896,
+        "mime": "image/jpeg",
+        "alt": "Jungle stream flowing over rocks beneath tropical ferns (preview 1 of 3)",
+        "blurhash": null,
+        "focal": null,
+        "variants": []
+      }
+    }
+  }
+}

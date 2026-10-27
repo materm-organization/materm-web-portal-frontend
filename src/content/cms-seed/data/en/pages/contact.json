@@ -1,0 +1,323 @@
+{
+  "success": true,
+  "data": {
+    "locale": "en",
+    "page": {
+      "id": 5,
+      "public_id": "0192e5a0-cba8-7421-8d25-74455021be12",
+      "key": "contact",
+      "template": "contact",
+      "path": "/contact",
+      "is_home": false,
+      "resolved_locale": "en",
+      "is_fallback": false,
+      "title": "Contact",
+      "updated_at": "2026-01-01T00:00:00Z",
+      "seo": {
+        "title": "Contact",
+        "title_absolute": false,
+        "description": "Get in touch with Materm — stays, music nights and treks at Phou Khao Khouay.",
+        "og_image": {
+          "media_id": 15
+        },
+        "canonical": "https://materm.example/contact",
+        "noindex": false
+      }
+    },
+    "sections": [
+      {
+        "id": "0192e5a0-1754-75b5-86fe-bc8d58703d48",
+        "key": "hero_brand",
+        "version": 1,
+        "variant": "wide",
+        "anchor_id": null,
+        "is_fallback": false,
+        "props": {
+          "title": "Contact",
+          "description": "Questions about a stay, a music night or a trek? Send us a message and we'll help you find your path.",
+          "background": {
+            "media_id": 15,
+            "alt": "",
+            "decorative": true
+          },
+          "show_logo": true,
+          "animate_in": true
+        },
+        "resolved": {}
+      },
+      {
+        "id": "0192e5a0-45e6-7223-8629-d5e7394a002e",
+        "key": "contact_section",
+        "version": 1,
+        "variant": null,
+        "anchor_id": null,
+        "is_fallback": false,
+        "props": {
+          "eyebrow": "GET IN TOUCH",
+          "title": "We'd love to hear from you",
+          "description": "Tell us about your plans — a night in a treehouse, a music evening or a trek. We read every message and reply personally.",
+          "info_items": [
+            {
+              "icon": "map_pin",
+              "label": "Visit us",
+              "source": "contact.address"
+            },
+            {
+              "icon": "phone",
+              "label": "Call us",
+              "source": "contact.phone"
+            },
+            {
+              "icon": "mail",
+              "label": "Email us",
+              "source": "contact.email"
+            },
+            {
+              "icon": "clock",
+              "label": "Opening hours",
+              "source": "contact.hours"
+            }
+          ],
+          "form_slug": "contact"
+        },
+        "resolved": {
+          "info": [
+            {
+              "icon": "map_pin",
+              "label": "Visit us",
+              "value": "Phou Khao Khouay National Park, Vientiane Province, Lao PDR",
+              "href": null
+            },
+            {
+              "icon": "phone",
+              "label": "Call us",
+              "value": "+856 20 0000 0000",
+              "href": "tel:+856200000000"
+            },
+            {
+              "icon": "mail",
+              "label": "Email us",
+              "value": "hello@materm.example",
+              "href": "mailto:hello@materm.example"
+            },
+            {
+              "icon": "clock",
+              "label": "Opening hours",
+              "value": "Every day, 08:00 – 18:00",
+              "href": null
+            }
+          ],
+          "form": {
+            "slug": "contact",
+            "resolved_locale": "en",
+            "title": "Send a message",
+            "description": "We usually reply within two working days.",
+            "submit_label": "Send message",
+            "sending_label": "Sending…",
+            "success": {
+              "title": "Thank you!",
+              "description": "Your message is on its way. We'll reply as soon as we can.",
+              "again_label": "Send another message"
+            },
+            "messages": {
+              "required": "This field is required",
+              "email": "Enter a valid email address",
+              "messageShort": "Please write at least 10 characters",
+              "phone": "Enter a valid phone number",
+              "generic": "Something went wrong. Please try again.",
+              "summary": "Please check the highlighted fields."
+            },
+            "honeypot_field": "company",
+            "fields": [
+              {
+                "key": "name",
+                "required": true,
+                "schema": {
+                  "type": "string",
+                  "minLength": 2,
+                  "maxLength": 100
+                },
+                "label": "Full name",
+                "placeholder": "Your name",
+                "help": null
+              },
+              {
+                "key": "email",
+                "required": true,
+                "schema": {
+                  "type": "string",
+                  "format": "email",
+                  "maxLength": 254
+                },
+                "label": "Email",
+                "placeholder": "you@example.com",
+                "help": null
+              },
+              {
+                "key": "phone",
+                "required": false,
+                "schema": {
+                  "type": "string",
+                  "maxLength": 30,
+                  "pattern": "^[0-9 +()\\-.]+$"
+                },
+                "label": "Phone (optional)",
+                "placeholder": "+856 20 0000 0000",
+                "help": null
+              },
+              {
+                "key": "topic",
+                "required": true,
+                "schema": {
+                  "type": "string",
+                  "enum": [
+                    "booking",
+                    "events",
+                    "camping",
+                    "other"
+                  ]
+                },
+                "label": "What is it about?",
+                "placeholder": null,
+                "help": null,
+                "options": [
+                  {
+                    "value": "booking",
+                    "label": "Booking & stays"
+                  },
+                  {
+                    "value": "events",
+                    "label": "Music nights & events"
+                  },
+                  {
+                    "value": "camping",
+                    "label": "Camping & treks"
+                  },
+                  {
+                    "value": "other",
+                    "label": "Something else"
+                  }
+                ]
+              },
+              {
+                "key": "message",
+                "required": true,
+                "schema": {
+                  "type": "string",
+                  "minLength": 10,
+                  "maxLength": 2000
+                },
+                "label": "Message",
+                "placeholder": "Tell us how we can help…",
+                "help": null
+              }
+            ],
+            "success_redirect_url": null
+          }
+        }
+      },
+      {
+        "id": "0192e5a0-e866-74e9-840b-26460d729ccd",
+        "key": "faq",
+        "version": 1,
+        "variant": "soft",
+        "anchor_id": null,
+        "is_fallback": false,
+        "props": {
+          "eyebrow": "GOOD TO KNOW",
+          "title": "Before you come",
+          "group_key": "contact",
+          "open_first": true
+        },
+        "resolved": {
+          "items": [
+            {
+              "id": 1,
+              "question": "How do I get to Materm?",
+              "answer": {
+                "type": "doc",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "Materm is inside Phou Khao Khouay National Park in Vientiane Province. Send us a message and we'll share directions and help you plan the journey."
+                      }
+                    ]
+                  }
+                ]
+              }
+            },
+            {
+              "id": 2,
+              "question": "What are the check-in and opening times?",
+              "answer": {
+                "type": "doc",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "We are open every day from 08:00 to 18:00. Check-in and check-out times depend on your stay, so we'll confirm them when you book."
+                      }
+                    ]
+                  }
+                ]
+              }
+            },
+            {
+              "id": 3,
+              "question": "Do you host music nights and events?",
+              "answer": {
+                "type": "doc",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "Yes, we hold music evenings and small gatherings from time to time. Ask us about upcoming dates before you plan your visit."
+                      }
+                    ]
+                  }
+                ]
+              }
+            },
+            {
+              "id": 4,
+              "question": "Can you arrange for groups or special requests?",
+              "answer": {
+                "type": "doc",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "We're happy to help with groups, celebrations and special requirements. Tell us what you have in mind and we'll see how we can make it work."
+                      }
+                    ]
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      }
+    ],
+    "media": {
+      "15": {
+        "url": "/images/site/hero-forest-stream.jpg",
+        "width": 3456,
+        "height": 1902,
+        "mime": "image/jpeg",
+        "alt": "Rainforest stream flowing past ferns",
+        "blurhash": null,
+        "focal": null,
+        "variants": []
+      }
+    }
+  }
+}

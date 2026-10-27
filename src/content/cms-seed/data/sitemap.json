@@ -1,0 +1,45 @@
+{
+  "success": true,
+  "data": {
+    "locale": "la",
+    "base_url": "https://materm.example",
+    "entries": [
+      {
+        "kind": "page",
+        "entity_id": 1,
+        "path": "/",
+        "lastmod": "2026-01-01T00:00:00Z"
+      },
+      {
+        "kind": "page",
+        "entity_id": 2,
+        "path": "/our-path",
+        "lastmod": "2026-01-01T00:00:00Z"
+      },
+      {
+        "kind": "page",
+        "entity_id": 3,
+        "path": "/blog",
+        "lastmod": "2026-01-01T00:00:00Z"
+      },
+      {
+        "kind": "page",
+        "entity_id": 4,
+        "path": "/gallery",
+        "lastmod": "2026-01-01T00:00:00Z"
+      },
+      {
+        "kind": "page",
+        "entity_id": 5,
+        "path": "/contact",
+        "lastmod": "2026-01-01T00:00:00Z"
+      },
+      {
+        "kind": "post",
+        "entity_id": 1,
+        "path": "/blog/music-night-under-the-stars",
+        "lastmod": "2026-09-05T00:00:00Z"
+      }
+    ]
+  }
+}

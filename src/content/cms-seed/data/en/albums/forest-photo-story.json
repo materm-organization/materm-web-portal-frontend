@@ -1,0 +1,108 @@
+{
+  "success": true,
+  "data": {
+    "locale": "en",
+    "id": 1,
+    "key": "forest-photo-story",
+    "title": "The forest photo story",
+    "description": null,
+    "cover": {
+      "media_id": 18,
+      "alt": null
+    },
+    "items": [
+      {
+        "id": 1,
+        "media_id": 18,
+        "alt": "Looking up through tall rainforest trees to a bright patch of sky",
+        "caption_title": "Beneath the canopy",
+        "caption_description": "Layers of green, reaching towards the light.",
+        "sort_order": 1
+      },
+      {
+        "id": 2,
+        "media_id": 19,
+        "alt": "Close-up of a fern frond unfurling",
+        "caption_title": "A small unfolding",
+        "caption_description": "The quiet geometry of a fern.",
+        "sort_order": 2
+      },
+      {
+        "id": 3,
+        "media_id": 20,
+        "alt": "Clear stream running over mossy stones",
+        "caption_title": "Water over stone",
+        "caption_description": "Moss, ripples and the shapes left by the current.",
+        "sort_order": 3
+      },
+      {
+        "id": 4,
+        "media_id": 21,
+        "alt": "Narrow misty forest path between tall trees",
+        "caption_title": "A softer path",
+        "caption_description": "An invitation to wander a little further.",
+        "sort_order": 4
+      },
+      {
+        "id": 5,
+        "media_id": 22,
+        "alt": "Sunbeams filtering through the misty forest",
+        "caption_title": "When the light comes through",
+        "caption_description": "The forest changes, one sunbeam at a time.",
+        "sort_order": 5
+      }
+    ],
+    "media": {
+      "18": {
+        "url": "/images/site/gallery/story-beneath-the-canopy.jpg",
+        "width": 1376,
+        "height": 768,
+        "mime": "image/jpeg",
+        "alt": "Looking up through tall rainforest trees to a bright patch of sky",
+        "blurhash": null,
+        "focal": null,
+        "variants": []
+      },
+      "19": {
+        "url": "/images/site/gallery/story-small-unfolding-fern.jpg",
+        "width": 1024,
+        "height": 1024,
+        "mime": "image/jpeg",
+        "alt": "Close-up of a fern frond unfurling",
+        "blurhash": null,
+        "focal": null,
+        "variants": []
+      },
+      "20": {
+        "url": "/images/site/gallery/story-water-over-stone.jpg",
+        "width": 1200,
+        "height": 896,
+        "mime": "image/jpeg",
+        "alt": "Clear stream running over mossy stones",
+        "blurhash": null,
+        "focal": null,
+        "variants": []
+      },
+      "21": {
+        "url": "/images/site/gallery/story-softer-path.jpg",
+        "width": 1024,
+        "height": 1024,
+        "mime": "image/jpeg",
+        "alt": "Narrow misty forest path between tall trees",
+        "blurhash": null,
+        "focal": null,
+        "variants": []
+      },
+      "22": {
+        "url": "/images/site/gallery/story-light-comes-through.jpg",
+        "width": 1152,
+        "height": 928,
+        "mime": "image/jpeg",
+        "alt": "Sunbeams filtering through the misty forest",
+        "blurhash": null,
+        "focal": null,
+        "variants": []
+      }
+    }
+  }
+}

@@ -53,9 +53,11 @@ function useHeroMotion(): HeroMotionState {
 }
 
 export function HeroMotionRoot({
+  id,
   className,
   children,
 }: {
+  id?: string;
   className?: string;
   children: ReactNode;
 }) {
@@ -75,7 +77,7 @@ export function HeroMotionRoot({
 
   return (
     <HeroMotionContext.Provider value={value}>
-      <section ref={ref} className={className}>
+      <section ref={ref} id={id} className={className}>
         {children}
       </section>
     </HeroMotionContext.Provider>

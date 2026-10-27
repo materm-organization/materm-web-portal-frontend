@@ -1,0 +1,35 @@
+{
+  "success": true,
+  "data": [
+    {
+      "key": "music",
+      "name": "Music",
+      "slug": "music",
+      "sort_order": 1
+    },
+    {
+      "key": "camping",
+      "name": "Camping",
+      "slug": "camping",
+      "sort_order": 2
+    },
+    {
+      "key": "outdoor",
+      "name": "Outdoor",
+      "slug": "outdoor",
+      "sort_order": 3
+    },
+    {
+      "key": "avenger",
+      "name": "Avenger",
+      "slug": "avenger",
+      "sort_order": 4
+    },
+    {
+      "key": "hiking",
+      "name": "Hiking",
+      "slug": "hiking",
+      "sort_order": 5
+    }
+  ]
+}

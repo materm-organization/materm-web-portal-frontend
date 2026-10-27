@@ -1,10 +1,8 @@
 import type { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
 
-import { BlogTeaser } from "@/components/home/blog-teaser";
-import { GalleryTeaser } from "@/components/home/gallery-teaser";
-import { HomeHero } from "@/components/home/home-hero";
-import { OurPathTeaser } from "@/components/home/our-path-teaser";
+import { getHomeSections } from "@/components/sections/adapters/home";
+import { SectionRenderer } from "@/components/sections/section-renderer";
 
 // Home shows just the site name (absolute title bypasses the "%s | Materm" template).
 export async function generateMetadata(): Promise<Metadata> {
@@ -12,13 +10,6 @@ export async function generateMetadata(): Promise<Metadata> {
   return { title: { absolute: t("title") }, description: t("description") };
 }
 
-export default function HomePage() {
-  return (
-    <>
-      <HomeHero />
-      <OurPathTeaser />
-      <BlogTeaser />
-      <GalleryTeaser />
-    </>
-  );
+export default async function HomePage() {
+  return <SectionRenderer sections={await getHomeSections()} />;
 }

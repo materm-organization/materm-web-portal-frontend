@@ -1,0 +1,59 @@
+{
+  "success": true,
+  "data": {
+    "locale": "en",
+    "settings": {
+      "brand": {
+        "name": "MATERM",
+        "logo_alt": "MATERM logo",
+        "emblem_alt": "MATERM emblem",
+        "statement": "Forging wild paths across the untamed earth. Led by expert survivalists and certified wilderness rescue guides.",
+        "logo_media_id": 23,
+        "emblem_media_id": 24,
+        "favicon_media_id": null
+      },
+      "footer": {
+        "copyright": "© 2026 Outdoor Avenger Ltd. All Wilderness Permits Reserved."
+      },
+      "seo": {
+        "site_name": "Materm",
+        "title_template": "%s | Materm",
+        "default_description": "Materm - treehouse and camping at Phou Khao Khouay, Laos.",
+        "default_og_media_id": null
+      },
+      "site": {
+        "base_url": "https://materm.example"
+      },
+      "contact": {
+        "address": "Phou Khao Khouay National Park, Vientiane Province, Lao PDR",
+        "phone": "+856200000000",
+        "phone_display": "+856 20 0000 0000",
+        "map_url": null,
+        "email": "hello@materm.example",
+        "hours": "Every day, 08:00 – 18:00"
+      }
+    },
+    "media": {
+      "23": {
+        "url": "/images/site/materm-logo-white.svg",
+        "width": 285,
+        "height": 245,
+        "mime": "image/svg+xml",
+        "alt": "MATERM logo",
+        "blurhash": null,
+        "focal": null,
+        "variants": []
+      },
+      "24": {
+        "url": "/images/site/materm-emblem.svg",
+        "width": 78,
+        "height": 65,
+        "mime": "image/svg+xml",
+        "alt": "MATERM emblem",
+        "blurhash": null,
+        "focal": null,
+        "variants": []
+      }
+    }
+  }
+}

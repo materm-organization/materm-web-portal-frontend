@@ -1,0 +1,335 @@
+{
+  "success": true,
+  "data": {
+    "locale": "en",
+    "page": {
+      "id": 4,
+      "public_id": "0192e5a0-f793-7e41-8e94-0b01b3e3dacd",
+      "key": "gallery",
+      "template": "standard",
+      "path": "/gallery",
+      "is_home": false,
+      "resolved_locale": "en",
+      "is_fallback": false,
+      "title": "Gallery",
+      "updated_at": "2026-01-01T00:00:00Z",
+      "seo": {
+        "title": "Gallery",
+        "title_absolute": false,
+        "description": "A visual walk-through of Materm at Phou Khao Khouay: streams, ferns and light beneath the forest canopy.",
+        "og_image": {
+          "media_id": 15
+        },
+        "canonical": "https://materm.example/gallery",
+        "noindex": false
+      }
+    },
+    "sections": [
+      {
+        "id": "0192e5a0-0cc8-7df7-8a6c-0595a9d62ecd",
+        "key": "hero_article",
+        "version": 1,
+        "variant": null,
+        "anchor_id": null,
+        "is_fallback": false,
+        "props": {
+          "title": "The origin story, since 2020",
+          "meta_items": [
+            {
+              "text": "Sep. 05.2026"
+            },
+            {
+              "text": "Music Night"
+            },
+            {
+              "text": "Phou Khao Khouay · Community journal"
+            }
+          ],
+          "background": {
+            "media_id": 15,
+            "alt": "Rainforest stream flowing past ferns",
+            "decorative": false
+          },
+          "animate_in": true
+        },
+        "resolved": {}
+      },
+      {
+        "id": "0192e5a0-d144-773e-8406-b9b465ec4d8d",
+        "key": "intro_text",
+        "version": 1,
+        "variant": null,
+        "anchor_id": null,
+        "is_fallback": false,
+        "props": {
+          "text": {
+            "type": "doc",
+            "content": [
+              {
+                "type": "paragraph",
+                "content": [
+                  {
+                    "type": "text",
+                    "text": "Follow the water into a world of green. A quiet visual journey through rushing streams, textured forest floors and light beneath the canopy. Follow the water into a world of green. A quiet visual journey through rushing streams, textured forest floors and light beneath the canopy. Follow the water into a world of green. A quiet visual journey through rushing streams, textured forest floors and light beneath the canopy."
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        "resolved": {}
+      },
+      {
+        "id": "0192e5a0-aaa4-7079-8f7a-418e1fd252a3",
+        "key": "photo_story",
+        "version": 1,
+        "variant": null,
+        "anchor_id": null,
+        "is_fallback": false,
+        "props": {
+          "accessible_heading": "The forest photo story",
+          "album_id": 1,
+          "rows": [
+            {
+              "layout": "wide-narrow",
+              "slots": [
+                {
+                  "album_item_id": 1,
+                  "size": "wide"
+                },
+                {
+                  "album_item_id": 2,
+                  "size": "narrow"
+                }
+              ]
+            },
+            {
+              "layout": "staggered-3",
+              "slots": [
+                {
+                  "album_item_id": 3,
+                  "size": "short"
+                },
+                {
+                  "album_item_id": 4,
+                  "size": "tall"
+                },
+                {
+                  "album_item_id": 5,
+                  "size": "medium",
+                  "offset": true
+                }
+              ]
+            },
+            {
+              "layout": "narrow-wide",
+              "slots": [
+                {
+                  "album_item_id": 2,
+                  "size": "narrow"
+                },
+                {
+                  "album_item_id": 1,
+                  "size": "wide"
+                }
+              ]
+            },
+            {
+              "layout": "staggered-3",
+              "slots": [
+                {
+                  "album_item_id": 3,
+                  "size": "short"
+                },
+                {
+                  "album_item_id": 4,
+                  "size": "tall"
+                },
+                {
+                  "album_item_id": 5,
+                  "size": "medium",
+                  "offset": true
+                }
+              ]
+            }
+          ]
+        },
+        "resolved": {
+          "slots": {
+            "1": {
+              "media_id": 18,
+              "alt": "Looking up through tall rainforest trees to a bright patch of sky",
+              "caption_title": "Beneath the canopy",
+              "caption_description": "Layers of green, reaching towards the light."
+            },
+            "2": {
+              "media_id": 19,
+              "alt": "Close-up of a fern frond unfurling",
+              "caption_title": "A small unfolding",
+              "caption_description": "The quiet geometry of a fern."
+            },
+            "3": {
+              "media_id": 20,
+              "alt": "Clear stream running over mossy stones",
+              "caption_title": "Water over stone",
+              "caption_description": "Moss, ripples and the shapes left by the current."
+            },
+            "4": {
+              "media_id": 21,
+              "alt": "Narrow misty forest path between tall trees",
+              "caption_title": "A softer path",
+              "caption_description": "An invitation to wander a little further."
+            },
+            "5": {
+              "media_id": 22,
+              "alt": "Sunbeams filtering through the misty forest",
+              "caption_title": "When the light comes through",
+              "caption_description": "The forest changes, one sunbeam at a time."
+            }
+          }
+        }
+      },
+      {
+        "id": "0192e5a0-abe0-7e39-8ee0-d64aac4c653d",
+        "key": "gallery_cards",
+        "version": 1,
+        "variant": "showcase",
+        "anchor_id": null,
+        "is_fallback": false,
+        "props": {
+          "eyebrow": "Gallery",
+          "title": "A visual walk-through is coming",
+          "description": "What started as a small treehouse site in 2020 has grown into a place where campers, musicians, food lovers, and first-time visitors return to share the same slope of Phou Khao Khouay. Read the full story of how Materm came together.",
+          "row_label": "Forest stream photos",
+          "source": "manual",
+          "cards": [
+            {
+              "image": {
+                "media_id": 9,
+                "alt": "Rainforest stream running between ferns and trees",
+                "decorative": false
+              }
+            },
+            {
+              "image": {
+                "media_id": 9,
+                "alt": "",
+                "decorative": true
+              }
+            },
+            {
+              "image": {
+                "media_id": 9,
+                "alt": "",
+                "decorative": true
+              }
+            }
+          ]
+        },
+        "resolved": {
+          "cards": [
+            {
+              "image": {
+                "media_id": 9,
+                "alt": "Rainforest stream running between ferns and trees",
+                "decorative": false
+              },
+              "caption": null,
+              "href": null
+            },
+            {
+              "image": {
+                "media_id": 9,
+                "alt": "",
+                "decorative": true
+              },
+              "caption": null,
+              "href": null
+            },
+            {
+              "image": {
+                "media_id": 9,
+                "alt": "",
+                "decorative": true
+              },
+              "caption": null,
+              "href": null
+            }
+          ]
+        }
+      }
+    ],
+    "media": {
+      "9": {
+        "url": "/images/site/gallery-card-forest-stream.png",
+        "width": 1200,
+        "height": 896,
+        "mime": "image/jpeg",
+        "alt": "Jungle waterfall and stream surrounded by palms and tropical trees",
+        "blurhash": null,
+        "focal": null,
+        "variants": []
+      },
+      "15": {
+        "url": "/images/site/hero-forest-stream.jpg",
+        "width": 3456,
+        "height": 1902,
+        "mime": "image/jpeg",
+        "alt": "Rainforest stream flowing past ferns",
+        "blurhash": null,
+        "focal": null,
+        "variants": []
+      },
+      "18": {
+        "url": "/images/site/gallery/story-beneath-the-canopy.jpg",
+        "width": 1376,
+        "height": 768,
+        "mime": "image/jpeg",
+        "alt": "Looking up through tall rainforest trees to a bright patch of sky",
+        "blurhash": null,
+        "focal": null,
+        "variants": []
+      },
+      "19": {
+        "url": "/images/site/gallery/story-small-unfolding-fern.jpg",
+        "width": 1024,
+        "height": 1024,
+        "mime": "image/jpeg",
+        "alt": "Close-up of a fern frond unfurling",
+        "blurhash": null,
+        "focal": null,
+        "variants": []
+      },
+      "20": {
+        "url": "/images/site/gallery/story-water-over-stone.jpg",
+        "width": 1200,
+        "height": 896,
+        "mime": "image/jpeg",
+        "alt": "Clear stream running over mossy stones",
+        "blurhash": null,
+        "focal": null,
+        "variants": []
+      },
+      "21": {
+        "url": "/images/site/gallery/story-softer-path.jpg",
+        "width": 1024,
+        "height": 1024,
+        "mime": "image/jpeg",
+        "alt": "Narrow misty forest path between tall trees",
+        "blurhash": null,
+        "focal": null,
+        "variants": []
+      },
+      "22": {
+        "url": "/images/site/gallery/story-light-comes-through.jpg",
+        "width": 1152,
+        "height": 928,
+        "mime": "image/jpeg",
+        "alt": "Sunbeams filtering through the misty forest",
+        "blurhash": null,
+        "focal": null,
+        "variants": []
+      }
+    }
+  }
+}
