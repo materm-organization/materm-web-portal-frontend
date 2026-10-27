@@ -34,7 +34,7 @@ function compile(tmp) {
   mkdirSync(join(tmp, "node_modules", "server-only"), { recursive: true });
   writeFileSync(join(tmp, "node_modules", "server-only", "index.js"), "module.exports = {};\n");
   symlinkSync(join(ROOT, "node_modules", "react"), join(tmp, "node_modules", "react"), "dir");
-  const files = ["loaders", "bundle", "client", "tags", "locale", "media", "ui-strings", "config", "fallback", "result"].map((f) => join(ROOT, "src/lib/cms", `${f}.ts`));
+  const files = ["loaders", "bundle", "client", "tags", "locale", "media", "image-hosts", "ui-strings", "config", "fallback", "result"].map((f) => join(ROOT, "src/lib/cms", `${f}.ts`));
   writeFileSync(
     join(tmp, "tsconfig.json"),
     JSON.stringify({

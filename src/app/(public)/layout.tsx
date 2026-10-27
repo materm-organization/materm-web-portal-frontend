@@ -3,12 +3,16 @@ import { getTranslations } from "next-intl/server";
 
 import { SiteFooter } from "@/components/site/site-footer";
 import { SiteHeader } from "@/components/site/site-header";
+import { getSite } from "@/lib/cms/loaders";
+import { getRequestLocale } from "@/lib/cms/locale";
+import { createLayoutMetadata } from "@/lib/site-metadata";
 
-// Page titles come from each page's metadata and render as "<title> | Materm".
-export const metadata: Metadata = {
-  title: { default: "Materm", template: "%s | Materm" },
-  description: "Materm - treehouse and camping at Phou Khao Khouay, Laos.",
-};
+// Layout metadata comes from the CMS settings (P-05): `metadataBase` (site.base_url), the title template
+// (`%s | Materm`) and the default description. Page titles come from each page's `seo.title`.
+export async function generateMetadata(): Promise<Metadata> {
+  const { settings } = await getSite(await getRequestLocale());
+  return createLayoutMetadata(settings);
+}
 
 // Public marketing site shell (`/`, `/our-path`, `/blog`, `/blog/[slug]`,
 // `/gallery`). The `.site` wrapper (globals.css) scopes the site's fonts and

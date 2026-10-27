@@ -3,9 +3,18 @@ import path from "node:path";
 import type { NextConfig } from "next";
 import createNextIntlPlugin from "next-intl/plugin";
 
+import { parseMediaHosts, toRemotePatterns } from "./src/lib/cms/image-hosts";
+
 const withNextIntl = createNextIntlPlugin("./src/i18n/request.ts");
 
+// Media served by the file service (`file.path_ip`, doc/08 §3.12): `next/image` only optimises remote
+// hosts listed here, and the list is read at BUILD time (rebuild when the host changes). Bundled media are
+// relative (`/images/site/*`) and need no entry. Never use `unoptimized` for file-service images: the
+// optimizer fetches them server-side, so an `http://` host does not become mixed content on an https site.
+const mediaPatterns = toRemotePatterns(parseMediaHosts(process.env.MEDIA_BASE_URL));
+
 const nextConfig: NextConfig = {
+  images: { remotePatterns: mediaPatterns },
   // Dev only: move Next's dev indicator off the bottom-left, where it covers
   // the fixed bottom nav bar.
   devIndicators: { position: "top-right" },

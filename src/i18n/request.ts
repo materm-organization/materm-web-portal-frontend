@@ -1,9 +1,10 @@
 import { getRequestConfig } from "next-intl/server";
-import { cookies } from "next/headers";
 
+import { getUiStrings } from "@/lib/cms/loaders";
+import { getRequestLocale } from "@/lib/cms/locale";
+import { applyUiStrings } from "@/lib/cms/ui-strings";
 import {
   DEFAULT_LOCALE,
-  LOCALE_COOKIE_NAME,
   isSupportedLocale,
   type LocaleCode,
 } from "@/lib/constants/locales";
@@ -33,6 +34,12 @@ const SITE_NAMESPACES = {
 
 type SiteFile = (typeof SITE_NAMESPACES)[keyof typeof SITE_NAMESPACES];
 
+// Marker keys such as `_todoTranslate` (the `la` files are English copies) are not messages: drop every
+// top-level key that starts with "_" (doc/08 §5.3 step 2).
+function withoutMarkers(file: Messages): Messages {
+  return Object.fromEntries(Object.entries(file).filter(([key]) => !key.startsWith("_")));
+}
+
 async function loadSiteFile(file: SiteFile, locale: LocaleCode): Promise<Messages> {
   switch (file) {
     case "common":
@@ -56,10 +63,10 @@ async function loadSiteMessages(locale: LocaleCode): Promise<Messages> {
   const entries = await Promise.all(
     Object.entries(SITE_NAMESPACES).map(async ([namespace, file]) => {
       try {
-        return [namespace, await loadSiteFile(file, locale)] as const;
+        return [namespace, withoutMarkers(await loadSiteFile(file, locale))] as const;
       } catch {
         // A missing/broken per-page file must not take the whole site down.
-        return [namespace, await loadSiteFile(file, "en").catch(() => ({}))] as const;
+        return [namespace, withoutMarkers(await loadSiteFile(file, "en").catch(() => ({})))] as const;
       }
     })
   );
@@ -71,13 +78,26 @@ async function loadMessages(locale: LocaleCode): Promise<Messages> {
   return { ...base, ...(await loadSiteMessages(locale)) };
 }
 
+// CMS UI-string overrides (`cms_ui_strings`, P-03) are applied over the bundled messages (doc/08 §5.3 step 4).
+// The loader already falls back to the bundled copy when the API is down; if even that fails the
+// bundle messages are used as they are. Never throws.
+async function withUiOverrides(messages: Messages, locale: string): Promise<Messages> {
+  try {
+    const { strings } = await getUiStrings(locale, "site,blog,forms");
+    // clone first: the per-file JSON modules are shared between requests and must not be mutated
+    return applyUiStrings(structuredClone(messages) as Parameters<typeof applyUiStrings>[0], strings);
+  } catch {
+    return messages;
+  }
+}
+
 export default getRequestConfig(async () => {
-  const cookieStore = await cookies();
-  const cookieLocale = cookieStore.get(LOCALE_COOKIE_NAME)?.value;
-  const locale = isSupportedLocale(cookieLocale) ? cookieLocale : DEFAULT_LOCALE;
+  // cookie `locale` -> active locales (P-01) -> default. Only locales we ship message files for are usable.
+  const requested = await getRequestLocale();
+  const locale: LocaleCode = isSupportedLocale(requested) ? requested : DEFAULT_LOCALE;
 
   try {
-    const messages = await loadMessages(locale);
+    const messages = await withUiOverrides(await loadMessages(locale), locale);
     return { locale, messages, timeZone: "Asia/Vientiane" };
   } catch {
     // last-resort fallback if a locale file is missing/broken — hardcoded to

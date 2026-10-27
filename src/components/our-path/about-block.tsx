@@ -9,7 +9,8 @@ import "./our-path.css";
 interface AboutBlockProps {
   date: string | null;
   title: string;
-  paragraphs: readonly string[];
+  /** Paragraphs (`<RichText>` of the body: one fading `<p>` per paragraph). */
+  body: React.ReactNode;
   image: { src: string; alt: string };
   /** Width / height of the photo frame at the 1728 design (e.g. 712 / 478). */
   ratio: number;
@@ -25,7 +26,7 @@ interface AboutBlockProps {
 export function AboutBlock({
   date,
   title,
-  paragraphs,
+  body,
   image,
   ratio,
   imageSide,
@@ -70,11 +71,7 @@ export function AboutBlock({
           </Reveal>
         </div>
         <div className="flex flex-col gap-[1.6em] font-site-manrope text-base leading-[1.6] text-(--our-path-body)">
-          {paragraphs.map((paragraph, index) => (
-            <Reveal as="p" key={index} delay={revealDelay(2 + index)}>
-              {paragraph}
-            </Reveal>
-          ))}
+          {body}
         </div>
       </div>
 

@@ -86,16 +86,31 @@ The address, phone, email and opening hours in `i18n/site/contact.*.json` (`info
 
 ## Metadata
 
-Titles render as `<title> | Materm` through the template in `(public)/layout.tsx`. In each `page.tsx`:
+All metadata comes from the CMS responses (`src/lib/site-metadata.ts`, doc/08 §3.5):
 
-```ts
-import { createSiteMetadata, createTranslatedSiteMetadata } from "@/lib/site-metadata";
-export const metadata = createSiteMetadata({ title: "Gallery" });
-// or translated / dynamic:
-export const generateMetadata = () => createTranslatedSiteMetadata("gallery", "meta.title", "meta.description");
-```
+- layout (`(public)/layout.tsx` `generateMetadata`): `metadataBase` = settings `site.base_url`, title template
+  (`%s | Materm`), default description - from `getSite(locale)`.
+- CMS page (`(public)/[[...path]]/page.tsx`): `createPageMetadata(page)` = `page.seo` (title, or `{ absolute }` when
+  `title_absolute` as on Home, description, `alternates.canonical`, `openGraph.images`, `robots` when `noindex`).
+- article (`blog/[slug]`): `createPostMetadata(post)` = `post.seo` + `openGraph.type = "article"` + `publishedTime`.
+- `app/sitemap.ts` (P-16, default-locale canonical URLs) and `app/robots.ts` (env only: `SITE_ENV=production` or Netlify
+  `CONTEXT=production` allows crawling, anything else disallows everything). No hreflang.
+
+Pages no longer export their own `metadata`: edit the SEO fields in the CMS (bundle: `src/content/cms-seed/source`).
+
+## 404 / error
+
+`(public)/not-found.tsx` (`site.notFound.*`) and `(public)/error.tsx` (`site.error.*`, client) use `PageHero brand`
+and the site layout (nav, footer). An unknown CMS path or article slug calls `notFound()` (HTTP 404). Do NOT add a
+`loading.tsx` above `[[...path]]` or `blog/[slug]`: a Suspense boundary lets the shell stream before `notFound()` /
+`permanentRedirect()` runs, which turns the 404 into a 200 and the 308 into a client-side redirect.
 
 ## Images
+
+Media URLs come from the CMS (`resolveImage`, `src/lib/cms/media.ts`): relative `/images/site/*` (bundled) or absolute
+file-service URLs. Absolute hosts must be listed in the BUILD-time env `MEDIA_BASE_URL` (comma-separated URLs,
+`next.config.ts` -> `images.remotePatterns`); a media URL on another host is treated as missing instead of crashing
+`next/image`. Never `unoptimized` for file-service images. Rich text: `@/components/site/rich-text` (`RichText`).
 
 Shared (flat in `public/images/site/`): `materm-logo-white.svg`, `materm-emblem.svg`,
 `hero-forest-stream.jpg` (article/gallery hero), `gallery-card-forest-stream.png`,

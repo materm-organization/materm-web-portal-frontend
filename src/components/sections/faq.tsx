@@ -5,24 +5,18 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import { Reveal, revealDelay } from "@/components/site/motion";
+import { RichText } from "@/components/site/rich-text";
 import { SectionHeading } from "@/components/site/section-heading";
 import { cn } from "@/lib/utils";
 
 import { subId } from "./dom-id";
-import { richTextParagraphs } from "./rich-text";
 import type { FaqItemData, SectionComponentProps } from "./types";
 import "@/components/contact/contact.css";
 
 // A single-paragraph answer is bare text (as in the pre-CMS accordion); several paragraphs are
-// stacked <p>s.
+// stacked <p>s (no fade-up inside the accordion).
 function FaqAnswer({ answer }: { answer: FaqItemData["answer"] }) {
-  const paragraphs = richTextParagraphs(answer);
-  if (paragraphs.length === 1) return paragraphs[0];
-  return paragraphs.map((paragraph, i) => (
-    <p key={i} className="[&:not(:first-child)]:mt-4">
-      {paragraph}
-    </p>
-  ));
+  return <RichText doc={answer} unwrapSingle reveal={false} paragraphClassName="[&:not(:first-child)]:mt-4" />;
 }
 
 // `faq` (variants `soft` | `white`): heading left, accordion right from `lg`, mirroring the 5/12 +

@@ -1,7 +1,8 @@
 import { AboutBlock } from "@/components/our-path/about-block";
+import { revealDelay } from "@/components/site/motion";
+import { RichText } from "@/components/site/rich-text";
 import { cn } from "@/lib/utils";
 
-import { richTextParagraphs } from "./rich-text";
 import type { AboutImageRatio, SectionComponentProps } from "./types";
 import "@/components/our-path/our-path.css";
 
@@ -29,7 +30,7 @@ export function AboutBlocks({ domId, variant, footerBackdrop, items }: SectionCo
             key={index}
             date={item.dateLabel}
             title={item.title}
-            paragraphs={richTextParagraphs(item.body)}
+            body={<RichText doc={item.body} delay={(i) => revealDelay(2 + i)} />}
             image={{ src: item.image.url, alt: item.image.alt }}
             ratio={ABOUT_IMAGE_RATIO[ratioKey]}
             imageSide={item.imageSide}

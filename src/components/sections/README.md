@@ -13,8 +13,8 @@ Pages are no longer hand-assembled: a page is a list of `SectionData` handed to 
 - **Props are ALREADY RESOLVED** (`types.ts`): `x-localized` strings are plain strings for the viewer's
   locale, images are `ResolvedImage {url, alt, width, height}` (`alt: ""` = decorative), links are
   `ResolvedLink {label, href}` (`href: null` = target not published, the CTA is not rendered), rich text is a
-  single-locale doc (`RichTextDoc`, mapped to paragraphs by `rich-text.ts`; the shared `RichText`
-  renderer is T1.2.9). Props are camelCase; the API (snake_case) is converted by the adapter.
+  single-locale doc (`RichTextDoc`, rendered by the shared `RichText`; `rich-text.ts` only counts
+  paragraphs). Props are camelCase; the API (snake_case) is converted by the adapter.
 - A component also receives `SectionChrome` from the renderer: `domId`, effective `variant`,
   `footerBackdrop`, `priority`. It puts `id={domId}` on its outermost element and builds sub-ids with
   `subId(domId, "title")`. **Never hard-code a DOM id** (the same section type may repeat on a page).
@@ -24,7 +24,7 @@ Pages are no longer hand-assembled: a page is a list of `SectionData` handed to 
   `<main>`; the last section gets `footerBackdrop="soft"` when its variant is `soft` (the footer ridge
   selector in `globals.css`); adjacent sections with the same `frame` share one wrapper (`page-column` =
   Gallery's intro text + photo story); only the first section gets `priority`; an unknown key or an
-  unsupported version renders nothing and logs once (dev only); duplicate `anchor_id`s become `-2`, `-3`.
+  unsupported version renders nothing and logs once (dev only; `adaptPage` already filters them and logs in production); duplicate `anchor_id`s become `-2`, `-3`.
 - Helpers called from Server Components (`dom-id.ts`, `rich-text.ts`, `cta.ts`, `registry.ts`) must not
   live in `"use client"` files. The client pieces stay where they were: `home/blog-strip*.tsx`,
   `home/our-path-collage.tsx`, `contact/contact-form.tsx`.
@@ -48,11 +48,39 @@ Pages are no longer hand-assembled: a page is a list of `SectionData` handed to 
 | `faq` | `faq.tsx` | `soft`, `white` | single-paragraph answer = bare text |
 | `post_list` | `post-list.tsx` | - | no pagination yet (PF-5) |
 
-## Adapters (`adapters/`)
+## Adapters (`adapters.ts`, `adapt-page.ts`) - API -> props
 
-Pre-CMS data source: turn today's typed data (`src/lib/site/*`) + the page i18n namespaces into
-`SectionData[]`. `getHomeSections`, `getOurPathSections`, `getGallerySections`, `getContactSections`,
-`getBlogIndexSections(category)`. Section ids are readable fixtures (`home-hero` -> DOM id `s-home-hero`).
-The CMS data layer (T1.1.14) / API adapters (T1.2.9) replace them with the same output shape.
-Shell strings (`site.*`, `blog.index.*`, `forms.errors.*`) are NOT part of the section props: components
-read them from the i18n bundle (overridable from `cms_ui_strings`).
+One path for every `CMS_MODE` (bundle, mock, api): the page comes from `getPage` (`src/lib/cms`), `adaptPage(page,
+{ locale, category })` turns each API section into the `SectionData` the renderer draws, then `SectionRenderer`.
+
+```tsx
+const sections = await adaptPage(page, { locale, category });   // src/app/(public)/[[...path]]/page.tsx
+return <SectionRenderer sections={sections} />;
+```
+
+- `registry.ts` entry = `{ versions, variants, frame?, adapter, component }`. The adapter
+  `(section: TypedSection<K>, ctx) => props | null` is in `adapters.ts` (`ADAPTERS` is typed so that a new key does
+  not compile without one). `ctx = { locale, media, category, getPosts }`.
+- Input is the API shape: snake_case props, `media_id`s resolved through `page.media` (`resolveImage`: placement alt
+  wins, decorative = `""`, a URL on a host that is not in `MEDIA_BASE_URL` counts as missing), `resolved.*`
+  (blog posts, cards, album slots, FAQ items, form definition, categories). Output is the camelCase props of
+  `types.ts`.
+- An adapter returns `null` when the data is not enough (hero without image, `blog_strip` / `gallery_cards` with no
+  items, `teaser_collage` without exactly 3 photos, a FAQ without items...); a throw counts as `null`. `adaptPage` then
+  skips the section and logs `{event:"section_invalid", key, version, page_key}` once. An unknown `key`, an
+  unsupported `version` or `unsupported: true` is skipped with `{event:"section_unknown", ...}` (also in production,
+  doc/08 §4.5). The page still renders.
+- `post_list` is the only async adapter: it calls `getPosts(locale, { category, limit: page_size })`; an unknown
+  `?category=` falls back to all posts; no pagination yet (PF-5).
+- Shell strings (`site.*`, `blog.index.*`, `forms.errors.*`) are NOT part of the section props: components read them
+  from the i18n bundle (overridden by `cms_ui_strings` in `src/i18n/request.ts`).
+- The fixture adapters (`getHomeSections`...) and `src/lib/site/{home,our-path,blog}*` data were removed in T1.2.9;
+  `src/lib/site/gallery-data.ts` keeps only the photo-slot geometry.
+
+## Rich text
+
+`@/components/site/rich-text` (`RichText`) renders a `lite` doc (paragraph, lists, hardBreak, bold, italic, link;
+also `lead`, `heading`, `blockquote`) as a fragment: one paragraph = one `<Reveal as="p">`, stagger `delay(index)`
+(default `revealDelay`), `paragraphClassName` / `leadClassName` from the caller, `unwrapSingle` + `reveal={false}` for
+accordion answers. No `dangerouslySetInnerHTML`; link hrefs are checked (`/x`, `http(s):`, `mailto:`, `tel:` only) and go
+through the `ctaLinkProps` rel/target rules. Used by `intro_text`, `about_blocks`, `faq` and the article body.

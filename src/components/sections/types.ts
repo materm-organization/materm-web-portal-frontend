@@ -44,6 +44,7 @@ export interface ResolvedLink {
 export interface RichTextNode {
   type: string;
   text?: string;
+  attrs?: Readonly<Record<string, unknown>>;
   content?: readonly RichTextNode[];
   marks?: readonly { type: string; attrs?: Record<string, unknown> }[];
 }

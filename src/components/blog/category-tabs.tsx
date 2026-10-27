@@ -1,17 +1,13 @@
 import { useTranslations } from "next-intl";
 import Link from "next/link";
 
-import { BLOG_CATEGORIES } from "@/lib/site/blog-posts";
 import { cn } from "@/lib/utils";
 
 interface CategoryTabsProps {
   /** Highlighted category key. On the index, `undefined` + `showAll` highlights "All". */
   active?: string;
-  /**
-   * Tabs in order (`key` goes into `/blog?category=<key>`). Omitted = the static
-   * `BLOG_CATEGORIES` with their `blog.categories.*` labels (article page).
-   */
-  categories?: readonly { key: string; label: string }[];
+  /** Tabs in order (`key` goes into `/blog?category=<key>`), from the CMS categories (P-09 / `post_list`). */
+  categories: readonly { key: string; label: string }[];
   /** Adds an "All" tab (index only; the article design has exactly five tabs). */
   showAll?: boolean;
   className?: string;
@@ -34,7 +30,7 @@ export function CategoryTabs({ active, categories, showAll = false, className }:
 
   const items: { value: string; href: string; label: string }[] = [
     ...(showAll ? [{ value: ALL, href: "/blog", label: t("categories.all") }] : []),
-    ...(categories ?? BLOG_CATEGORIES.map((key) => ({ key, label: t(`categories.${key}`) }))).map(
+    ...categories.map(
       ({ key, label }) => ({
         value: key,
         href: `/blog?category=${key}`,

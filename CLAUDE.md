@@ -30,16 +30,19 @@ npm run lint
 npm run check:shadows   # fails on any shadow/ring utility in the site scope
 ```
 
-Env vars (`.env.development` / `.env.production`): only `NEXT_PUBLIC_API_BASE_URL`, reserved for the
-future backend — nothing reads it yet. No secrets belong in these files (`NEXT_PUBLIC_*` is baked
-into the client bundle).
+Env vars: `CMS_MODE` (`bundle` default | `mock` | `api`), `NEXT_PUBLIC_API_BASE_URL` / `CMS_API_BASE_URL`, `PORTAL_API_KEY`
+(secret), `CMS_FETCH_TIMEOUT_MS`, `MEDIA_BASE_URL` (BUILD time: file-service host for `next/image`), `SITE_ENV` / `CONTEXT`
+(robots). No secrets in the tracked `.env.*` files (`NEXT_PUBLIC_*` is baked into the client bundle).
 
 ## Code layout
 
 - `src/app/layout.tsx` — root layout: fonts, theme provider, next-intl provider, React Query
   provider, toaster.
 - `src/app/(public)/` — the public route group. Its `layout.tsx` renders `SiteHeader`, `<main id="main">`
-  and `SiteFooter` inside the `.site` wrapper (white canvas, site fonts). One folder per page.
+  and `SiteFooter` inside the `.site` wrapper (white canvas, site fonts). Pages are NOT one folder each any more: the
+  catch-all `[[...path]]/page.tsx` renders every CMS page (`getPage` -> `adaptPage` -> `SectionRenderer`);
+  `blog/[slug]` (article, `getPost`), `not-found.tsx` and `error.tsx` are the only other routes; `src/app/sitemap.ts`
+  and `robots.ts` come from the CMS data layer.
 - `src/components/site/` — shared site building blocks (header, footer, page hero, section heading,
   CTA link, torn edge, gallery card, nav items). **Read `src/components/site/README.md` (the
   contract: rules, components, tokens) before touching a page.**
@@ -48,8 +51,10 @@ into the client bundle).
   reloads); used by `SiteHeader`.
 - `src/components/ui/` — shadcn primitives (some are currently unused; keep them).
 - `src/components/provider/` — `theme-provider.tsx`, `query-provider.tsx`.
-- `src/lib/site/` — static page data (blog posts, gallery, home, our-path);
-  `src/lib/site-metadata.ts` — `createSiteMetadata` / `createTranslatedSiteMetadata` helpers;
+- `src/lib/cms/` — CMS data layer (loaders, bundle/mock/api modes, media, UI strings; `CMS_MODE`); `src/content/cms-seed/` — bundled
+  content; `src/components/sections/` — registry, API->props adapters, `SectionRenderer`; `src/components/site/rich-text.tsx`.
+  `src/lib/site/gallery-data.ts` — photo-slot geometry only;
+  `src/lib/site-metadata.ts` — layout / page / article metadata from the CMS responses;
   `src/lib/constants/locales.ts` — supported locales and the locale cookie name; `src/lib/utils.ts` — `cn`.
 - `src/hooks/use-mobile.ts` — used by `components/ui/sidebar.tsx`.
 - `public/images/site/` — static images, referenced via `next/image`.
