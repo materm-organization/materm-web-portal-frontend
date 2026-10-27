@@ -1,0 +1,59 @@
+{
+  "_todoTranslate": true,
+  "categoryNavLabel": "Blog categories",
+  "categories": {
+    "all": "All",
+    "music": "Music",
+    "camping": "Camping",
+    "outdoor": "Outdoor",
+    "avenger": "Avenger",
+    "hiking": "Hiking"
+  },
+  "months": [
+    "Jan",
+    "Feb",
+    "Mar",
+    "Apr",
+    "May",
+    "Jun",
+    "Jul",
+    "Aug",
+    "Sep",
+    "Oct",
+    "Nov",
+    "Dec"
+  ],
+  "dateFormat": "{month}. {day}.{year}",
+  "article": {
+    "galleryEyebrow": "Gallery"
+  },
+  "index": {
+    "metaTitle": "The Blog",
+    "metaDescription": "Stories, recaps and field notes from Materm at Phou Khao Khouay.",
+    "title": "The Blog",
+    "subtitle": "Stories and recaps from the slope of Phou Khao Khouay",
+    "listLabel": "Blog posts",
+    "empty": {
+      "title": "No posts in this category yet",
+      "description": "We have not published anything under {category} yet. Check back soon, or browse all posts.",
+      "action": "View all posts"
+    }
+  },
+  "posts": {
+    "musicNight": {
+      "title": "Music Night Under the Stars — a recap",
+      "categoryLabel": "Music Night",
+      "location": "Phou Khao Khouay · Community journal",
+      "heroAlt": "Snow-capped mountains above a forest lake under heavy clouds",
+      "intro": [
+        "On one weekend night in September, the slope of Phou Khao Khouay where Materm’s treehouses sit turned into an impromptu music stage. Three local bands took turns playing. A familiar place became a place to listen.",
+        "Music Night belongs to the same story as the treehouses: a reason to come together, with the landscape still at the centre. This recap is a reflection on that meeting of music, community and place — and on what it means to make room for something shared, outdoors."
+      ],
+      "gallery": {
+        "heading": "A visual walk-through is coming",
+        "description": "What started as a small treehouse site in 2020 has grown into a place where campers, musicians, food lovers, and first-time visitors return to share the same slope of Phou Khao Khouay. Read the full story of how Materm came together.",
+        "photoAlt": "Music Night photo {number} of {total}: a forest stream with ferns and small waterfalls"
+      }
+    }
+  }
+}

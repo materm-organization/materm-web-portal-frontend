@@ -117,6 +117,77 @@
   --sidebar-ring: oklch(0.439 0 0);
 }
 
+/* ------------------------------------------------------------------ */
+/* Public marketing site tokens (src/app/(public), src/components/site) */
+/* Additive only: every name is prefixed `site-`, so the admin look that  */
+/* uses --primary/--background/etc. is untouched. Never use raw hex in   */
+/* site components - use these utilities (bg-site-green-900, ...).       */
+/* ------------------------------------------------------------------ */
+@theme {
+  --color-site-green-900: #004b0d; /* CTA + footer field */
+  --color-site-green-800: #075525; /* Figma "Colors/Green/Red-800": social discs */
+  --color-site-green-700: #0a7f37;
+  --color-site-green-600: #2a7c13; /* section bar + eyebrow, CTA hover */
+  --color-site-green-500: #00700d; /* nav active item */
+  --color-site-nav: #032a12; /* nav bar (used at 88% via bg-site-nav/88) */
+  --color-site-nav-chip: #2a4d2e; /* active language chip */
+  --color-site-neon: #00ff2a; /* article meta row on photo */
+  --color-site-ink: #212121; /* text title */
+  --color-site-ink-strong: #142019;
+  --color-site-muted: #677068;
+  --color-site-mist: #bac3be; /* muted text on dark green */
+  --color-site-line: #dce3dc; /* dividers */
+
+  --radius-site-card: 12px; /* gallery-card */
+  --radius-site-photo: 4px; /* gallery story photos */
+
+  --ease-site-out: cubic-bezier(0, 0, 0.2, 1); /* Figma EASE_OUT */
+}
+
+@theme inline {
+  /* Noto Sans Lao = body/headings, Manrope = nav/footer copy/article body,
+     Young Serif = display ("MATERM", about-block titles). Lao glyphs fall
+     back to Noto Sans Lao when Manrope/Young Serif lack them. */
+  --font-site: var(--font-site-lao), var(--font-noto-sans-lao), ui-sans-serif, system-ui, sans-serif;
+  --font-site-manrope: var(--font-manrope), var(--font-site-lao), ui-sans-serif, system-ui, sans-serif;
+  --font-site-display: var(--font-young-serif), var(--font-site-lao), ui-serif, Georgia, serif;
+}
+
+/* Wrapper rendered by src/app/(public)/layout.tsx. Pins the site to a light
+   canvas regardless of the admin theme (next-themes). */
+.site {
+  background: #fff;
+  color: var(--color-site-ink);
+  font-family: var(--font-site);
+  min-height: 100dvh;
+  overflow-x: clip;
+}
+
+/* Footer ridge: the sky above the mountain silhouette is transparent, so it shows
+   whatever is behind it (the white `.site` canvas). When the page's LAST section
+   is the soft off-white band, paint that colour there too, otherwise a white strip
+   shows between the band and the green ridge. A page opts in with
+   `data-footer-backdrop="soft"` on its last section (direct child of <main>). */
+.site:has(main > [data-footer-backdrop="soft"]:last-child) [data-slot="footer-ridge"] {
+  background-color: #fafaf7;
+}
+
+/* Scroll reveal (src/components/site/motion/reveal.tsx). Hidden state and
+   transition only when motion is allowed; reduced motion = always visible. */
+@media (prefers-reduced-motion: no-preference) {
+  .site-reveal {
+    opacity: 0;
+    transform: translate3d(0, var(--reveal-y, 24px), 0);
+    transition:
+      opacity 0.6s var(--ease-site-out) var(--reveal-delay, 0s),
+      transform 0.6s var(--ease-site-out) var(--reveal-delay, 0s);
+  }
+  .site-reveal[data-revealed="true"] {
+    opacity: 1;
+    transform: none;
+  }
+}
+
 @layer base {
   * {
     @apply border-border outline-ring/50;

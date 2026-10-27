@@ -1,10 +1,16 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono, Noto_Sans_Lao_Looped } from "next/font/google";
+import {
+  Geist,
+  Geist_Mono,
+  Manrope,
+  Noto_Sans_Lao,
+  Noto_Sans_Lao_Looped,
+  Young_Serif,
+} from "next/font/google";
 import { NextIntlClientProvider } from "next-intl";
 import { getLocale, getMessages } from "next-intl/server";
 
 import { QueryProvider } from "@/components/provider/query-provider";
-import { ReduxProvider } from "@/components/provider/redux-provider";
 import { ThemeProvider } from "@/components/provider/theme-provider";
 import { Toaster } from "@/components/ui/sonner";
 
@@ -37,9 +43,35 @@ const notoSansLao = Noto_Sans_Lao_Looped({
   subsets: ["latin"],
 });
 
+// Public marketing site (`src/app/(public)`) fonts — exposed as CSS variables
+// and consumed through the `font-site*` Tailwind tokens declared under
+// `.site` in globals.css.
+//  - Noto Sans Lao: the site's body/heading face (design variable font).
+//  - Manrope: nav bar, footer copy, blog article standfirst + body.
+//  - Young Serif: display face for "MATERM" and the about-block titles.
+const siteLao = Noto_Sans_Lao({
+  variable: "--font-site-lao",
+  subsets: ["lao", "latin"],
+  display: "swap",
+});
+
+const siteManrope = Manrope({
+  variable: "--font-manrope",
+  subsets: ["latin"],
+  weight: ["400", "600", "700"],
+  display: "swap",
+});
+
+const siteYoungSerif = Young_Serif({
+  variable: "--font-young-serif",
+  subsets: ["latin"],
+  weight: "400",
+  display: "swap",
+});
+
 export const metadata: Metadata = {
-  title: "Materm Web Portal",
-  description: "Materm web portal frontend.",
+  title: "Materm",
+  description: "Materm - treehouse and camping at Phou Khao Khouay, Laos.",
 };
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
@@ -51,7 +83,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
     <html
       lang={locale}
       suppressHydrationWarning
-      className={`${geistSans.variable} ${geistMono.variable} ${notoSansLao.variable}`}
+      className={`${geistSans.variable} ${geistMono.variable} ${notoSansLao.variable} ${siteLao.variable} ${siteManrope.variable} ${siteYoungSerif.variable}`}
     >
       <body className={`${fontClassName} antialiased`} suppressHydrationWarning>
         <ThemeProvider
@@ -61,12 +93,10 @@ export default async function RootLayout({ children }: { children: React.ReactNo
           disableTransitionOnChange
         >
           <NextIntlClientProvider messages={messages}>
-            <ReduxProvider>
-              <QueryProvider>
-                {children}
-                <Toaster />
-              </QueryProvider>
-            </ReduxProvider>
+            <QueryProvider>
+              {children}
+              <Toaster />
+            </QueryProvider>
           </NextIntlClientProvider>
         </ThemeProvider>
       </body>

@@ -15,16 +15,15 @@ import { LOCALE_COOKIE_NAME, LOCALES, type LocaleCode } from "@/lib/constants/lo
 import { cn } from "@/lib/utils";
 
 // Switching language is a full page reload, not a client-side re-render —
-// messages are resolved server-side per-request in i18n/request.ts
-//.
-function switchLocale(code: LocaleCode) {
+// messages are resolved server-side per-request in i18n/request.ts.
+// Exported so the public site header (components/site) reuses the exact
+// same cookie mechanism.
+export function switchLocale(code: LocaleCode) {
   Cookies.set(LOCALE_COOKIE_NAME, code, { path: "/" });
   window.location.reload();
 }
 
-// Standalone entry point for a surface with no other chrome (e.g. the
-// sign-in page). The authenticated shell renders `<LanguageMenuItems />`
-// inside nav-user.tsx's already-open menu instead — never both.
+// Standalone dropdown entry point for switching language.
 export function LanguageSwitcher() {
   const locale = useLocale();
 
@@ -48,26 +47,5 @@ export function LanguageSwitcher() {
         ))}
       </DropdownMenuContent>
     </DropdownMenu>
-  );
-}
-
-// Group of items to render inside an already-open menu (e.g. nav-user.tsx's
-// account dropdown) rather than a standalone trigger.
-export function LanguageMenuItems() {
-  const locale = useLocale();
-
-  return (
-    <>
-      {LOCALES.map((l) => (
-        <DropdownMenuItem
-          key={l.code}
-          className={cn(l.code === locale && "font-medium")}
-          onSelect={() => switchLocale(l.code)}
-        >
-          <span className="mr-2">{l.flag}</span>
-          {l.name}
-        </DropdownMenuItem>
-      ))}
-    </>
   );
 }

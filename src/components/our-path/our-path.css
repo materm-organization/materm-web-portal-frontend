@@ -1,0 +1,6 @@
+/* Page-local colours for /our-path (no matching shared `site-*` token yet).
+   Consumed as `bg-(--our-path-band)` / `text-(--our-path-body)`. */
+.our-path-scope {
+  --our-path-band: #fafaf7; /* continuous off-white band behind the about blocks */
+  --our-path-body: #4e5450; /* about-block body copy */
+}

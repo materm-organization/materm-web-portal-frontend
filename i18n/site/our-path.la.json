@@ -1,0 +1,60 @@
+{
+  "_todoTranslate": true,
+  "meta": {
+    "title": "Our Path",
+    "description": "From a treehouse idea to a gathering community: the story of Materm at Phou Khao Khouay."
+  },
+  "hero": {
+    "title": "Our Path",
+    "description": "Travel is all about connecting with the raw beauty of nature. The MATERM logo draws inspiration from majestic mountain peaks, evergreen pine forests, and bold, grounded lines—symbolizing the courage to explore. We invite you to step off the beaten path and immerse yourself in the tranquility, adventure, and freedom of the great outdoors. Start your next adventure with MATERM today."
+  },
+  "intro": {
+    "eyebrow": "Our Path",
+    "title": "From a treehouse idea to a gathering community",
+    "description": "What started as a small treehouse site in 2020 has grown into a place where campers, musicians, food lovers, and first-time visitors return to share the same slope of Phou Khao Khouay. Read the full story of how Materm came together."
+  },
+  "about": {
+    "items": {
+      "kayak": {
+        "date": "12.02.2026",
+        "title": "We are the guardians of the great unknown",
+        "paragraphs": {
+          "p1": "Outdoor Avenger was founded on a simple, raw premise: modern life is too quiet. We believe that to truly find yourself, you must first get comfortably lost in nature.",
+          "p2": "Our logo and craft draw inspiration from the majestic mountain peaks, evergreen pine forests, and bold, grounded lines of the wilderness — symbolizing the courage to explore. We invite you to step off the beaten path and immerse yourself in the adventure and freedom of the deep wild."
+        },
+        "imageAlt": "Two kayakers paddling through whitewater rapids between red canyon walls"
+      },
+      "glacier": {
+        "date": "12.02.2026",
+        "title": "We are the guardians of the great unknown",
+        "paragraphs": {
+          "p1": "Outdoor Avenger was founded on a simple, raw premise: modern life is too quiet. We believe that to truly find yourself, you must first get comfortably lost in nature.",
+          "p2": "Our logo and craft draw inspiration from the majestic mountain peaks, evergreen pine forests, and bold, grounded lines of the wilderness — symbolizing the courage to explore. We invite you to step off the beaten path and immerse yourself in the adventure and freedom of the deep wild."
+        },
+        "imageAlt": "Ice climbers ascending a glacier crevasse"
+      },
+      "climber": {
+        "date": "12.02.2026",
+        "title": "We are the guardians of the great unknown",
+        "paragraphs": {
+          "p1": "Outdoor Avenger was founded on a simple, raw premise: modern life is too quiet. We believe that to truly find yourself, you must first get comfortably lost in nature.",
+          "p2": "Our logo and craft draw inspiration from the majestic mountain peaks, evergreen pine forests, and bold, grounded lines of the wilderness — symbolizing the courage to explore. We invite you to step off the beaten path and immerse yourself in the adventure and freedom of the deep wild."
+        },
+        "imageAlt": "Rock climber scaling a steep granite wall above a mountain valley"
+      }
+    }
+  },
+  "gallery": {
+    "eyebrow": "Gallery",
+    "title": "A visual walk-through is coming",
+    "description": "What started as a small treehouse site in 2020 has grown into a place where campers, musicians, food lovers, and first-time visitors return to share the same slope of Phou Khao Khouay. Read the full story of how Materm came together.",
+    "cardAlt": "Jungle stream flowing over rocks beneath tropical ferns (preview {position} of {count})",
+    "rowLabel": "Gallery highlights",
+    "cardLabel": "Open the gallery ({index} of {total})",
+    "caption": {
+      "date": "SEP. 05.2026",
+      "title": "THE ORIGIN STORY, SINCE 2020"
+    },
+    "cta": "View more"
+  }
+}

@@ -1,0 +1,50 @@
+{
+  "brand": "MATERM",
+  "skipToContent": "Skip to main content",
+  "nav": {
+    "label": "Main navigation",
+    "home": "Home",
+    "ourPath": "Our Path",
+    "blog": "The Blog",
+    "gallery": "Gallery",
+    "contact": "Contact",
+    "openMenu": "Open menu",
+    "closeMenu": "Close menu",
+    "menuTitle": "Menu",
+    "currentPage": "Menu: current page {page}"
+  },
+  "language": {
+    "label": "Language",
+    "en": "EN",
+    "la": "LAO",
+    "enName": "English",
+    "laName": "Lao"
+  },
+  "cta": {
+    "exploreExpeditions": "Explore Expeditions",
+    "viewAllPosts": "View all posts >>",
+    "viewMore": "View more"
+  },
+  "hero": {
+    "logoAlt": "MATERM logo"
+  },
+  "footer": {
+    "statement": "Forging wild paths across the untamed earth. Led by expert survivalists and certified wilderness rescue guides.",
+    "emblemAlt": "MATERM emblem",
+    "navLabel": "Footer navigation",
+    "nav": {
+      "home": "Home",
+      "ourPath": "Our Path",
+      "blog": "Blog",
+      "contact": "Contact"
+    },
+    "copyright": "© 2026 Outdoor Avenger Ltd. All Wilderness Permits Reserved.",
+    "socialLabel": "Social links",
+    "social": {
+      "instagram": "Instagram",
+      "youtube": "YouTube",
+      "facebook": "Facebook",
+      "twitter": "Twitter"
+    }
+  }
+}

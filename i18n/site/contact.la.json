@@ -1,0 +1,104 @@
+{
+  "_todoTranslate": true,
+  "meta": {
+    "title": "Contact",
+    "description": "Get in touch with Materm — stays, music nights and treks at Phou Khao Khouay."
+  },
+  "hero": {
+    "title": "Contact",
+    "description": "Questions about a stay, a music night or a trek? Send us a message and we'll help you find your path.",
+    "imageAlt": ""
+  },
+  "intro": {
+    "eyebrow": "GET IN TOUCH",
+    "title": "We'd love to hear from you",
+    "description": "Tell us about your plans — a night in a treehouse, a music evening or a trek. We read every message and reply personally."
+  },
+  "info": {
+    "visit": {
+      "label": "Visit us",
+      "value": "Phou Khao Khouay National Park, Vientiane Province, Lao PDR"
+    },
+    "call": {
+      "label": "Call us",
+      "value": "+856 20 0000 0000"
+    },
+    "email": {
+      "label": "Email us",
+      "value": "hello@materm.example"
+    },
+    "hours": {
+      "label": "Opening hours",
+      "value": "Every day, 08:00 – 18:00"
+    }
+  },
+  "form": {
+    "title": "Send a message",
+    "description": "We usually reply within two working days.",
+    "fields": {
+      "name": {
+        "label": "Full name",
+        "placeholder": "Your name"
+      },
+      "email": {
+        "label": "Email",
+        "placeholder": "you@example.com"
+      },
+      "phone": {
+        "label": "Phone (optional)",
+        "placeholder": "+856 20 0000 0000"
+      },
+      "topic": {
+        "label": "What is it about?",
+        "options": {
+          "booking": "Booking & stays",
+          "events": "Music nights & events",
+          "camping": "Camping & treks",
+          "other": "Something else"
+        }
+      },
+      "message": {
+        "label": "Message",
+        "placeholder": "Tell us how we can help…"
+      }
+    },
+    "submit": "Send message",
+    "sending": "Sending…",
+    "errors": {
+      "required": "This field is required",
+      "email": "Enter a valid email address",
+      "messageShort": "Please write at least 10 characters",
+      "phone": "Enter a valid phone number",
+      "unconfigured": "Messages can't be sent from this site yet. Please email us directly.",
+      "generic": "Something went wrong. Please try again.",
+      "summary": "Please check the highlighted fields."
+    },
+    "success": {
+      "title": "Thank you!",
+      "description": "Your message is on its way. We'll reply as soon as we can.",
+      "again": "Send another message"
+    }
+  },
+  "faq": {
+    "eyebrow": "GOOD TO KNOW",
+    "title": "Before you come",
+    "items": {
+      "getting": {
+        "question": "How do I get to Materm?",
+        "answer": "Materm is inside Phou Khao Khouay National Park in Vientiane Province. Send us a message and we'll share directions and help you plan the journey."
+      },
+      "times": {
+        "question": "What are the check-in and opening times?",
+        "answer": "We are open every day from 08:00 to 18:00. Check-in and check-out times depend on your stay, so we'll confirm them when you book."
+      },
+      "events": {
+        "question": "Do you host music nights and events?",
+        "answer": "Yes, we hold music evenings and small gatherings from time to time. Ask us about upcoming dates before you plan your visit."
+      },
+      "groups": {
+        "question": "Can you arrange for groups or special requests?",
+        "answer": "We're happy to help with groups, celebrations and special requirements. Tell us what you have in mind and we'll see how we can make it work."
+      }
+    }
+  }
+}

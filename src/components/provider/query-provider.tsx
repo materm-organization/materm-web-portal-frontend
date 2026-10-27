@@ -1,9 +1,11 @@
 "use client";
 
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { useState } from "react";
 
+// Kept for the future backend (nothing calls `useQuery` yet). No React Query
+// Devtools on purpose: its floating button covers the fixed bottom navbar on
+// mobile in development and draws a box-shadow (the site has no shadows).
 export function QueryProvider({ children }: { children: React.ReactNode }) {
   const [queryClient] = useState(
     () =>
@@ -16,13 +18,5 @@ export function QueryProvider({ children }: { children: React.ReactNode }) {
       })
   );
 
-  return (
-    <QueryClientProvider client={queryClient}>
-      {children}
-      {/* `process.env.NODE_ENV` is statically replaced at build time, so
-          Next.js dead-code-eliminates this (and the devtools import) out of
-          production bundles. */}
-      {process.env.NODE_ENV === "development" && <ReactQueryDevtools initialIsOpen={false} />}
-    </QueryClientProvider>
-  );
+  return <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>;
 }

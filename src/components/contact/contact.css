@@ -1,0 +1,5 @@
+/* Page-local colour for /contact (same value as the Our Path band; no shared
+   `site-*` token exists for it). Consumed as `bg-(--contact-band)`. */
+.contact-scope {
+  --contact-band: #fafaf7; /* soft off-white band behind the FAQ */
+}

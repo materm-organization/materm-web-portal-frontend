@@ -1,0 +1,54 @@
+{
+  "_todoTranslate": true,
+  "meta": {
+    "title": "Gallery",
+    "description": "A visual walk-through of Materm at Phou Khao Khouay: streams, ferns and light beneath the forest canopy."
+  },
+  "hero": {
+    "title": "The origin story, since 2020",
+    "imageAlt": "Rainforest stream flowing past ferns",
+    "meta": {
+      "date": "Sep. 05.2026",
+      "event": "Music Night",
+      "place": "Phou Khao Khouay · Community journal"
+    }
+  },
+  "intro": "Follow the water into a world of green. A quiet visual journey through rushing streams, textured forest floors and light beneath the canopy. Follow the water into a world of green. A quiet visual journey through rushing streams, textured forest floors and light beneath the canopy. Follow the water into a world of green. A quiet visual journey through rushing streams, textured forest floors and light beneath the canopy.",
+  "story": {
+    "heading": "The forest photo story"
+  },
+  "photos": {
+    "beneathTheCanopy": {
+      "title": "Beneath the canopy",
+      "description": "Layers of green, reaching towards the light.",
+      "alt": "Looking up through tall rainforest trees to a bright patch of sky"
+    },
+    "smallUnfolding": {
+      "title": "A small unfolding",
+      "description": "The quiet geometry of a fern.",
+      "alt": "Close-up of a fern frond unfurling"
+    },
+    "waterOverStone": {
+      "title": "Water over stone",
+      "description": "Moss, ripples and the shapes left by the current.",
+      "alt": "Clear stream running over mossy stones"
+    },
+    "softerPath": {
+      "title": "A softer path",
+      "description": "An invitation to wander a little further.",
+      "alt": "Narrow misty forest path between tall trees"
+    },
+    "lightComesThrough": {
+      "title": "When the light comes through",
+      "description": "The forest changes, one sunbeam at a time.",
+      "alt": "Sunbeams filtering through the misty forest"
+    }
+  },
+  "section": {
+    "eyebrow": "Gallery",
+    "title": "A visual walk-through is coming",
+    "description": "What started as a small treehouse site in 2020 has grown into a place where campers, musicians, food lovers, and first-time visitors return to share the same slope of Phou Khao Khouay. Read the full story of how Materm came together.",
+    "cardAlt": "Rainforest stream running between ferns and trees",
+    "cardsLabel": "Forest stream photos"
+  }
+}

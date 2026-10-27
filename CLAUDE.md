@@ -4,23 +4,21 @@ This file provides guidance to Claude Code when working on this project.
 
 ## What this is
 
-`materm-web-portal-frontend` — a Next.js 16 App Router web portal frontend. It currently contains only the shared foundation: the
-sign-in/auth flow, the `(protected)` layout shell (sidebar + header), and shared
-infrastructure. It has no business features yet — a minimal placeholder dashboard at
-`/admin` is the only protected page. Add the project's real feature modules on top.
+`materm-web-portal-frontend` — the public marketing website for **Materm** (treehouse and camping at
+Phou Khao Khouay, Laos), built with Next.js 16 App Router. It is a public site only: pages
+**Home** (`/`), **Our Path** (`/our-path`), **Blog** (`/blog`, `/blog/[slug]`) and **Gallery**
+(`/gallery`) and **Contact** (`/contact`). There is no login, no admin area, no permissions and no backend calls yet.
 
 ## Tech stack
 
 | Concern | Choice |
 |---|---|
 | Framework | Next.js 16 (App Router), TypeScript |
-| Server state | TanStack React Query |
-| Client-only state | Redux Toolkit (one small `ui` slice, currently just an example `activeWorkspaceId`) |
-| HTTP | axios (`src/lib/axios.ts` — one authenticated + one public instance, 401 -> silent refresh -> retry) |
-| Forms | react-hook-form + zod |
-| UI kit | shadcn/ui ("new-york" style) + Tailwind v4 |
+| UI kit | shadcn/ui ("new-york" style, `src/components/ui`) + Tailwind v4 |
 | i18n | next-intl, cookie-based locale (`la` default, `en`) — no `[locale]` route segment |
-| Auth | JWT in cookies (`js-cookie`), client-side `(protected)` route-group guard, no edge middleware |
+| Fonts | `next/font/google` in the root layout (Noto Sans Lao, Manrope, Young Serif, Geist) |
+| Theming | `next-themes` provider in the root layout (needed by the sonner toaster); the public site is light-only inside the `.site` wrapper |
+| Server state | TanStack React Query provider is mounted but unused (kept for the future backend) |
 
 ## Run it
 
@@ -29,49 +27,57 @@ npm install
 npm run dev     # http://localhost:3000
 npm run build
 npm run lint
+npm run check:shadows   # fails on any shadow/ring utility in the site scope
 ```
 
-Env vars: `.env.development` / `.env.production`. `NEXT_PUBLIC_API_BASE_URL` is the backend
-base URL. `.env.development` also sets `NEXT_PUBLIC_DISABLE_AUTH_GUARD=true`, a dev-only flag
-that skips the login/route-guard check (see `DEV_BYPASS_AUTH` in `src/hooks/use-auth.ts`) —
-never set it in `.env.production`. No secrets belong in these files.
+Env vars (`.env.development` / `.env.production`): only `NEXT_PUBLIC_API_BASE_URL`, reserved for the
+future backend — nothing reads it yet. No secrets belong in these files (`NEXT_PUBLIC_*` is baked
+into the client bundle).
 
-## What is in the codebase
+## Code layout
 
-- `src/app/auth/sign-in` — public sign-in page (`components/auth/signin-form.tsx`).
-- `src/app/(protected)/(routes)/layout.tsx` — the protected shell: `SidebarProvider` +
-  `AppSidebar` + `AppHeader` + `RoutePermissionGuard` around `{children}`.
-- `src/app/(protected)/(routes)/admin/page.tsx` — placeholder dashboard (post-login landing).
-- `src/components/navbar` (sidebar: `app-sidebar`, `nav-main`, `nav-user`), `src/components/layout`
-  (`app-header`, `route-permission-guard`), `src/components/auth` (sign-in form, change-password
-  dialog), `src/components/provider` (query/redux/theme providers).
-- `src/components/ui` — shadcn primitives. `src/components/global` — shared, feature-agnostic
-  building blocks (data-table, pagination, keyword/date-range/single-select/multi-select filters,
-  export-csv dialog, empty state, language/theme toggles, logo icon).
-- `src/lib` — `axios.ts`, `utils.ts`, `nav-main-items.ts` (the sidebar config AND the route
-  permission map — single source of truth), `constants/` (api endpoints, breadcrumb map,
-  cookies, locales, pagination).
-- `src/hooks/use-auth.ts` (current user, login, change password, `useHasAction`),
-  `use-mobile.ts`, `use-workspace-initializer.ts`; `src/services/auth.api.ts`;
-  `src/types/{api,user}.d.ts`; `src/redux/` (store, typed hooks, `ui` slice); `src/i18n/request.ts`
-  and `i18n/{en,la}.json`.
+- `src/app/layout.tsx` — root layout: fonts, theme provider, next-intl provider, React Query
+  provider, toaster.
+- `src/app/(public)/` — the public route group. Its `layout.tsx` renders `SiteHeader`, `<main id="main">`
+  and `SiteFooter` inside the `.site` wrapper (white canvas, site fonts). One folder per page.
+- `src/components/site/` — shared site building blocks (header, footer, page hero, section heading,
+  CTA link, torn edge, gallery card, nav items). **Read `src/components/site/README.md` (the
+  contract: rules, components, tokens) before touching a page.**
+- `src/components/{home,our-path,blog,gallery,contact}/` — page-specific components (`/contact` is code-designed, no Figma; contact details in `i18n/site/contact.*.json` `info.*.value` are placeholders to replace).
+- `src/components/global/language-switcher.tsx` — `switchLocale` (sets the `locale` cookie and
+  reloads); used by `SiteHeader`.
+- `src/components/ui/` — shadcn primitives (some are currently unused; keep them).
+- `src/components/provider/` — `theme-provider.tsx`, `query-provider.tsx`.
+- `src/lib/site/` — static page data (blog posts, gallery, home, our-path);
+  `src/lib/site-metadata.ts` — `createSiteMetadata` / `createTranslatedSiteMetadata` helpers;
+  `src/lib/constants/locales.ts` — supported locales and the locale cookie name; `src/lib/utils.ts` — `cn`.
+- `src/hooks/use-mobile.ts` — used by `components/ui/sidebar.tsx`.
+- `public/images/site/` — static images, referenced via `next/image`.
 
-## Adding a feature
+## i18n
 
-1. Add the page under `src/app/(protected)/(routes)/<route>/page.tsx`.
-2. Register it in `src/lib/nav-main-items.ts` (`NAV_MAIN_CONFIG`; use `anyPermission` to gate it —
-   the same config drives `RoutePermissionGuard`) and in `src/lib/constants/breadcrumb.ts`.
-3. Add its i18n keys (`nav.*`, `breadcrumb.*`, feature namespace) to BOTH `i18n/en.json` and
-   `i18n/la.json`.
-4. Add endpoints to `src/lib/constants/api-endpoints.ts`, a `src/services/<feature>.api.ts`,
-   types in `src/types/`, a React Query hook in `src/hooks/`, and feature components under
-   `src/components/<feature>/` (or `components/protected/<feature>/`).
-5. If a gated route is added, also add the matching permission grant to `DEV_BYPASS_USER` in
-   `src/hooks/use-auth.ts` so it shows up in dev-bypass mode.
+- Messages are cookie-driven (`locale` cookie; default `la`). `src/i18n/request.ts` loads
+  `i18n/{en,la}.json` (both currently empty `{}`) and merges the per-page files under top-level
+  namespaces:
+
+  | File | Namespace |
+  |---|---|
+  | `i18n/site/common.{en,la}.json` | `site` (nav, footer, shared CTAs) |
+  | `i18n/site/home.{en,la}.json` | `home` |
+  | `i18n/site/our-path.{en,la}.json` | `ourPath` |
+  | `i18n/site/blog.{en,la}.json` | `blog` |
+  | `i18n/site/gallery.{en,la}.json` | `gallery` |
+  | `i18n/site/contact.{en,la}.json` | `contact` |
+
+- To add a namespace: add it to `SITE_NAMESPACES` and a `case` in `loadSiteFile` in `request.ts`,
+  and create both locale files.
+- All visible copy comes from i18n (`useTranslations` / `getTranslations`); no hard-coded strings.
 
 ## Things to know
 
-- The auth model (`/login`, `/auth/me`, `/jwt/refresh`, `/auth/users/change-password`; `CurrentUser`
-  with `permissions[]`) is a placeholder. Verify the endpoint paths and payload shapes in
-  `lib/constants/api-endpoints.ts` and `types/user.d.ts` against the real backend.
-- The protected area lives under the `/admin` path. Sign-in redirects there on success.
+- Site tokens (`site-*` colours, `font-site*`, `rounded-site-*`) live in `globals.css` and are
+  scoped to the `.site` wrapper.
+- No shadows anywhere (no `shadow-*`, `drop-shadow`, `text-shadow`, `ring-*`); focus uses `outline`. Run `npm run check:shadows` (`scripts/check-no-shadows.mjs`) before finishing.
+- Do not add `/admin`, auth or sign-in code here; the project was deliberately reduced to a public
+  marketing site.
+- Next.js 16 differs from older versions — see `AGENTS.md` and `node_modules/next/dist/docs/`.
