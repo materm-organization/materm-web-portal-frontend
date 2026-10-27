@@ -7,7 +7,7 @@ This file provides guidance to Claude Code when working on this project.
 `materm-web-portal-frontend` — the public marketing website for **Materm** (treehouse and camping at
 Phou Khao Khouay, Laos), built with Next.js 16 App Router. It is a public site only: pages
 **Home** (`/`), **Our Path** (`/our-path`), **Blog** (`/blog`, `/blog/[slug]`) and **Gallery**
-(`/gallery`) and **Contact** (`/contact`). There is no login, no admin area, no permissions and no backend calls yet.
+(`/gallery`) and **Contact** (`/contact`), all served by one catch-all route from CMS data. There is no login, no admin area and no permissions. Content is read server-side by `src/lib/cms` from the bundled seed (default) or, with `CMS_MODE=api`, from `materm-web-portal-backend` (`X-Portal-Key`); the browser never calls a backend.
 
 ## Tech stack
 
@@ -18,7 +18,7 @@ Phou Khao Khouay, Laos), built with Next.js 16 App Router. It is a public site o
 | i18n | next-intl, cookie-based locale (`la` default, `en`) — no `[locale]` route segment |
 | Fonts | `next/font/google` in the root layout (Noto Sans Lao, Manrope, Young Serif, Geist) |
 | Theming | `next-themes` provider in the root layout (needed by the sonner toaster); the public site is light-only inside the `.site` wrapper |
-| Server state | TanStack React Query provider is mounted but unused (kept for the future backend) |
+| Server state | TanStack React Query provider is mounted but unused (CMS data is fetched on the server by `src/lib/cms`) |
 
 ## Run it
 
@@ -28,6 +28,8 @@ npm run dev     # http://localhost:3000
 npm run build
 npm run lint
 npm run check:shadows   # fails on any shadow/ring utility in the site scope
+npm run check:i18n      # en/la key parity of the message files
+npm run cms:check       # bundle + exports are current and valid (cms:export regenerates; cms:mock = mock API; cms:selftest)
 ```
 
 Env vars: `CMS_MODE` (`bundle` default | `mock` | `api`), `NEXT_PUBLIC_API_BASE_URL` / `CMS_API_BASE_URL`, `PORTAL_API_KEY`
@@ -46,7 +48,7 @@ Env vars: `CMS_MODE` (`bundle` default | `mock` | `api`), `NEXT_PUBLIC_API_BASE_
 - `src/components/site/` — shared site building blocks (header, footer, page hero, section heading,
   CTA link, torn edge, gallery card, nav items). **Read `src/components/site/README.md` (the
   contract: rules, components, tokens) before touching a page.**
-- `src/components/{home,our-path,blog,gallery,contact}/` — page-specific components (`/contact` is code-designed, no Figma; contact details in `i18n/site/contact.*.json` `info.*.value` are placeholders to replace).
+- `src/components/{home,our-path,blog,gallery,contact}/` — the few page-specific pieces left (the sections themselves are in `components/sections/`). `/contact` is code-designed, no Figma; its phone / email / address / hours are placeholders in `src/content/cms-seed/source/page.contact.json` (`info_items`), later the CMS; the form uses the server action `contact/actions.ts` (`CONTACT_ENDPOINT`), not the portal backend's form endpoint.
 - `src/components/global/language-switcher.tsx` — `switchLocale` (sets the `locale` cookie and
   reloads); used by `SiteHeader`.
 - `src/components/ui/` — shadcn primitives (some are currently unused; keep them).
@@ -62,21 +64,29 @@ Env vars: `CMS_MODE` (`bundle` default | `mock` | `api`), `NEXT_PUBLIC_API_BASE_
 ## i18n
 
 - Messages are cookie-driven (`locale` cookie; default `la`). `src/i18n/request.ts` loads
-  `i18n/{en,la}.json` (both currently empty `{}`) and merges the per-page files under top-level
-  namespaces:
+  `i18n/{en,la}.json` (both empty `{}`, must stay) and merges the per-namespace files, dropping top-level
+  `_`-prefixed marker keys such as `_todoTranslate`; then the CMS UI strings (P-03, `getUiStrings(locale,
+  "site,blog,forms")`, flat dotted keys through `applyUiStrings`) are laid over them, so an editor's value wins
+  and the bundled text is the fallback when the API is down:
 
-  | File | Namespace |
-  |---|---|
-  | `i18n/site/common.{en,la}.json` | `site` (nav, footer, shared CTAs) |
-  | `i18n/site/home.{en,la}.json` | `home` |
-  | `i18n/site/our-path.{en,la}.json` | `ourPath` |
-  | `i18n/site/blog.{en,la}.json` | `blog` |
-  | `i18n/site/gallery.{en,la}.json` | `gallery` |
-  | `i18n/site/contact.{en,la}.json` | `contact` |
+  | File | Namespace | Read by components? |
+  |---|---|---|
+  | `i18n/site/common.{en,la}.json` | `site` (nav, footer, shared CTAs, 404 / error, gallery shell) | yes |
+  | `i18n/site/blog.{en,la}.json` | `blog` | yes (article, category tabs, post list) |
+  | `i18n/site/forms.{en,la}.json` | `forms` (form error defaults) | yes (contact form) |
+  | `i18n/site/home.{en,la}.json` | `home` | no (page copy moved to CMS content) |
+  | `i18n/site/our-path.{en,la}.json` | `ourPath` | no |
+  | `i18n/site/gallery.{en,la}.json` | `gallery` | no (shell strings are `site.gallery.*`) |
+  | `i18n/site/contact.{en,la}.json` | `contact` | no (form labels come from the CMS form definition, info from the page) |
 
+- Page copy (headings, paragraphs, CTA labels, contact info, FAQ, form fields) is CMS content: section props in
+  `src/content/cms-seed/source/page.*.json` for the bundle, the portal API otherwise. Only `common`, `blog` and `forms` are
+  the source of the 39 UI-string keys (`npm run cms:export` writes `exports/ui-strings.json`, which seeds the admin
+  backend); run it after changing those files.
 - To add a namespace: add it to `SITE_NAMESPACES` and a `case` in `loadSiteFile` in `request.ts`,
   and create both locale files.
-- All visible copy comes from i18n (`useTranslations` / `getTranslations`); no hard-coded strings.
+- Shell copy comes from i18n (`useTranslations` / `getTranslations`); no hard-coded strings. All `la` files are English
+  copies marked `"_todoTranslate": true`.
 
 ## Things to know
 

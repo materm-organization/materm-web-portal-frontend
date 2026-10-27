@@ -14,7 +14,7 @@ from the existing tokens (see **Contact page** below).
   navigation-menu, sheet, toggle-group, aspect-ratio, carousel, accordion, dialog, skeleton, hover-card,
   scroll-area, tooltip, progress, switch, radio-group, slider...). No `npx shadcn add`, no `npm install`.
 - No inline hex colours or one-off styles: use the tokens below.
-- All visible copy comes from i18n (`useTranslations` / `getTranslations`); no hard-coded strings.
+- Shell copy (nav, footer, CTAs, 404 / error, blog and form labels) comes from i18n (`useTranslations` / `getTranslations`); page copy is CMS content (section props, see `src/components/sections/README.md`). No hard-coded strings.
 - Images via `next/image`; static assets in `public/images/site/`.
 - No shadows (box/drop/text) anywhere on the public site. Focus indicators use `outline`, not `ring`.
 
@@ -61,19 +61,19 @@ Fonts (loaded in `src/app/layout.tsx` with `next/font`, scoped by the `.site` wr
 
 ## i18n
 
-`src/i18n/request.ts` merges one file per namespace (static imports, per locale):
+`src/i18n/request.ts` merges one file per namespace (static imports, per locale), drops top-level `_`-prefixed marker keys
+(`_todoTranslate`), and then overlays the CMS UI strings (P-03, `site,blog,forms`, `applyUiStrings`) so an editor's value wins and
+the bundled text is the fallback:
 
 | File | Namespace |
 |---|---|
-| `i18n/site/common.{en,la}.json` | `site` (nav, footer, shared CTAs `site.cta.*`; owned by the foundation) |
-| `i18n/site/home.{en,la}.json` | `home` |
-| `i18n/site/our-path.{en,la}.json` | `ourPath` |
+| `i18n/site/common.{en,la}.json` | `site` (nav, footer, shared CTAs `site.cta.*`, `site.gallery.*`, `site.notFound.*`, `site.error.*`; owned by the foundation) |
 | `i18n/site/blog.{en,la}.json` | `blog` |
-| `i18n/site/gallery.{en,la}.json` | `gallery` |
-| `i18n/site/contact.{en,la}.json` | `contact` |
+| `i18n/site/forms.{en,la}.json` | `forms` (form error defaults, shared by every form) |
+| `i18n/site/home.{en,la}.json`, `our-path`, `gallery`, `contact` | `home`, `ourPath`, `gallery`, `contact`: still registered, but no component reads them any more (the page copy now comes from CMS section props) |
 
-Put your keys in your own two files. We have no Lao translations: the `la` file holds the English text
-plus a top-level `"_todoTranslate": true`; do not invent Lao. Use `useTranslations("home")` etc.
+Only `common`, `blog` and `forms` feed the 39 UI-string keys (`npm run cms:export`). We have no Lao translations: the `la` files hold the
+English text plus a top-level `"_todoTranslate": true`; do not invent Lao. Use `useTranslations("site")` etc. in shell components.
 
 ## Contact page (`/contact`)
 
@@ -82,7 +82,7 @@ Code-designed (no Figma). Files: `src/app/(public)/contact/page.tsx` (hero + sec
 `contact-info.tsx` (4 rows: green 48px icon box + label + value, `tel:`/`mailto:` links),
 `contact-form.tsx` (client form, `contact.form.*` keys; its server action is `contact/actions.ts`),
 `contact-faq.tsx` (shadcn `Accordion` on the `#fafaf7` band, `contact.css` -> `--contact-band`).
-The address, phone, email and opening hours in `i18n/site/contact.*.json` (`info.*.value`) are placeholders.
+The address, phone, email and opening hours are placeholders in the contact page content (`src/content/cms-seed/source/page.contact.json`, `info_items`; later the CMS), and the form's labels come from the CMS form definition (`contact` form, P-14) with the `forms` namespace as error defaults.
 
 ## Metadata
 
