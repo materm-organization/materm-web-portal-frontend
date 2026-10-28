@@ -30,11 +30,13 @@ npm run lint
 npm run check:shadows   # fails on any shadow/ring utility in the site scope
 npm run check:i18n      # en/la key parity of the message files
 npm run cms:check       # bundle + exports are current and valid (cms:export regenerates; cms:mock = mock API; cms:selftest)
+npm run site:selftest   # /api/revalidate logic (HMAC, replay, allow-list, limits) + header/footer/switcher data
 ```
 
 Env vars: `CMS_MODE` (`bundle` default | `mock` | `api`), `NEXT_PUBLIC_API_BASE_URL` / `CMS_API_BASE_URL`, `PORTAL_API_KEY`
 (secret), `CMS_FETCH_TIMEOUT_MS`, `MEDIA_BASE_URL` (BUILD time: file-service host for `next/image`), `SITE_ENV` / `CONTEXT`
-(robots). No secrets in the tracked `.env.*` files (`NEXT_PUBLIC_*` is baked into the client bundle).
+(robots), `REVALIDATE_SECRET` (secret, >= 32 chars; missing = `/api/revalidate` answers 503), `REVALIDATE_SECRET_PREVIOUS` (rotation),
+`REVALIDATE_MAX_SKEW_SECONDS` (default 300), `REVALIDATE_RATE_LIMIT_PER_MINUTE` (default 120); the endpoint contract is in `README.md`. No secrets in the tracked `.env.*` files (`NEXT_PUBLIC_*` is baked into the client bundle).
 
 ## Code layout
 
@@ -44,13 +46,14 @@ Env vars: `CMS_MODE` (`bundle` default | `mock` | `api`), `NEXT_PUBLIC_API_BASE_
   and `SiteFooter` inside the `.site` wrapper (white canvas, site fonts). Pages are NOT one folder each any more: the
   catch-all `[[...path]]/page.tsx` renders every CMS page (`getPage` -> `adaptPage` -> `SectionRenderer`);
   `blog/[slug]` (article, `getPost`), `not-found.tsx` and `error.tsx` are the only other routes; `src/app/sitemap.ts`
-  and `robots.ts` come from the CMS data layer.
+  and `robots.ts` come from the CMS data layer; `src/app/api/revalidate/route.ts` is the revalidation webhook.
 - `src/components/site/` — shared site building blocks (header, footer, page hero, section heading,
-  CTA link, torn edge, gallery card, nav items). **Read `src/components/site/README.md` (the
+  CTA link, torn edge, gallery card, chrome link). **Read `src/components/site/README.md` (the
   contract: rules, components, tokens) before touching a page.**
 - `src/components/{home,our-path,blog,gallery,contact}/` — the few page-specific pieces left (the sections themselves are in `components/sections/`). `/contact` is code-designed, no Figma; its phone / email / address / hours are placeholders in `src/content/cms-seed/source/page.contact.json` (`info_items`), later the CMS; the form uses the server action `contact/actions.ts` (`CONTACT_ENDPOINT`), not the portal backend's form endpoint.
-- `src/components/global/language-switcher.tsx` — `switchLocale` (sets the `locale` cookie and
-  reloads); used by `SiteHeader`.
+- `src/components/global/language-switcher.tsx` — `useSwitchLocale` (sets the `locale` cookie and soft-refreshes the route with `router.refresh()`, no reload); used by `SiteHeader`. The languages offered are the ones the API returns.
+- `src/lib/cms/site-chrome.ts` — `buildSiteChrome(getSite(locale), t)`: header nav, footer nav, social links, brand/footer settings and the language list from the P-05 bundle (items without a published target are skipped, i18n/code defaults when a menu is empty); `(public)/layout.tsx` passes the result to `SiteHeader` / `SiteFooter`.
+- `src/app/api/revalidate/route.ts` + `src/lib/revalidate/` — the HMAC-signed revalidation webhook (PF-8).
 - `src/components/ui/` — shadcn primitives (some are currently unused; keep them).
 - `src/components/provider/` — `theme-provider.tsx`, `query-provider.tsx`.
 - `src/lib/cms/` — CMS data layer (loaders, bundle/mock/api modes, media, UI strings; `CMS_MODE`); `src/content/cms-seed/` — bundled

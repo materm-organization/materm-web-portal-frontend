@@ -3,6 +3,8 @@
 import Cookies from "js-cookie";
 import { LanguagesIcon } from "lucide-react";
 import { useLocale } from "next-intl";
+import { useRouter } from "next/navigation";
+import { useCallback, useTransition } from "react";
 
 import {
   DropdownMenu,
@@ -11,21 +13,34 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
-import { LOCALE_COOKIE_NAME, LOCALES, type LocaleCode } from "@/lib/constants/locales";
+import type { ChromeLanguage } from "@/lib/cms/site-chrome";
+import { LOCALE_COOKIE_NAME } from "@/lib/constants/locales";
 import { cn } from "@/lib/utils";
 
-// Switching language is a full page reload, not a client-side re-render —
-// messages are resolved server-side per-request in i18n/request.ts.
-// Exported so the public site header (components/site) reuses the exact
-// same cookie mechanism.
-export function switchLocale(code: LocaleCode) {
-  Cookies.set(LOCALE_COOKIE_NAME, code, { path: "/" });
-  window.location.reload();
+/**
+ * Switching language sets the `locale` cookie the data layer reads (`getRequestLocale`) and refreshes the
+ * current route SOFTLY (`router.refresh()`: the server re-renders with the new cookie, no page reload, client
+ * state such as the open menu survives). Pages are dynamic because they read that cookie.
+ * The set of languages is the one the API returned (see `SiteChrome.languages`), not a list in code.
+ */
+export function useSwitchLocale() {
+  const router = useRouter();
+  const [pending, startTransition] = useTransition();
+  const switchTo = useCallback(
+    (code: string) => {
+      Cookies.set(LOCALE_COOKIE_NAME, code, { path: "/", sameSite: "lax", expires: 365 });
+      startTransition(() => router.refresh());
+    },
+    [router],
+  );
+  return { switchTo, pending };
 }
 
-// Standalone dropdown entry point for switching language.
-export function LanguageSwitcher() {
+// Standalone dropdown entry point for switching language (the public site uses the toggle in `SiteHeader`).
+export function LanguageSwitcher({ languages }: { languages: ChromeLanguage[] }) {
   const locale = useLocale();
+  const { switchTo } = useSwitchLocale();
+  if (languages.length < 2) return null;
 
   return (
     <DropdownMenu>
@@ -35,13 +50,14 @@ export function LanguageSwitcher() {
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
-        {LOCALES.map((l) => (
+        {languages.map((l) => (
           <DropdownMenuItem
             key={l.code}
             className={cn(l.code === locale && "font-medium")}
-            onSelect={() => switchLocale(l.code)}
+            onSelect={() => {
+              if (l.code !== locale) switchTo(l.code);
+            }}
           >
-            <span className="mr-2">{l.flag}</span>
             {l.name}
           </DropdownMenuItem>
         ))}

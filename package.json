@@ -16,7 +16,9 @@
     "cms:validate": "node scripts/cms/validate-seed.mjs",
     "cms:mock": "node scripts/cms/mock-api.mjs",
     "cms:selftest": "node scripts/cms/selftest.mjs",
-    "cms:sync-doc": "node scripts/cms/sync-from-doc.mjs"
+    "cms:sync-doc": "node scripts/cms/sync-from-doc.mjs",
+    "site:selftest": "node scripts/site/selftest.mjs",
+    "revalidate:demo": "node scripts/cms/revalidate-demo.mjs"
   },
   "dependencies": {
     "@tanstack/react-query": "^5.103.2",

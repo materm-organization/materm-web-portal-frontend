@@ -10,6 +10,7 @@ import {
 import { NextIntlClientProvider } from "next-intl";
 import { getLocale, getMessages } from "next-intl/server";
 
+import { toBcp47 } from "@/lib/constants/locales";
 import { QueryProvider } from "@/components/provider/query-provider";
 import { ThemeProvider } from "@/components/provider/theme-provider";
 import { Toaster } from "@/components/ui/sonner";
@@ -81,7 +82,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
 
   return (
     <html
-      lang={locale}
+      lang={toBcp47(locale)}
       suppressHydrationWarning
       className={`${geistSans.variable} ${geistMono.variable} ${notoSansLao.variable} ${siteLao.variable} ${siteManrope.variable} ${siteYoungSerif.variable}`}
     >

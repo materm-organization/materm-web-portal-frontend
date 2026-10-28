@@ -5,6 +5,7 @@ import { SiteFooter } from "@/components/site/site-footer";
 import { SiteHeader } from "@/components/site/site-header";
 import { getSite } from "@/lib/cms/loaders";
 import { getRequestLocale } from "@/lib/cms/locale";
+import { buildSiteChrome } from "@/lib/cms/site-chrome";
 import { createLayoutMetadata } from "@/lib/site-metadata";
 
 // Layout metadata comes from the CMS settings (P-05): `metadataBase` (site.base_url), the title template
@@ -19,6 +20,9 @@ export async function generateMetadata(): Promise<Metadata> {
 // light canvas, so nothing here leaks into the admin look.
 export default async function PublicLayout({ children }: { children: React.ReactNode }) {
   const t = await getTranslations("site");
+  // Header, footer and language switcher are driven by the P-05 site bundle (menus main/footer/social,
+  // settings brand/footer, active locales); `getSite` is cached per render and never throws (API down -> bundle).
+  const chrome = buildSiteChrome(await getSite(await getRequestLocale()), (key) => t(key));
 
   return (
     <div className="site flex flex-col">
@@ -32,11 +36,11 @@ export default async function PublicLayout({ children }: { children: React.React
       <noscript>
         <style>{".site-reveal{opacity:1 !important;transform:none !important;transition:none !important}"}</style>
       </noscript>
-      <SiteHeader />
+      <SiteHeader chrome={chrome} />
       <main id="main" className="flex-1">
         {children}
       </main>
-      <SiteFooter />
+      <SiteFooter chrome={chrome} />
       {/* The nav bar is fixed to the bottom of the viewport; this spacer extends the footer's
           green below its last row so the bar never covers the copyright/social row, while
           the green still reaches the page's bottom edge. Keep the colour in sync with

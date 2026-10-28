@@ -3,11 +3,10 @@
 import { ChevronUpIcon, XIcon } from "lucide-react";
 import { useLocale, useTranslations } from "next-intl";
 import Image from "next/image";
-import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
 
-import { SITE_NAV_ITEMS, isActiveSiteRoute } from "@/components/site/nav-items";
+import { ChromeAnchor } from "@/components/site/chrome-link";
 import { TORN_EDGE_PATHS } from "@/components/site/torn-edge-paths";
 import {
   Sheet,
@@ -18,14 +17,9 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet";
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
-import { switchLocale } from "@/components/global/language-switcher";
-import { isSupportedLocale } from "@/lib/constants/locales";
+import { useSwitchLocale } from "@/components/global/language-switcher";
+import { isActiveLink, type ChromeLanguage, type SiteChrome } from "@/lib/cms/site-chrome";
 import { cn } from "@/lib/utils";
-
-const LANGUAGE_OPTIONS = [
-  { code: "en", labelKey: "language.en" },
-  { code: "la", labelKey: "language.la" },
-] as const;
 
 // Site navigation bar, fixed at the BOTTOM of the viewport ("Mountain edge" design).
 //
@@ -36,6 +30,9 @@ const LANGUAGE_OPTIONS = [
 // shows through the notches like a ridge line. The bottom Sheet repeats the
 // silhouette along its top edge, so the menu feels like the footer rising.
 const SILHOUETTE = TORN_EDGE_PATHS.short;
+
+// The brand link of the md+ bar always goes to the home page (it is visually hidden until focused).
+const HOME_LINK = { href: "/", label: "", ariaLabel: null, match: "exact", external: false, newTab: false, rel: undefined, icon: null } as const;
 
 // Decorative ridge strip. Drawn at the footer's own scale (the footer maps the
 // 1728-wide artwork to the viewport width), i.e. height = 85/1728 * width,
@@ -61,15 +58,17 @@ function MountainSilhouette({ className }: { className?: string }) {
 function LanguageToggle({
   locale,
   label,
+  languages,
+  onSwitch,
   itemClassName,
   className,
-  t,
 }: {
   locale: string;
   label: string;
+  languages: ChromeLanguage[];
+  onSwitch: (code: string) => void;
   itemClassName: string;
   className?: string;
-  t: (key: string) => string;
 }) {
   return (
     <ToggleGroup
@@ -80,10 +79,10 @@ function LanguageToggle({
       className={cn("rounded-none", className)}
       onValueChange={(value) => {
         // Radix emits "" when the active item is clicked again — ignore.
-        if (isSupportedLocale(value) && value !== locale) switchLocale(value);
+        if (value && value !== locale && languages.some((l) => l.code === value)) onSwitch(value);
       }}
     >
-      {LANGUAGE_OPTIONS.map((option) => (
+      {languages.map((option) => (
         <ToggleGroupItem
           key={option.code}
           value={option.code}
@@ -93,21 +92,27 @@ function LanguageToggle({
             itemClassName
           )}
         >
-          {t(option.labelKey)}
+          {option.label}
         </ToggleGroupItem>
       ))}
     </ToggleGroup>
   );
 }
 
-export function SiteHeader() {
+// `chrome` = menus, brand and languages from the CMS site bundle (P-05), built on the server by
+// `buildSiteChrome` (menu items without a published target are already gone, the languages are the ones
+// the API returned).
+export function SiteHeader({ chrome }: { chrome: Pick<SiteChrome, "nav" | "languages" | "brand"> }) {
   const t = useTranslations("site");
   const pathname = usePathname();
   const locale = useLocale();
   const [menuOpen, setMenuOpen] = useState(false);
-  const currentItem = SITE_NAV_ITEMS.find((item) => isActiveSiteRoute(pathname, item.href));
+  const { switchTo } = useSwitchLocale();
+  const { nav, languages, brand } = chrome;
+  const currentItem = nav.find((item) => isActiveLink(pathname, item));
   // Unknown routes (404) fall back to the generic "Menu" label.
-  const currentLabel = currentItem ? t(currentItem.labelKey) : t("nav.menuTitle");
+  const currentLabel = currentItem ? currentItem.label : t("nav.menuTitle");
+  const showLanguages = languages.length > 1;
 
   return (
     <header className="pointer-events-none fixed inset-x-0 bottom-0 z-50 flex justify-center md:px-4 md:pb-[calc(1.5rem+env(safe-area-inset-bottom))]">
@@ -137,12 +142,15 @@ export function SiteHeader() {
             </SheetTrigger>
 
             <div className="flex shrink-0 items-center gap-2">
-              <LanguageToggle
-                locale={locale}
-                label={t("language.label")}
-                t={t}
-                itemClassName="relative h-9 min-w-9 px-2 before:absolute before:inset-x-0 before:-inset-y-1"
-              />
+              {showLanguages && (
+                <LanguageToggle
+                  locale={locale}
+                  label={t("language.label")}
+                  languages={languages}
+                  onSwitch={switchTo}
+                  itemClassName="relative h-9 min-w-9 px-2 before:absolute before:inset-x-0 before:-inset-y-1"
+                />
+              )}
               <SheetTrigger
                 className="flex h-11 items-center gap-1.5 border border-white/30 px-2.5 font-site-manrope text-xs font-bold tracking-[0.16em] uppercase transition-colors hover:bg-white/10 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
                 aria-label={t("nav.openMenu")}
@@ -174,16 +182,16 @@ export function SiteHeader() {
 
               <nav aria-label={t("nav.label")} className="min-h-0 flex-1 overflow-y-auto">
                 <ul className="flex flex-col divide-y divide-white/15 border-t border-white/15">
-                  {SITE_NAV_ITEMS.map((item, index) => {
-                    const active = isActiveSiteRoute(pathname, item.href);
+                  {nav.map((item, index) => {
+                    const active = isActiveLink(pathname, item);
                     return (
                       <li
-                        key={item.href}
+                        key={`${item.href}-${index}`}
                         className="motion-safe:animate-in motion-safe:duration-300 motion-safe:fill-mode-backwards motion-safe:fade-in-0 motion-safe:slide-in-from-bottom-2"
                         style={{ animationDelay: `${120 + index * 40}ms` }}
                       >
-                        <Link
-                          href={item.href}
+                        <ChromeAnchor
+                          link={item}
                           aria-current={active ? "page" : undefined}
                           onClick={() => setMenuOpen(false)}
                           className={cn(
@@ -198,8 +206,8 @@ export function SiteHeader() {
                               <span className="block h-px w-3.5 bg-site-mist" />
                             )}
                           </span>
-                          {t(item.labelKey)}
-                        </Link>
+                          {item.label}
+                        </ChromeAnchor>
                       </li>
                     );
                   })}
@@ -207,12 +215,17 @@ export function SiteHeader() {
               </nav>
 
               <div className="flex shrink-0 items-center justify-between gap-4 border-t border-white/15 px-6 pt-3 pb-[calc(0.75rem+env(safe-area-inset-bottom))]">
-                <LanguageToggle
-                  locale={locale}
-                  label={t("language.label")}
-                  t={t}
-                  itemClassName="h-11 min-w-12 px-3"
-                />
+                {showLanguages ? (
+                  <LanguageToggle
+                    locale={locale}
+                    label={t("language.label")}
+                    languages={languages}
+                    onSwitch={switchTo}
+                    itemClassName="h-11 min-w-12 px-3"
+                  />
+                ) : (
+                  <span />
+                )}
                 <Image
                   src="/images/site/materm-emblem.svg"
                   alt=""
@@ -226,22 +239,22 @@ export function SiteHeader() {
         </Sheet>
 
         {/* ---- md+ : the Figma bar, identical to site-header.tsx ---- */}
-        <Link
-          href="/"
+        <ChromeAnchor
+          link={HOME_LINK}
           className="hidden font-site-display text-lg leading-none md:block md:sr-only md:focus-visible:not-sr-only focus-visible:outline-2 focus-visible:outline-offset-[-2px] focus-visible:outline-white/70"
           aria-label={t("nav.home")}
         >
-          {t("brand")}
-        </Link>
+          {brand.name}
+        </ChromeAnchor>
 
         <nav aria-label={t("nav.label")} className="hidden md:block">
           <ul className="flex items-center gap-3 font-site-manrope text-sm">
-            {SITE_NAV_ITEMS.map((item) => {
-              const active = isActiveSiteRoute(pathname, item.href);
+            {nav.map((item, index) => {
+              const active = isActiveLink(pathname, item);
               return (
-                <li key={item.href}>
-                  <Link
-                    href={item.href}
+                <li key={`${item.href}-${index}`}>
+                  <ChromeAnchor
+                    link={item}
                     aria-current={active ? "page" : undefined}
                     className={cn(
                       "block px-4 py-2.5 transition-colors focus-visible:outline-2 focus-visible:outline-offset-[-2px] focus-visible:outline-white/70",
@@ -250,8 +263,8 @@ export function SiteHeader() {
                         : "rounded-full font-semibold hover:bg-white/10"
                     )}
                   >
-                    {t(item.labelKey)}
-                  </Link>
+                    {item.label}
+                  </ChromeAnchor>
                 </li>
               );
             })}
@@ -259,29 +272,31 @@ export function SiteHeader() {
         </nav>
 
         <div className="hidden shrink-0 items-center gap-2 md:flex">
-          <ToggleGroup
-            type="single"
-            spacing={2}
-            value={locale}
-            aria-label={t("language.label")}
-            onValueChange={(value) => {
-              // Radix emits "" when the active item is clicked again — ignore.
-              if (isSupportedLocale(value) && value !== locale) switchLocale(value);
-            }}
-          >
-            {LANGUAGE_OPTIONS.map((option) => (
-              <ToggleGroupItem
-                key={option.code}
-                value={option.code}
-                className={cn(
-                  "h-auto min-w-0 rounded-full px-2.5 py-1.5 font-site-manrope text-xs text-site-mist hover:bg-white/10 hover:text-white",
-                  "data-[state=on]:bg-site-nav-chip data-[state=on]:font-bold data-[state=on]:text-white"
-                )}
-              >
-                {t(option.labelKey)}
-              </ToggleGroupItem>
-            ))}
-          </ToggleGroup>
+          {showLanguages && (
+            <ToggleGroup
+              type="single"
+              spacing={2}
+              value={locale}
+              aria-label={t("language.label")}
+              onValueChange={(value) => {
+                // Radix emits "" when the active item is clicked again — ignore.
+                if (value && value !== locale && languages.some((l) => l.code === value)) switchTo(value);
+              }}
+            >
+              {languages.map((option) => (
+                <ToggleGroupItem
+                  key={option.code}
+                  value={option.code}
+                  className={cn(
+                    "h-auto min-w-0 rounded-full px-2.5 py-1.5 font-site-manrope text-xs text-site-mist hover:bg-white/10 hover:text-white",
+                    "data-[state=on]:bg-site-nav-chip data-[state=on]:font-bold data-[state=on]:text-white"
+                  )}
+                >
+                  {option.label}
+                </ToggleGroupItem>
+              ))}
+            </ToggleGroup>
+          )}
         </div>
       </div>
     </header>
