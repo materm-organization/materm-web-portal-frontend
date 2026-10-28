@@ -3,7 +3,11 @@ import "server-only";
 //  - GET: cache "force-cache" + next { revalidate, tags }; locale goes in the QUERY (no Accept-Language)
 //  - NO X-Request-Id on cached requests (Next uses headers in the cache key); only on POST
 //  - X-Portal-Key from PORTAL_API_KEY (server-only env, never NEXT_PUBLIC)
-//  - timeout via AbortSignal.timeout (CMS_FETCH_TIMEOUT_MS, default 2000)
+//  - timeout via AbortSignal.timeout (CMS_FETCH_TIMEOUT_MS, default 2000) for the WHOLE call, retry included
+//  - a GET that fails FAST (connection refused/reset, 502/503/504) is retried ONCE after RETRY_PAUSE_MS inside that
+//    budget (a restarting backend, one overloaded answer); a timeout is never retried (the budget is spent) and
+//    nothing is remembered between calls: the next request starts from scratch, a 503 never sticks. Next's data
+//    cache stores only 200 answers, so a failed answer is not cached either.
 import { getApiConfig, getCmsMode } from "./config";
 import { interpret, type CmsResult } from "./result";
 
@@ -24,6 +28,10 @@ export interface CmsFetchOptions {
   /** extra request headers (preview: `X-Preview-Token`). Use together with `noStore`: a header is part of Next's cache key. */
   headers?: Record<string, string>;
 }
+
+/** pause before the single retry of a fast failure (ms) */
+export const RETRY_PAUSE_MS = 100;
+const RETRY_STATUS = new Set([502, 503, 504]);
 
 type NextInit = RequestInit & { next?: { revalidate?: number; tags?: string[] } };
 
@@ -64,13 +72,24 @@ export async function cmsFetch<T>(path: string, opts: CmsFetchOptions): Promise<
     }
   }
 
-  let res: Response;
-  try {
-    res = await fetch(buildUrl(cfg.baseUrl, path, opts.locale, opts.query), init);
-  } catch (err) {
-    const name = (err as { name?: string } | null)?.name;
-    return { kind: "error", ok: false, status: name === "TimeoutError" || name === "AbortError" ? "timeout" : "network", down: true, source };
+  const canRetry = method === "GET";
+  let res: Response | undefined;
+  for (let attempt = 0; attempt < 2; attempt++) {
+    try {
+      res = await fetch(buildUrl(cfg.baseUrl, path, opts.locale, opts.query), init);
+    } catch (err) {
+      const name = (err as { name?: string } | null)?.name;
+      if (name === "TimeoutError" || name === "AbortError") return { kind: "error", ok: false, status: "timeout", down: true, source };
+      if (attempt === 0 && canRetry && (await pauseWithin(init.signal))) continue;
+      return { kind: "error", ok: false, status: "network", down: true, source };
+    }
+    if (attempt === 0 && canRetry && RETRY_STATUS.has(res.status)) {
+      await res.body?.cancel().catch(() => undefined);
+      if (await pauseWithin(init.signal)) continue;
+    }
+    break;
   }
+  if (!res) return { kind: "error", ok: false, status: "network", down: true, source };
 
   let body: unknown = null;
   try {
@@ -79,4 +98,11 @@ export async function cmsFetch<T>(path: string, opts: CmsFetchOptions): Promise<
     body = null; // 3xx with only a Location header, or a non-JSON error page
   }
   return interpret<T>(res.status, body, res.headers.get("location"), source);
+}
+
+/** sleeps RETRY_PAUSE_MS; false when the call's budget would not survive the pause (no retry then) */
+async function pauseWithin(signal: AbortSignal | null | undefined): Promise<boolean> {
+  if (signal?.aborted) return false;
+  await new Promise((r) => setTimeout(r, RETRY_PAUSE_MS));
+  return !signal?.aborted;
 }

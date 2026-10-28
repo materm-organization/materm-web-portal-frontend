@@ -9,7 +9,8 @@ import { TornEdge } from "@/components/site/torn-edge";
 import { cn } from "@/lib/utils";
 
 interface PageHeroProps {
-  image: ImageProps["src"];
+  /** `null`/missing = no photo: the hero keeps its solid `bg-site-green-900` and still shows title and text (only a draft in preview gets here). */
+  image?: ImageProps["src"] | null;
   imageAlt: string;
   title: string;
   /** `brand` only: paragraph under the title. */
@@ -35,6 +36,8 @@ interface PageHeroProps {
   priority?: boolean;
   /** `brand` only: show the white logo above the title (default true). */
   showLogo?: boolean;
+  /** Preview only: a small non-blocking note for the editor (see `PreviewHint`), drawn in the top-left corner. */
+  hint?: React.ReactNode;
   /** DOM id of the hero `<section>` (section anchor). */
   id?: string;
   className?: string;
@@ -62,6 +65,7 @@ export function PageHero({
   animateIn = false,
   priority = true,
   showLogo = true,
+  hint,
   id,
   className,
 }: PageHeroProps) {
@@ -72,7 +76,7 @@ export function PageHero({
   const Root: React.ElementType = animated ? HeroMotionRoot : "section";
   const Content: React.ElementType = animated ? HeroContent : "div";
 
-  const photo = (
+  const photo = image ? (
     <Image
       src={image}
       alt={imageAlt}
@@ -81,7 +85,7 @@ export function PageHero({
       sizes="100vw"
       className={cn("object-cover", !animated && "-z-20")}
     />
-  );
+  ) : null;
 
   return (
     <Root
@@ -94,7 +98,7 @@ export function PageHero({
         className,
       )}
     >
-      {animated ? <HeroBackdrop>{photo}</HeroBackdrop> : photo}
+      {photo ? (animated ? <HeroBackdrop>{photo}</HeroBackdrop> : photo) : null}
       <div
         aria-hidden="true"
         className={cn(
@@ -188,6 +192,8 @@ export function PageHero({
           ) : null}
         </Content>
       )}
+
+      {hint}
 
       <TornEdge
         position="bottom"

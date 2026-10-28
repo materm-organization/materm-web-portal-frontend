@@ -22,5 +22,10 @@
     "unavailableTitle": "Preview is unavailable",
     "unavailableDescription": "The preview could not be loaded right now. Try the link again later.",
     "action": "Back to the home page"
-  }
+  },
+  "hints": {
+    "no_background_image": "No background image yet",
+    "placeholder": "This section cannot be shown yet. Missing: {fields}"
+  },
+  "placeholderTitle": "Section not shown yet"
 }

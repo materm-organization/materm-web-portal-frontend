@@ -14,6 +14,8 @@
 //   mock-preview-valid-token-0123456789abcdef       /our-path   snapshot (hero title changed), no warnings
 //   mock-preview-home-token-0123456789abcdefgh      /           snapshot of the home page
 //   mock-preview-warnings-token-0123456789abcdef    /contact    contact_section + faq with `resolved: {}` and 3 warnings
+//   mock-preview-draft-token-0123456789abcdefgh     /our-path   DRAFT: hero without background image, about_blocks without items,
+//                                                               gallery_cards without cards (B5: incomplete sections in preview)
 //   mock-preview-expired-token-0123456789abcdef     401 INVALID_TOKEN   (same body as unknown / revoked / path mismatch)
 //   mock-preview-ratelimit-token-0123456789abcd     429 RATE_LIMITED + Retry-After
 //   mock-preview-broken-token-0123456789abcdefg     500
@@ -42,6 +44,7 @@ export const PREVIEW_TOKENS = {
   valid: "mock-preview-valid-token-0123456789abcdef",
   home: "mock-preview-home-token-0123456789abcdefgh",
   warnings: "mock-preview-warnings-token-0123456789abcdef",
+  draft: "mock-preview-draft-token-0123456789abcdefgh",
   expired: "mock-preview-expired-token-0123456789abcdef",
   rateLimited: "mock-preview-ratelimit-token-0123456789abcd",
   broken: "mock-preview-broken-token-0123456789abcdefg",
@@ -125,6 +128,17 @@ export function createMockApi(dataDir = DATA_DIR) {
       mutate: (data) => {
         const hero = data.sections.find((x) => x.key === "hero_brand");
         if (hero) hero.props.title = `${hero.props.title} - DRAFT HOME`;
+      },
+      warnings: [],
+    },
+    [PREVIEW_TOKENS.draft]: {
+      path: "/our-path",
+      mutate: (data) => {
+        for (const x of data.sections) {
+          if (x.key === "hero_brand") x.props.background = null; // publish would refuse this
+          if (x.key === "about_blocks") x.props.items = [];
+          if (x.key === "gallery_cards") x.resolved = {};
+        }
       },
       warnings: [],
     },

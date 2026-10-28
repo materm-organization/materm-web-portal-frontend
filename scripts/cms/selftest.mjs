@@ -10,6 +10,7 @@ import assert from "node:assert/strict";
 import { execFileSync } from "node:child_process";
 import { cpSync, mkdirSync, mkdtempSync, realpathSync, rmSync, symlinkSync, writeFileSync } from "node:fs";
 import { createRequire } from "node:module";
+import { createServer as createHttpServer } from "node:http";
 import { createServer } from "node:net";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
@@ -491,6 +492,104 @@ export async function main() {
       try {
         const L = mm.loaders;
         await Promise.all([L.getLocales(), L.getSite("en"), L.getSettings("en"), L.getUiStrings("en"), L.getMenu("main", "en"), L.getPage("/", "en"), L.getPosts("en"), L.getPost("x", "en"), L.getCategories("en"), L.getTags("en"), L.getAlbums("en"), L.getAlbum("forest-photo-story", "en"), L.getFaq("contact", "en"), L.getForm("contact", "en"), L.getSitemap(), L.getRobots()]);
+      } finally { w.restore(); }
+    });
+
+    // ============================================================ 5b. a failure is never sticky (B1)
+    console.log("\n[5b] one fast retry, no sticky 'api_down' state, bounded fallback bookkeeping");
+    const flaky = () => {
+      const inner = createMockServer({ key: "k" });
+      const ctl = { mode: "ok", count: 0, delayMs: 0 };
+      const server = createHttpServer((rq, rs) => {
+        ctl.count++;
+        if (ctl.mode === "503") { rs.writeHead(503, { "Content-Type": "application/json" }); return rs.end(JSON.stringify({ success: false, code: "SERVICE_UNAVAILABLE" })); }
+        if (ctl.mode === "slow") return setTimeout(() => inner.emit("request", rq, rs), ctl.delayMs);
+        if (ctl.mode === "once-503") { ctl.mode = "ok"; rs.writeHead(503, { "Content-Type": "application/json" }); return rs.end(JSON.stringify({ success: false })); }
+        if (ctl.mode === "once-reset") { ctl.mode = "ok"; return rq.socket.destroy(); }
+        return inner.emit("request", rq, rs);
+      });
+      return { server, ctl };
+    };
+    const withFlaky = async (env, fn) => {
+      const { server, ctl } = flaky();
+      const fp = await listen(server);
+      setEnv({ CMS_MODE: "api", PORTAL_API_KEY: "k", NEXT_PUBLIC_API_BASE_URL: `http://127.0.0.1:${fp}/api/v1`, ...env });
+      const mm = freshModules(out);
+      const w = captureWarn();
+      try { await fn({ mm, ctl, w }); } finally { w.restore(); server.closeAllConnections?.(); await close(server); }
+    };
+    await test("a 503 once is retried inside the same call: API data, no fallback", async () => {
+      await withFlaky({}, async ({ mm, ctl, w }) => {
+        ctl.mode = "once-503";
+        assert.equal((await mm.loaders.getSite("en")).locale, "en");
+        assert.equal(ctl.count, 2, "one failed + one retried request");
+        assert.equal(events(w.lines).length, 0, "no fallback was used");
+      });
+    });
+    await test("a connection reset once is retried the same way", async () => {
+      await withFlaky({}, async ({ mm, ctl, w }) => {
+        ctl.mode = "once-reset";
+        assert.equal((await mm.loaders.getSite("en")).locale, "en");
+        assert.equal(ctl.count, 2);
+        assert.equal(events(w.lines).length, 0);
+      });
+    });
+    await test("503 for good: exactly ONE retry (2 requests per call), then the bundle; the next call asks the API again", async () => {
+      await withFlaky({}, async ({ mm, ctl, w }) => {
+        ctl.mode = "503";
+        await mm.loaders.getSite("en");
+        assert.equal(ctl.count, 2, "bounded: 2 requests, not a loop");
+        assert.deepEqual(events(w.lines).map((e) => e.reason), ["api_down:503"]);
+        ctl.mode = "ok"; ctl.count = 0; // the backend recovers: nothing may stay marked as down
+        const before = events(w.lines).length;
+        assert.equal((await mm.loaders.getSite("la")).locale, "la");
+        assert.equal(ctl.count, 1, "the API is asked again at once");
+        assert.equal(events(w.lines).length, before, "healthy answer: no fallback");
+      });
+    });
+    await test("slow once: timeout -> bundle for that call only, NOT retried; the next call is served by the API", async () => {
+      await withFlaky({ CMS_FETCH_TIMEOUT_MS: "150" }, async ({ mm, ctl, w }) => {
+        ctl.mode = "slow"; ctl.delayMs = 600;
+        await mm.loaders.getSite("en");
+        assert.equal(ctl.count, 1, "a timeout spends the budget: no retry");
+        assert.deepEqual(events(w.lines).map((e) => e.reason), ["api_down:timeout"]);
+        ctl.mode = "ok"; ctl.count = 0;
+        const before = events(w.lines).length;
+        assert.equal((await mm.loaders.getSite("la")).locale, "la");
+        assert.equal(ctl.count, 1);
+        assert.equal(events(w.lines).length, before);
+      });
+    });
+    await test("401 and a healthy 404 are not retried", async () => {
+      await withFlaky({ PORTAL_API_KEY: "wrong" }, async ({ mm, ctl }) => {
+        await mm.loaders.getSite("en");
+        assert.equal(ctl.count, 1);
+      });
+      await withFlaky({}, async ({ mm, ctl }) => {
+        assert.equal(await mm.loaders.getPage("/no-such-page", "en"), null);
+        assert.equal(ctl.count, 1);
+      });
+    });
+    await test("fallback log: once per minute per (resource, reason), a later outage is visible again", async () => {
+      const fb = freshModules(out).fallback;
+      const w = captureWarn();
+      try {
+        fb.logFallback("site", "en", "api_down:503", 1_000_000);
+        fb.logFallback("site", "la", "api_down:503", 1_000_000 + 59_000);
+        assert.equal(events(w.lines).length, 1, "throttled inside the minute");
+        fb.logFallback("site", "en", "api_down:503", 1_000_000 + 61_000);
+        assert.equal(events(w.lines).length, 2, "logged again after the minute");
+        assert.equal(fb.getFallbackCounts()["site|api_down:503"], 3, "every use is counted");
+      } finally { w.restore(); }
+    });
+    await test("fallback bookkeeping is bounded (visitor-chosen page paths)", async () => {
+      const fb = freshModules(out).fallback;
+      const w = captureWarn();
+      try {
+        for (let i = 0; i < 5000; i++) fb.logFallback(`page:/p${i}`, "en", "api_down:timeout", 5_000_000);
+        assert.ok(Object.keys(fb.getFallbackCounts()).length <= 201, `${Object.keys(fb.getFallbackCounts()).length} count keys`);
+        assert.ok(events(w.lines).length <= 201, `${events(w.lines).length} log lines`);
+        assert.equal(Object.values(fb.getFallbackCounts()).reduce((a, b) => a + b, 0), 5000, "nothing is lost from the totals");
       } finally { w.restore(); }
     });
 

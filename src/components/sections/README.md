@@ -65,7 +65,12 @@ return <SectionRenderer sections={sections} />;
   wins, decorative = `""`, a URL on a host that is not in `MEDIA_BASE_URL` counts as missing), `resolved.*`
   (blog posts, cards, album slots, FAQ items, form definition, categories). Output is the camelCase props of
   `types.ts`.
-- An adapter returns `null` when the data is not enough (hero without image, `blog_strip` / `gallery_cards` with no
+- Draft pages (preview): `adaptPage(page, { locale, category, preview: true })` also reaches the adapters as `ctx.preview`. The heroes
+  (`hero_brand`, `hero_article`) no longer need an image: without one `background` is `null`, the title/text are drawn on the neutral
+  `bg-site-green-900` and, in preview only, `previewHint: "no_background_image"` shows the editor note. Any other section whose adapter
+  returns `null` becomes a `PreviewPlaceholder` (`key: "preview_placeholder"`, props `{ sectionKey, missing }`, see `preview-missing.ts`)
+  instead of being skipped; for a visitor nothing changes.
+- An adapter returns `null` when the data is not enough (hero without a title, `blog_strip` / `gallery_cards` with no
   items, `teaser_collage` without exactly 3 photos, a FAQ without items...); a throw counts as `null`. `adaptPage` then
   skips the section and logs `{event:"section_invalid", key, version, page_key}` once. An unknown `key`, an
   unsupported `version` or `unsupported: true` is skipped with `{event:"section_unknown", ...}` (also in production,

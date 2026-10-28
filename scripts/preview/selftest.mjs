@@ -39,6 +39,7 @@ function compile(tmp) {
   const files = [
     "lib/preview/session", "lib/preview/resolve", "lib/preview/warnings", "lib/preview/handlers", "lib/preview/metadata", "lib/preview/messages",
     "lib/cms/preview", "lib/cms/client", "lib/cms/config", "lib/cms/result", "lib/cms/locale",
+    "components/sections/adapters", "components/sections/preview-missing", // B5: draft sections (adapters import `@/lib/cms/media`)
   ].map((f) => join(ROOT, "src", `${f}.ts`));
   writeFileSync(
     join(tmp, "tsconfig.json"),
@@ -46,6 +47,7 @@ function compile(tmp) {
       compilerOptions: {
         target: "ES2022", lib: ["es2023", "dom"], module: "commonjs", moduleResolution: "node10", esModuleInterop: true,
         resolveJsonModule: true, strict: true, skipLibCheck: true, incremental: false, outDir: out, rootDir: join(ROOT, "src"),
+        baseUrl: join(ROOT, "src"), paths: { "@/*": ["*"] },
         types: ["node"], typeRoots: [join(ROOT, "node_modules", "@types")],
       },
       files,
@@ -87,6 +89,14 @@ try {
   const M = req("./lib/preview/metadata.js");
   const P = req("./lib/cms/preview.js");
   const T = req("./lib/preview/messages.js");
+  // the compiled adapters import `@/lib/cms/media`: map the alias to the compiled tree
+  const Module = createRequire(import.meta.url)("node:module");
+  const resolveFilename = Module._resolveFilename;
+  Module._resolveFilename = function (request, ...rest) {
+    return resolveFilename.call(this, request.startsWith("@/") ? join(out, request.slice(2)) : request, ...rest);
+  };
+  const A = req("./components/sections/adapters.js");
+  const MISS = req("./components/sections/preview-missing.js");
 
   const pageData = (over = {}) => ({
     locale: "en",
@@ -433,6 +443,11 @@ try {
       o = await P.resolvePreview(PREVIEW_TOKENS.home, { path: "/", locale: "la" });
       assert.equal(o.kind, "ok");
 
+      o = await P.resolvePreview(PREVIEW_TOKENS.draft, { path: "/our-path", locale: "en" }); // B5 fixture: an incomplete draft
+      assert.equal(o.kind, "ok");
+      assert.equal(o.data.page.sections.find((s) => s.key === "hero_brand").props.background, null);
+      assert.deepEqual(o.data.page.sections.find((s) => s.key === "about_blocks").props.items, []);
+
       for (const t of [PREVIEW_TOKENS.expired, "mock-preview-never-issued-token-0123456789abc"]) {
         assert.equal((await P.resolvePreview(t, { path: "/our-path", locale: "en" })).kind, "invalid", t);
       }
@@ -470,6 +485,63 @@ try {
     assert.equal(await P.readPreviewSession(), null);
     setEnv({});
     assert.equal(await P.readPreviewSession(), null);
+  });
+
+  // ---------------------------------------------------------------- B5: draft sections in preview
+  const MEDIA = {
+    7: { id: 7, url: "/images/site/hero.jpg", alt: "a hero", width: 100, height: 50 },
+    8: { id: 8, url: "https://not-allowed.example.test/hero.jpg", alt: "", width: 100, height: 50 }, // host not in MEDIA_BASE_URL
+  };
+  const heroSection = (props) => ({ id: "h", key: "hero_brand", version: 1, props: { title: "Draft title", ...props }, resolved: undefined });
+  await test("hero_brand without a background image: title and text stay, background null, hint only in preview", () => {
+    const visitor = A.ADAPTERS.hero_brand(heroSection({ description: "Sub", background: undefined }), { locale: "en", media: MEDIA, category: null });
+    assert.equal(visitor.title, "Draft title");
+    assert.equal(visitor.description, "Sub");
+    assert.equal(visitor.background, null);
+    assert.ok(!("previewHint" in visitor), "a visitor never sees the hint");
+    const editor = A.ADAPTERS.hero_brand(heroSection({}), { locale: "en", media: MEDIA, category: null, preview: true });
+    assert.equal(editor.previewHint, "no_background_image");
+    const withImage = A.ADAPTERS.hero_brand(heroSection({ background: { media_id: 7 } }), { locale: "en", media: MEDIA, category: null, preview: true });
+    assert.equal(withImage.background.url, "/images/site/hero.jpg");
+    assert.ok(!("previewHint" in withImage), "no hint when the image is there");
+  });
+
+  await test("hero_brand / hero_article: an unknown media id or an image on a disallowed host is 'no image', the title stays; no title = nothing to draw", () => {
+    const ctx = { locale: "en", media: MEDIA, category: null, preview: true };
+    assert.equal(A.ADAPTERS.hero_brand(heroSection({ background: { media_id: 999 } }), ctx).background, null);
+    const offHost = A.ADAPTERS.hero_brand(heroSection({ background: { media_id: 8 } }), { ...ctx, preview: false });
+    assert.equal(offHost.background, null, "next/image would throw on that host: treated as missing");
+    assert.equal(offHost.title, "Draft title");
+    const art = A.ADAPTERS.hero_article({ id: "a", key: "hero_article", version: 1, props: { title: "Article", meta_items: [{ text: "x" }, null, { text: "" }] }, resolved: undefined }, ctx);
+    assert.deepEqual([art.title, art.metaItems, art.background, art.previewHint], ["Article", ["x"], null, "no_background_image"]);
+    assert.equal(A.ADAPTERS.hero_brand(heroSection({ title: "" }), ctx), null);
+    assert.equal(A.ADAPTERS.hero_article({ id: "a", key: "hero_article", version: 1, props: {}, resolved: undefined }, ctx), null);
+  });
+
+  await test("no adapter throws on a bare draft section (empty props, null resolved): null or props, never an exception", async () => {
+    const ctx = { locale: "en", media: {}, category: null, preview: true, getPosts: async () => ({ items: [], meta: { total: 0, page: 1, limit: 12, total_page: 1 }, media: {} }) };
+    for (const key of Object.keys(A.ADAPTERS)) {
+      for (const sec of [{ props: {}, resolved: undefined }, { props: {}, resolved: {} }, { props: {}, resolved: null }]) {
+        const out = await A.ADAPTERS[key]({ id: "x", key, version: 1, ...sec }, ctx);
+        assert.ok(out === null || typeof out === "object", `${key} -> ${typeof out}`);
+      }
+    }
+  });
+
+  await test("describeMissing names the field that keeps a draft section from rendering (the placeholder text)", () => {
+    const ctx = { media: MEDIA };
+    const d = (key, props = {}, resolved) => MISS.describeMissing(key, { props, resolved }, ctx);
+    assert.deepEqual(d("hero_brand", {}), ["title"]);
+    assert.deepEqual(d("intro_heading", { title: "" }), ["title"]);
+    assert.deepEqual(d("intro_text", { text: "no doc" }), ["text"]);
+    assert.deepEqual(d("teaser_collage", { title: "T", images: [{ media_id: 7 }, { media_id: 7 }] }), ["images (3 usable photos)"]);
+    assert.deepEqual(d("blog_strip", {}, {}), ["posts (none published or with an image)"]);
+    assert.deepEqual(d("gallery_cards", {}, {}), ["cards (none with an image)"]);
+    assert.deepEqual(d("about_blocks", { items: [] }), ["items (image, title and body)"]);
+    assert.deepEqual(d("faq", {}, {}), ["faq_group_key (no published questions)"]);
+    assert.deepEqual(d("photo_story", { rows: [] }), ["rows"]);
+    assert.deepEqual(d("contact_section", {}), ["content"], "unknown cause: generic");
+    assert.deepEqual(d("no_such_type", null), ["content"]);
   });
 
   await test("static guards: token never in NEXT_PUBLIC_*, never a component prop, never logged", () => {

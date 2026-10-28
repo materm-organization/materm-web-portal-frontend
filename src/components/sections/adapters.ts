@@ -51,6 +51,8 @@ export interface AdaptContext {
   media: MediaMap;
   /** `?category=` of the request (only `post_list` reads it) */
   category: string | null;
+  /** true = the page comes from the preview endpoint (a DRAFT: publish-required props may be missing) */
+  preview?: boolean;
   /** P-07, injected by `adaptPage` so this file stays free of server-only modules */
   getPosts: (query: PostQuery) => Promise<PostsPage>;
 }
@@ -88,28 +90,34 @@ export function toDoc(v: unknown): RichTextDoc | null {
 
 // ---------------------------------------------------------------- adapters
 
-const heroBrand: SectionAdapter<"hero_brand"> = (s, { media }) => {
+// A hero without a usable background image still draws its title on a neutral background (the site tokens): publish
+// requires the image, so a visitor never sees this; a draft in preview does, with a hint for the editor. (An image on
+// a host that `next/image` may not load, MEDIA_BASE_URL, now also leaves the title readable instead of dropping
+// the whole hero.) Without a title there is nothing to show: null.
+const heroBrand: SectionAdapter<"hero_brand"> = (s, { media, preview }) => {
   const background = toImage(media, s.props.background);
   const title = strOrNull(s.props.title);
-  if (!background || !title) return null;
+  if (!title) return null;
   return {
     title,
     description: strOrNull(s.props.description),
     cta: toLink(s.props.cta),
     background,
+    ...(preview && !background ? { previewHint: "no_background_image" as const } : {}),
     showLogo: s.props.show_logo ?? true,
     animateIn: s.props.animate_in ?? true,
   };
 };
 
-const heroArticle: SectionAdapter<"hero_article"> = (s, { media }) => {
+const heroArticle: SectionAdapter<"hero_article"> = (s, { media, preview }) => {
   const background = toImage(media, s.props.background);
   const title = strOrNull(s.props.title);
-  if (!background || !title) return null;
+  if (!title) return null;
   return {
     title,
     metaItems: arr(s.props.meta_items).map((m) => strOrNull(m?.text)).filter((t): t is string => t !== null),
     background,
+    ...(preview && !background ? { previewHint: "no_background_image" as const } : {}),
     animateIn: s.props.animate_in ?? true,
   };
 };

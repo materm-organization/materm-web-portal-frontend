@@ -1,6 +1,8 @@
 import { CtaLink } from "@/components/site/cta-link";
 import { PageHero } from "@/components/site/page-hero";
 
+import { PreviewHint } from "@/components/site/preview-hint";
+
 import { ctaLinkProps } from "./cta";
 import type { SectionComponentProps } from "./types";
 
@@ -15,6 +17,7 @@ export function HeroBrand({
   description,
   cta,
   background,
+  previewHint,
   showLogo = true,
   animateIn = true,
 }: SectionComponentProps<"hero_brand">) {
@@ -25,14 +28,15 @@ export function HeroBrand({
       id={domId}
       variant="brand"
       titleSpacing={variant === "wide" ? "wide" : "normal"}
-      image={background.url}
-      imageAlt={background.alt}
+      image={background?.url ?? null}
+      imageAlt={background?.alt ?? ""}
       title={title}
       description={description ?? undefined}
       className="[&_h1]:whitespace-pre-line"
       showLogo={showLogo}
       animateIn={animateIn}
       priority={priority}
+      hint={previewHint ? <PreviewHint code={previewHint} /> : undefined}
     >
       {link ? (
         <CtaLink href={link.href} target={link.target} rel={link.rel} className="sm:w-[294px]">

@@ -55,11 +55,17 @@ export interface RichTextDoc {
 
 // ---------------------------------------------------------------- per-section props
 
+/** Hints only a PREVIEW page carries (editor-only copy, `i18n/site/preview.*.json` `hints.*`). */
+export type PreviewHintCode = "no_background_image";
+
 export interface HeroBrandProps {
   title: string;
   description: string | null;
   cta: ResolvedLink | null;
-  background: ResolvedImage;
+  /** `null` = no usable image (a draft in preview; publish requires one): the hero shows a neutral background. */
+  background: ResolvedImage | null;
+  /** Set by the adapter in preview mode only, when something is missing that publish would require. */
+  previewHint?: PreviewHintCode;
   /** Default true. */
   showLogo?: boolean;
   /** Default true. Only switches the load-in + parallax on/off. */
@@ -70,7 +76,9 @@ export interface HeroArticleProps {
   title: string;
   /** `meta_items[].text`. */
   metaItems: readonly string[];
-  background: ResolvedImage;
+  /** `null` = no usable image (a draft in preview): neutral background. */
+  background: ResolvedImage | null;
+  previewHint?: PreviewHintCode;
   animateIn?: boolean;
 }
 
@@ -289,8 +297,19 @@ export interface SectionChrome {
 
 export type SectionComponentProps<K extends SectionKey> = SectionPropsMap[K] & SectionChrome;
 
+/** Preview only: stands where an adapter found too little data (a draft), so the editor sees WHAT is incomplete. */
+export const PREVIEW_PLACEHOLDER_KEY = "preview_placeholder" as const;
+export interface PreviewPlaceholderData {
+  id: string;
+  key: typeof PREVIEW_PLACEHOLDER_KEY;
+  version: number;
+  variant: null;
+  anchorId: string | null;
+  props: { sectionKey: string; missing: readonly string[] };
+}
+
 /** One section of a page as the renderer receives it (adapter / API output). */
-export type SectionData = {
+export type SectionData = PreviewPlaceholderData | {
   [K in SectionKey]: {
     /** `cms_page_sections.public_id` (any stable unique string for fixtures). */
     id: string;

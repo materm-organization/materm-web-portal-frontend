@@ -31,7 +31,7 @@ npm run check:shadows   # fails on any shadow/ring utility in the site scope
 npm run check:i18n      # en/la key parity of the message files
 npm run cms:check       # bundle + exports are current and valid (cms:export regenerates; cms:mock = mock API; cms:selftest)
 npm run site:selftest   # /api/revalidate logic (HMAC, replay, allow-list, limits) + header/footer/switcher data
-npm run preview:selftest # preview flow (PF-10): token/path validation, cookie, sliding refresh, handlers, resolve answer, mock API
+npm run preview:selftest # preview flow (PF-10) + draft sections (B5): token/path validation, cookie, sliding refresh, handlers, resolve answer, mock API, adapters on drafts
 ```
 
 Env vars: `CMS_MODE` (`bundle` default | `mock` | `api`), `NEXT_PUBLIC_API_BASE_URL` / `CMS_API_BASE_URL`, `PORTAL_API_KEY`
@@ -65,6 +65,16 @@ Env vars: `CMS_MODE` (`bundle` default | `mock` | `api`), `NEXT_PUBLIC_API_BASE_
 - `src/hooks/use-mobile.ts` — used by `components/ui/sidebar.tsx`.
 - `public/images/site/` — static images, referenced via `next/image`.
 
+## API outages (B1)
+
+`src/lib/cms/client.ts`: one budget per call (`CMS_FETCH_TIMEOUT_MS`, 2000); a GET that fails FAST (connection refused/reset, 502/503/504) is retried
+ONCE after 100 ms inside that budget, a timeout is never retried. `loaders.ts` falls back to the bundle only for `CmsError.down` (5xx, 401/403/408/429,
+timeout, network, bad body, unconfigured) and keeps NO state between calls: the next request asks the API again, so one 503 or one slow answer never
+sticks (Next's data cache stores only 200 answers, `patch-fetch.js`). `fallback.ts` logs each (resource, reason) once per minute (it used to be once per
+process, which hid a second outage) and caps its maps at 200 keys (page paths are visitor-chosen). Not covered: a route that Next prerenders statically
+(`sitemap.xml`) keeps whatever it rendered, bundle fallback included, until its revalidate; backend side: a Redis outage no longer makes the portal
+backend slower than this timeout (portal-backend `pkg/redisguard`). Tests: `npm run cms:selftest` section `[5b]`.
+
 ## Preview (PF-10)
 
 Editor preview of unpublished PAGES (T1.4.6; posts are M5). Full description in `README.md` ("Preview"). Short version:
@@ -85,7 +95,14 @@ Editor preview of unpublished PAGES (T1.4.6; posts are M5). Full description in 
   (an `invisible` twin reserves its height), solid colours, no token prop. Editor copy: `i18n/site/preview.*.json` via
   `src/lib/preview/messages.ts` (not a next-intl namespace); the shared `site.preview.banner|exit|expired` keys are existing UI strings.
   `/preview-status` is a reserved path.
-- Tests: `npm run preview:selftest` (24) + `scripts/cms/mock-api.mjs` fixture tokens (`PREVIEW_TOKENS`). Never log or echo a token.
+- Drafts (B5): a preview page is a DRAFT, so publish-required props can be missing. `adaptPage(..., { preview: true })` (only `page.tsx`
+  passes it for a preview page) makes the heroes draw their title/text on a neutral `bg-site-green-900` when there is no usable background image,
+  with the editor hint "No background image yet" (`PreviewHint`, `i18n/site/preview.*.json` `hints.*`), and replaces any other section whose adapter
+  returned null by a `PreviewPlaceholder` that names the section type and the missing fields (`preview-missing.ts` mirrors each adapter's
+  `return null` conditions). Visitors never get the hint or a placeholder: their render is byte-identical to before (checked on a production build, 14 pages)
+  except that a hero whose image host is not in `MEDIA_BASE_URL` now keeps its title on the neutral background instead of vanishing. Fixture token
+  `mock-preview-draft-token-0123456789abcdefgh` (`/our-path`: hero without image, `about_blocks` without items, `gallery_cards` without cards).
+- Tests: `npm run preview:selftest` (28) + `scripts/cms/mock-api.mjs` fixture tokens (`PREVIEW_TOKENS`). Never log or echo a token.
 
 ## i18n
 

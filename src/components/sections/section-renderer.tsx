@@ -1,8 +1,9 @@
 import { Fragment, type ComponentType, type ReactNode } from "react";
 
 import { pageDomIds } from "./dom-id";
+import { PreviewPlaceholder } from "./preview-placeholder";
 import { FRAMES, getSectionEntry, type FrameName } from "./registry";
-import type { SectionChrome, SectionData } from "./types";
+import { PREVIEW_PLACEHOLDER_KEY, type SectionChrome, type SectionData } from "./types";
 
 // Renders the sections of a page in order (doc/08 section 4.3):
 //  1. every section (or frame wrapper) is a DIRECT child of <main>: the footer ridge selector in
@@ -37,7 +38,8 @@ export function SectionRenderer({ sections }: { sections: readonly SectionData[]
   );
 
   // Resolve registry entries first so "last" and "first" refer to what is actually rendered.
-  const visible = sections.flatMap((section, index) => {
+  const visible = sections.flatMap((section, index): { section: SectionData; entry: NonNullable<ReturnType<typeof getSectionEntry>> | null; domId: string }[] => {
+    if (section.key === PREVIEW_PLACEHOLDER_KEY) return [{ section, entry: null, domId: domIds[index] }];
     const entry = getSectionEntry(section.key);
     if (!entry) {
       warnOnce(`unknown section key "${section.key}" skipped`);
@@ -51,6 +53,10 @@ export function SectionRenderer({ sections }: { sections: readonly SectionData[]
   });
 
   const items: Item[] = visible.map(({ section, entry, domId }, index) => {
+    if (entry === null || section.key === PREVIEW_PLACEHOLDER_KEY) {
+      // preview only (adaptPage never makes one for a visitor)
+      return { key: section.id, node: <PreviewPlaceholder domId={domId} {...(section.props as { sectionKey: string; missing: readonly string[] })} /> };
+    }
     const variant = section.variant ?? entry.variants[0] ?? null;
     if (variant !== null && entry.variants.length > 0 && !entry.variants.includes(variant)) {
       warnOnce(`section "${section.key}" has unknown variant "${variant}"`);

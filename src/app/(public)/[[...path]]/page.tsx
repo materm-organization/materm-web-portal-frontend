@@ -81,6 +81,7 @@ export default async function CmsPage({ params, searchParams }: CatchAllProps) {
   const sections = await adaptPage(loaded.page, {
     locale: loaded.locale,
     category: Array.isArray(category) ? (category[0] ?? null) : (category ?? null),
+    preview: loaded.preview !== null, // a draft: incomplete sections get a placeholder + hint instead of vanishing
   });
   // visitors without a preview session get exactly the tree they always had (no wrapper, same React ids)
   if (!loaded.preview && !loaded.elsewhereOf) return <SectionRenderer sections={sections} />;
