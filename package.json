@@ -18,6 +18,7 @@
     "cms:selftest": "node scripts/cms/selftest.mjs",
     "cms:sync-doc": "node scripts/cms/sync-from-doc.mjs",
     "site:selftest": "node scripts/site/selftest.mjs",
+    "preview:selftest": "node scripts/preview/selftest.mjs",
     "revalidate:demo": "node scripts/cms/revalidate-demo.mjs"
   },
   "dependencies": {

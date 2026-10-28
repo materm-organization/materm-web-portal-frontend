@@ -7,6 +7,18 @@
 // Env (all optional):  MOCK_PORTAL_KEY  require this X-Portal-Key (401 otherwise)
 //                      MOCK_DELAY_MS    delay every response (timeout tests)
 //                      MOCK_FAIL_STATUS answer every API call with this status (e.g. 503)
+//                      MOCK_LOG         1 = print one line per request (method, status, path, query keys; never header values)
+//
+// Preview (P-19, PF-10): GET /api/v1/preview/resolve?locale=&path= with header X-Preview-Token, answered from the
+// bundled pages. Fixture tokens (PREVIEW_TOKENS below; any other well-formed token = unknown = 401 INVALID_TOKEN):
+//   mock-preview-valid-token-0123456789abcdef       /our-path   snapshot (hero title changed), no warnings
+//   mock-preview-home-token-0123456789abcdefgh      /           snapshot of the home page
+//   mock-preview-warnings-token-0123456789abcdef    /contact    contact_section + faq with `resolved: {}` and 3 warnings
+//   mock-preview-expired-token-0123456789abcdef     401 INVALID_TOKEN   (same body as unknown / revoked / path mismatch)
+//   mock-preview-ratelimit-token-0123456789abcd     429 RATE_LIMITED + Retry-After
+//   mock-preview-broken-token-0123456789abcdefg     500
+//   missing header, length outside 32-256 or characters outside [A-Za-z0-9._~-]   422 VALIDATION_FAILED
+// Replies carry Cache-Control: no-store, X-Robots-Tag: noindex, nofollow, noarchive and Vary: X-Preview-Token.
 // Same routes/status codes as src/lib/cms/bundle.ts; scripts/cms/selftest.mjs asserts both agree.
 import { createServer } from "node:http";
 import { existsSync, readFileSync } from "node:fs";
@@ -24,6 +36,26 @@ const notFound = () => ({ status: 404, body: { success: false, message: "not fou
 const invalid = (field) => ({
   status: 422,
   body: { success: false, message: "validation failed", code: "VALIDATION_FAILED", errors: [{ in: "query", path: `/${field}` }] },
+});
+
+export const PREVIEW_TOKENS = {
+  valid: "mock-preview-valid-token-0123456789abcdef",
+  home: "mock-preview-home-token-0123456789abcdefgh",
+  warnings: "mock-preview-warnings-token-0123456789abcdef",
+  expired: "mock-preview-expired-token-0123456789abcdef",
+  rateLimited: "mock-preview-ratelimit-token-0123456789abcd",
+  broken: "mock-preview-broken-token-0123456789abcdefg",
+};
+const PREVIEW_TOKEN_RE = /^[A-Za-z0-9._~-]{32,256}$/;
+const PREVIEW_HEADERS = {
+  "Cache-Control": "no-store",
+  "X-Robots-Tag": "noindex, nofollow, noarchive",
+  Vary: "X-Preview-Token",
+};
+const invalidToken = () => ({
+  status: 401,
+  headers: PREVIEW_HEADERS,
+  body: { success: false, message: "preview link expired or invalid", code: "INVALID_TOKEN" },
 });
 
 export function createMockApi(dataDir = DATA_DIR) {
@@ -76,9 +108,81 @@ export function createMockApi(dataDir = DATA_DIR) {
     return { status: 308, location, body: { success: true, data: { redirect: { location, status: 308 } } } };
   }
 
-  function handle(pathname, q) {
+  // fixture token -> { path, mutate(page snapshot), warnings }
+  const previewFixtures = {
+    [PREVIEW_TOKENS.valid]: {
+      path: "/our-path",
+      mutate: (data) => {
+        const hero = data.sections.find((x) => x.key === "hero_brand");
+        if (hero) hero.props.title = `${hero.props.title} - DRAFT SNAPSHOT`;
+        data.page.title = `${data.page.title} (draft)`;
+        data.page.seo.title = data.page.title;
+      },
+      warnings: [],
+    },
+    [PREVIEW_TOKENS.home]: {
+      path: "/",
+      mutate: (data) => {
+        const hero = data.sections.find((x) => x.key === "hero_brand");
+        if (hero) hero.props.title = `${hero.props.title} - DRAFT HOME`;
+      },
+      warnings: [],
+    },
+    [PREVIEW_TOKENS.warnings]: {
+      path: "/contact",
+      mutate: (data) => {
+        data.sections.forEach((x) => {
+          if (x.key === "contact_section" || x.key === "faq") x.resolved = {};
+        });
+      },
+      warnings: (data) => [
+        { code: "reference_not_published", path: `/sections/${data.sections.findIndex((x) => x.key === "contact_section")}/props/form_slug`, message: "form is not published" },
+        { code: "reference_not_published", path: `/sections/${data.sections.findIndex((x) => x.key === "faq")}/props/faq_group_key`, message: "faq group is not published" },
+        { code: "link_page_not_published", path: "/sections/0/props/cta/page_id", message: "linked page is not published" },
+        { code: "brand_new_code_from_the_future", path: "", message: "n/a" },
+      ],
+    },
+  };
+
+  /** P-19. `headers` are the lower-cased request headers. */
+  function previewResolve(q, headers) {
+    const token = headers["x-preview-token"];
+    const bad = (field, where) => ({
+      status: 422,
+      headers: PREVIEW_HEADERS,
+      body: { success: false, message: "validation failed", code: "VALIDATION_FAILED", errors: [{ in: where, path: `/${field}` }] },
+    });
+    if (typeof token !== "string" || !PREVIEW_TOKEN_RE.test(token)) return bad("X-Preview-Token", "header");
+    const wanted = q.path;
+    if (wanted !== undefined && (wanted.length > 200 || !PAGE_PATH_RE.test(wanted))) return bad("path", "query");
+    if (token === PREVIEW_TOKENS.rateLimited) {
+      return { status: 429, headers: { ...PREVIEW_HEADERS, "Retry-After": "30" }, body: { success: false, message: "too many requests", code: "RATE_LIMITED" } };
+    }
+    if (token === PREVIEW_TOKENS.broken) return { status: 500, headers: PREVIEW_HEADERS, body: { success: false, message: "internal error", code: "INTERNAL_ERROR" } };
+    const fx = own(previewFixtures, token);
+    if (!fx) return invalidToken(); // unknown, expired, revoked: one answer
+    if (wanted !== undefined && wanted !== fx.path) return invalidToken(); // path mismatch: the same answer
+    const loc = localeOf(q.locale);
+    const key = own(manifest.pages, fx.path);
+    const env = key ? file(`${loc}/pages/${key}.json`) : null;
+    if (!env) return invalidToken();
+    const data = structuredClone(env.data);
+    fx.mutate(data);
+    const warnings = typeof fx.warnings === "function" ? fx.warnings(data) : fx.warnings;
+    return {
+      status: 200,
+      headers: PREVIEW_HEADERS,
+      body: {
+        success: true,
+        data: { locale: loc, kind: "page", page: data, preview: { entity_type: "cms.pages", entity_id: data.page.id, locale: loc, warnings } },
+      },
+    };
+  }
+
+  function handle(pathname, q, headers = {}) {
     const seg = pathname.replace(/^\/+|\/+$/g, "").split("/");
     if (seg[0] === "health") return ok({ success: true, data: { status: "ok", source: "mock" } });
+    if (seg[0] === "preview" && seg[1] === "resolve" && seg.length === 2) return previewResolve(q, headers);
     if (seg[0] !== "public") return notFound();
     const loc = localeOf(q.locale);
     const [, res, arg] = seg;
@@ -138,9 +242,11 @@ export function createMockServer({ dataDir = DATA_DIR, key = process.env.MOCK_PO
         "x-portal-key": req.headers["x-portal-key"],
         "x-request-id": req.headers["x-request-id"],
         "accept-language": req.headers["accept-language"],
+        "x-preview-token": req.headers["x-preview-token"],
       },
     });
     const reply = (status, body, extra = {}) => {
+      if (process.env.MOCK_LOG) console.log(`${req.method} ${status} ${url.pathname}?${[...url.searchParams.keys()].sort().join("&")}${req.headers["x-preview-token"] ? " [preview-token-header]" : ""}`);
       res.writeHead(status, { "Content-Type": "application/json; charset=utf-8", "Cache-Control": "public, max-age=30, stale-while-revalidate=300", "X-Mock": "1", ...extra });
       res.end(JSON.stringify(body));
     };
@@ -151,8 +257,8 @@ export function createMockServer({ dataDir = DATA_DIR, key = process.env.MOCK_PO
       if (key && !path.startsWith("/health") && req.headers["x-portal-key"] !== key) {
         return reply(401, { success: false, code: "UNAUTHENTICATED" });
       }
-      const r = api.handle(path, q);
-      reply(r.status, r.body, r.location ? { Location: r.location } : {});
+      const r = api.handle(path, q, req.headers);
+      reply(r.status, r.body, { ...r.headers, ...(r.location ? { Location: r.location } : {}) });
     };
     if (delayMs) setTimeout(run, delayMs);
     else run();

@@ -21,6 +21,8 @@ export interface CmsFetchOptions {
   redirect?: "manual" | "follow";
   /** skip the Next data cache (preview / Draft Mode, POST) */
   noStore?: boolean;
+  /** extra request headers (preview: `X-Preview-Token`). Use together with `noStore`: a header is part of Next's cache key. */
+  headers?: Record<string, string>;
 }
 
 type NextInit = RequestInit & { next?: { revalidate?: number; tags?: string[] } };
@@ -42,7 +44,7 @@ export async function cmsFetch<T>(path: string, opts: CmsFetchOptions): Promise<
   if (!cfg.baseUrl) return { kind: "error", ok: false, status: "unconfigured", down: true, source };
 
   const method = opts.method ?? "GET";
-  const headers: Record<string, string> = { Accept: "application/json" };
+  const headers: Record<string, string> = { Accept: "application/json", ...opts.headers };
   if (cfg.key) headers["X-Portal-Key"] = cfg.key;
   const init: NextInit = {
     method,

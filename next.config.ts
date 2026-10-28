@@ -15,6 +15,9 @@ const mediaPatterns = toRemotePatterns(parseMediaHosts(process.env.MEDIA_BASE_UR
 
 const nextConfig: NextConfig = {
   images: { remotePatterns: mediaPatterns },
+  // Dev only: `next dev` prints every request URL. A preview link carries the token in its query (PF-10), so that
+  // one route is not logged (`next start` logs no requests at all).
+  logging: { incomingRequests: { ignore: [/^\/api\/preview(\/|$)/] } },
   // Dev only: move Next's dev indicator off the bottom-left, where it covers
   // the fixed bottom nav bar.
   devIndicators: { position: "top-right" },

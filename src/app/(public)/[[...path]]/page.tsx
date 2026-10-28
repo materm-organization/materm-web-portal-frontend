@@ -1,10 +1,16 @@
 import type { Metadata } from "next";
-import { notFound } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
 
 import { adaptPage } from "@/components/sections/adapt-page";
 import { SectionRenderer } from "@/components/sections/section-renderer";
+import { PreviewBanner } from "@/components/site/preview-banner";
 import { getRequestLocale } from "@/lib/cms/locale";
 import { getPage } from "@/lib/cms/loaders";
+import { getPreviewPage, readPreviewSession } from "@/lib/cms/preview";
+import type { PageData } from "@/lib/cms/types";
+import type { PreviewInfo } from "@/lib/preview/resolve";
+import { statusLocation } from "@/lib/preview/handlers";
+import { PREVIEW_ROBOTS, withPreviewRobots } from "@/lib/preview/metadata";
 import { createPageMetadata } from "@/lib/site-metadata";
 
 // ONE route for every CMS page (`/`, `/our-path`, `/blog`, `/gallery`, `/contact`, pages made later in the
@@ -12,7 +18,15 @@ import { createPageMetadata } from "@/lib/site-metadata";
 // `SectionRenderer`. A path without a published page is a 404. More specific routes win over this one
 // (`blog/[slug]`, `api/*`, `sitemap.xml`, `robots.txt`). doc/08 §3.4.
 //
-// `cookies()` (locale) makes the route dynamic, as the root layout already did.
+// PREVIEW (PF-10): a visitor with the `materm_preview` cookie, on the page the link was issued for, gets the page
+// from `GET /preview/resolve` (`getPreviewPage`) instead of P-06 - the SAME `adaptPage` / `SectionRenderer`
+// pipeline, plus the banner and `noindex`. On any other page the published content is shown (a small banner says
+// the session is still open). A dead token (401/422) sends the browser through `/api/preview/exit?reason=expired`
+// (a Server Component cannot delete a cookie), 429 / backend trouble go to `/preview-status`; never to the bundle.
+//
+// `cookies()` (locale, preview) makes the route dynamic, as the root layout already did: visitors' pages are not
+// ISR today, their content is cached in Next's DATA cache (`force-cache` fetches in `src/lib/cms/client.ts`),
+// which a preview request neither reads nor writes.
 interface CatchAllProps {
   params: Promise<{ path?: string[] }>;
   searchParams: Promise<{ category?: string | string[] }>;
@@ -29,27 +43,52 @@ function toPagePath(segments: string[] | undefined): string | null {
   }
 }
 
-async function loadPage(segments: string[] | undefined) {
+type Loaded =
+  | { kind: "page"; page: PageData; locale: string; path: string; preview: PreviewInfo | null; elsewhereOf: string | null }
+  | { kind: "preview-failed"; to: string };
+
+async function loadPage(segments: string[] | undefined): Promise<Loaded | null> {
   const path = toPagePath(segments);
   if (path === null) return null;
   const locale = await getRequestLocale();
+
+  const session = await readPreviewSession(); // null without the cookie / in bundle mode
+  if (session && session.path === path) {
+    const outcome = await getPreviewPage(session.token, path, locale); // React cache(): shared by generateMetadata and the page
+    if (outcome.kind === "ok") return { kind: "page", page: outcome.data.page, locale, path, preview: outcome.data.preview, elsewhereOf: null };
+    if (outcome.kind === "invalid") return { kind: "preview-failed", to: "/api/preview/exit?reason=expired" };
+    return { kind: "preview-failed", to: statusLocation(outcome.kind === "busy" ? "busy" : "unavailable") };
+  }
+
   const page = await getPage(path, locale); // React cache(): shared by generateMetadata and the page
-  return page ? { page, locale } : null;
+  return page ? { kind: "page", page, locale, path, preview: null, elsewhereOf: session?.path ?? null } : null;
 }
 
 export async function generateMetadata({ params }: CatchAllProps): Promise<Metadata> {
   const loaded = await loadPage((await params).path);
-  return loaded ? createPageMetadata(loaded.page) : {};
+  if (!loaded) return {};
+  if (loaded.kind === "preview-failed") return { robots: PREVIEW_ROBOTS };
+  // drafts are never indexed; a published page seen from an open preview session is not indexed either
+  return withPreviewRobots(createPageMetadata(loaded.page), loaded.preview !== null || loaded.elsewhereOf !== null);
 }
 
 export default async function CmsPage({ params, searchParams }: CatchAllProps) {
   const loaded = await loadPage((await params).path);
   if (!loaded) notFound();
+  if (loaded.kind === "preview-failed") redirect(loaded.to);
 
   const { category } = await searchParams;
   const sections = await adaptPage(loaded.page, {
     locale: loaded.locale,
     category: Array.isArray(category) ? (category[0] ?? null) : (category ?? null),
   });
-  return <SectionRenderer sections={sections} />;
+  // visitors without a preview session get exactly the tree they always had (no wrapper, same React ids)
+  if (!loaded.preview && !loaded.elsewhereOf) return <SectionRenderer sections={sections} />;
+  return (
+    <>
+      {loaded.preview && <PreviewBanner variant="preview" warnings={loaded.preview.warnings} path={loaded.path} />}
+      {loaded.elsewhereOf && <PreviewBanner variant="elsewhere" path={loaded.elsewhereOf} />}
+      <SectionRenderer sections={sections} />
+    </>
+  );
 }

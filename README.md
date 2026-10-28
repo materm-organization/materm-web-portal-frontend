@@ -13,6 +13,8 @@ login or admin area.
 | `/blog` | Blog list |
 | `/blog/[slug]` | Blog article |
 | `/gallery` | Gallery |
+| `/preview-status` | where the preview flow ends without a page (expired link, no backend, busy); noindex |
+| `/api/preview`, `/api/preview/exit` | start / leave an editor preview (below) |
 
 Shared header/footer and page building blocks live in `src/components/site`; see
 `src/components/site/README.md` for the contract.
@@ -69,6 +71,71 @@ node scripts/cms/revalidate-demo.mjs --tags pages,settings,sitemap --replay
 node scripts/cms/revalidate-demo.mjs --bad-signature   # 401
 node scripts/cms/revalidate-demo.mjs --stale           # 401
 ```
+
+## Preview (PF-10, `/api/preview`)
+
+An editor previews an unpublished page from the admin. The admin issues a link
+`https://<site>/api/preview?token=<raw>&path=/our-path&locale=en` (open it in a NEW tab; an iframe is not built, the
+`frame-ancestors` CSP of doc/08 §3.9 is not set). Preview needs `CMS_MODE=api` (the real portal-backend) or
+`CMS_MODE=mock` (`npm run cms:mock`, see below); in `bundle` mode `/api/preview` answers a clear
+"preview needs `CMS_MODE=api`" page and a preview cookie is ignored. Only **pages** can be previewed (posts: M5).
+
+```bash
+npm run cms:mock                       # in one terminal (MOCK_LOG=1 prints one line per request)
+CMS_MODE=mock npm run dev              # in another, then open:
+#   http://localhost:3000/api/preview?token=mock-preview-valid-token-0123456789abcdef&path=/our-path&locale=en
+#   .../api/preview?token=mock-preview-warnings-token-0123456789abcdef&path=/contact   (resolved:{} sections + warnings)
+#   .../api/preview?token=mock-preview-expired-token-0123456789abcdef&path=/our-path   (expired page)
+npm run preview:selftest               # logic, cookie attributes, sliding refresh, open-redirect attempts, fetch options
+```
+
+Flow:
+
+1. `GET /api/preview` reads `token`, `path`, `locale` **once**; the token must be 32-256 chars of `[A-Za-z0-9._~-]`; `path` must
+   be a CMS page path (`/`, `/our-path`, `/a/b`: lowercase letters, digits, `-`; no `//`, `\`, scheme, query or `%`), otherwise
+   it is treated as a dead link. It asks the backend (`GET /preview/resolve`, token in the `X-Preview-Token` header,
+   `X-Portal-Key` from `PORTAL_API_KEY`). 401 `INVALID_TOKEN` / 422 -> the **expired page** (`/preview-status?s=expired`, copy
+   `site.preview.expired`; never says why: unknown, expired, revoked, other page); 429 -> "try again" page; backend trouble
+   (including a wrong portal key) -> "unavailable" page, never the published content.
+2. On success it sets the cookie `materm_preview`, turns on Next Draft Mode (every `fetch` of that browser skips the data
+   cache) and answers **307** to the page path **without the token** (relative `Location`, `Cache-Control: no-store`,
+   `Referrer-Policy: no-referrer`). The link's `locale` (if we ship it) becomes the site `locale` cookie.
+3. A request with the cookie **for the page the link was issued for** is rendered from `GET /preview/resolve` instead of P-06,
+   through the same `adaptPage` / `SectionRenderer` pipeline (`resolved: {}` sections are tolerated; an empty faq / gallery
+   section is simply not drawn), plus the banner and `robots: noindex, nofollow`. Any **other** page shows the published content with
+   a slim banner ("your preview session is still open", back link, exit): the backend ties a token to one page, so another
+   path is not a dead link. A dead token on its own page (401/422) redirects through `/api/preview/exit?reason=expired`
+   (a Server Component cannot delete a cookie) to the expired page; 429 / 5xx redirect to the status page and keep the cookie.
+4. **Exit** = the banner's plain `<a href="/api/preview/exit?path=...">` (never `next/link`: a prefetch would end the session):
+   GET or POST, clears the cookie and Draft Mode, redirects to the page without preview (or `/`).
+
+Cookie: `materm_preview`, `HttpOnly`, `SameSite=Lax` (doc/08 said `None` for an iframe we do not build), `Path=/`, `Secure`
+(everywhere except `next dev`; `localhost` / `127.0.0.1` accept it over http), value `v1.<base64url(path)>.<token>`.
+**Sliding Max-Age = 30 minutes of inactivity**, refreshed on every page request that carries it by `src/proxy.ts` (the
+only place that can write a cookie while a page renders; its matcher only fires when the cookie is present, so visitors never
+run it; prefetches, `_next`, `api` and files do not extend the session). This closes the open note of doc/08 §3.9: the link
+may live up to 24 h (the admin's `expires_at`), the cookie lives 30 min after the last request (option b), and an
+editor who comes back later opens the link again.
+
+Public pages stay cached: the catch-all was **already dynamic** (it reads the `locale` cookie, `ƒ` in the build output before
+and after), what is cached for visitors is Next's **data cache** (`force-cache` + tags in `src/lib/cms/client.ts`). A preview
+request neither reads nor writes it: the resolve call is `cache: "no-store"` without tags, and Draft Mode bypasses the data
+cache for the shell fetches (site, ui strings, locales) too. Reading the preview cookie adds no cost for visitors and their
+HTML is unchanged (the page returns exactly the same tree when there is no session). Files: `src/lib/preview/*` (pure logic,
+unit-tested), `src/lib/cms/preview.ts` (the backend call), `src/app/api/preview/**`, `src/proxy.ts`,
+`src/components/site/preview-banner.tsx`, `src/app/(public)/preview-status/page.tsx`, editor-only copy in
+`i18n/site/preview.{en,la}.json` (read by `src/lib/preview/messages.ts`, deliberately NOT a next-intl namespace so visitors
+do not download it; the `la` file is an English copy marked `_todoTranslate`). The shared strings `site.preview.banner|exit|expired`
+are the existing UI strings.
+
+Security: the token is never in `NEXT_PUBLIC_*`, never logged (route handlers and the loader log nothing about it; `next dev`
+does not print `/api/preview` requests, `next.config.ts` `logging.incomingRequests.ignore`), never in a URL after the first hop,
+never a prop of a component and never in the HTML / RSC payload (the cookie is HttpOnly and read only on the server).
+`/api/preview*` responses carry `no-store`, `Referrer-Policy: no-referrer` and `X-Robots-Tag: noindex`.
+
+`npm run cms:mock` also serves `GET /api/v1/preview/resolve` with fixture tokens (list at the top of
+`scripts/cms/mock-api.mjs`): a valid page snapshot, a snapshot with `resolved: {}` sections + warnings, expired (401),
+rate limited (429), broken (500), malformed / missing token (422), same response headers as the real backend.
 
 ## Contact form
 

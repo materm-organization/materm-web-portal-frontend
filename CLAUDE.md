@@ -31,6 +31,7 @@ npm run check:shadows   # fails on any shadow/ring utility in the site scope
 npm run check:i18n      # en/la key parity of the message files
 npm run cms:check       # bundle + exports are current and valid (cms:export regenerates; cms:mock = mock API; cms:selftest)
 npm run site:selftest   # /api/revalidate logic (HMAC, replay, allow-list, limits) + header/footer/switcher data
+npm run preview:selftest # preview flow (PF-10): token/path validation, cookie, sliding refresh, handlers, resolve answer, mock API
 ```
 
 Env vars: `CMS_MODE` (`bundle` default | `mock` | `api`), `NEXT_PUBLIC_API_BASE_URL` / `CMS_API_BASE_URL`, `PORTAL_API_KEY`
@@ -63,6 +64,28 @@ Env vars: `CMS_MODE` (`bundle` default | `mock` | `api`), `NEXT_PUBLIC_API_BASE_
   `src/lib/constants/locales.ts` — supported locales and the locale cookie name; `src/lib/utils.ts` — `cn`.
 - `src/hooks/use-mobile.ts` — used by `components/ui/sidebar.tsx`.
 - `public/images/site/` — static images, referenced via `next/image`.
+
+## Preview (PF-10)
+
+Editor preview of unpublished PAGES (T1.4.6; posts are M5). Full description in `README.md` ("Preview"). Short version:
+
+- Link from the admin: `/api/preview?token=<raw>&path=/our-path&locale=en`. `src/app/api/preview/route.ts` (logic in
+  `src/lib/preview/handlers.ts`) validates token shape and path (whitelist = CMS page path), calls `GET /preview/resolve`
+  (`src/lib/cms/preview.ts`: token ONLY in the `X-Preview-Token` header, `cache: "no-store"`, no tags), sets the HttpOnly
+  `materm_preview` cookie (`v1.<b64url(path)>.<token>`, SameSite=Lax, Secure except `next dev`, Max-Age 30 min) + Draft Mode and
+  307s to the path WITHOUT the token. `/api/preview/exit` clears both. Never link to exit with `next/link` (prefetch).
+- Data layer: `(public)/[[...path]]/page.tsx` renders `getPreviewPage` instead of P-06 only when the cookie's path equals the
+  request path; same `adaptPage` / `SectionRenderer`; no bundle fallback ever (a failed preview is an error page). Another page of the
+  site shows published content + the "elsewhere" banner. A visitor without the cookie gets the same tree and the same cached fetches as
+  before (the route was already dynamic through the `locale` cookie; caching lives in Next's data cache).
+- `src/proxy.ts` (Next 16 "proxy" = middleware) is the only place that refreshes the cookie (sliding 30 min), matcher gated on the cookie.
+  Pure logic in `src/lib/preview/session.ts`. Clearing a cookie needs `Expires` in the past as well as `Max-Age=0` (Next drops `Max-Age=0`
+  when it merges the Draft Mode cookies).
+- Modes: `api` / `mock` only; `bundle` answers `/preview-status?s=unsupported` and ignores the cookie. The preview banner is `fixed top-0`
+  (an `invisible` twin reserves its height), solid colours, no token prop. Editor copy: `i18n/site/preview.*.json` via
+  `src/lib/preview/messages.ts` (not a next-intl namespace); the shared `site.preview.banner|exit|expired` keys are existing UI strings.
+  `/preview-status` is a reserved path.
+- Tests: `npm run preview:selftest` (24) + `scripts/cms/mock-api.mjs` fixture tokens (`PREVIEW_TOKENS`). Never log or echo a token.
 
 ## i18n
 
