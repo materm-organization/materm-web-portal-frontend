@@ -50,7 +50,7 @@
   ],
   "source_checksums": {
     "src/content/cms-seed/exports/media-manifest.json": "9290075ca18b07998fd8fb4dd6cb60de6a2802ecf8c97bdc658b69cfb74eb10e",
-    "src/content/cms-seed/exports/ui-strings.json": "feae7df3d1aa9927c96876c941460eb7b1197b653528c12ad32ed8cd888d2c53",
+    "src/content/cms-seed/exports/ui-strings.json": "3afcdeb09408a38b40d94cf1877ed3eccc8910add7fb10b5737dae437e1cf9a2",
     "src/content/cms-seed/schemas/about_blocks.json": "61d4c21e0da61890b04c46e8b09c643e123566385851583fe564f86b587f4e0d",
     "src/content/cms-seed/schemas/blog_strip.json": "8b8601f48bb4de5d0fdb2409849b10890b6851a74be001bdf1566cee4dc571b2",
     "src/content/cms-seed/schemas/contact_section.json": "54cd5496ff1a69d3342b3639eb8a3f219af3344d834c9a89e1b72d5203e0bcce",

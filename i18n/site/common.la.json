@@ -1,46 +1,46 @@
 {
   "_todoTranslate": true,
   "brand": "MATERM",
-  "skipToContent": "Skip to main content",
+  "skipToContent": "ຂ້າມໄປຫາເນື້ອຫາຫຼັກ",
   "nav": {
-    "label": "Main navigation",
-    "home": "Home",
-    "ourPath": "Our Path",
-    "blog": "The Blog",
-    "gallery": "Gallery",
-    "contact": "Contact",
-    "openMenu": "Open menu",
-    "closeMenu": "Close menu",
-    "menuTitle": "Menu",
-    "currentPage": "Menu: current page {page}"
+    "label": "ເມນູນຳທາງຫຼັກ",
+    "home": "ໜ້າຫຼັກ",
+    "ourPath": "ເສັ້ນທາງຂອງພວກເຮົາ",
+    "blog": "ບລັອກ",
+    "gallery": "ຄັງຮູບພາບ",
+    "contact": "ຕິດຕໍ່",
+    "openMenu": "ເປີດເມນູ",
+    "closeMenu": "ປິດເມນູ",
+    "menuTitle": "ເມນູ",
+    "currentPage": "ເມນູ: ໜ້າປັດຈຸບັນ {page}"
   },
   "language": {
-    "label": "Language",
+    "label": "ພາສາ",
     "en": "EN",
-    "la": "LAO",
+    "la": "ລາວ",
     "enName": "English",
-    "laName": "Lao"
+    "laName": "ລາວ"
   },
   "cta": {
-    "exploreExpeditions": "Explore Expeditions",
-    "viewAllPosts": "View all posts >>",
-    "viewMore": "View more"
+    "exploreExpeditions": "ສຳຫຼວດການເດີນທາງ",
+    "viewAllPosts": "ເບິ່ງບົດຄວາມທັງໝົດ >>",
+    "viewMore": "ເບິ່ງເພີ່ມເຕີມ"
   },
   "hero": {
-    "logoAlt": "MATERM logo"
+    "logoAlt": "ໂລໂກ້ MATERM"
   },
   "footer": {
-    "statement": "Forging wild paths across the untamed earth. Led by expert survivalists and certified wilderness rescue guides.",
-    "emblemAlt": "MATERM emblem",
-    "navLabel": "Footer navigation",
+    "statement": "ບຸກເບີກເສັ້ນທາງໃນທຳມະຊາດອັນກວ້າງໃຫຍ່. ນຳທາງໂດຍຜູ້ຊ່ຽວຊານດ້ານການເອົາຕົວລອດ ແລະ ຜູ້ນຳທາງກູ້ໄພໃນປ່າທີ່ໄດ້ຮັບການຢັ້ງຢືນ.",
+    "emblemAlt": "ສັນຍາລັກ MATERM",
+    "navLabel": "ເມນູນຳທາງສ່ວນທ້າຍ",
     "nav": {
-      "home": "Home",
-      "ourPath": "Our Path",
-      "blog": "Blog",
-      "contact": "Contact"
+      "home": "ໜ້າຫຼັກ",
+      "ourPath": "ເສັ້ນທາງຂອງພວກເຮົາ",
+      "blog": "ບລັອກ",
+      "contact": "ຕິດຕໍ່"
     },
-    "copyright": "© 2026 Outdoor Avenger Ltd. All Wilderness Permits Reserved.",
-    "socialLabel": "Social links",
+    "copyright": "© 2026 Outdoor Avenger Ltd. ສະຫງວນລິຂະສິດ.",
+    "socialLabel": "ລິ້ງສື່ສັງຄົມ",
     "social": {
       "instagram": "Instagram",
       "youtube": "YouTube",
@@ -49,22 +49,22 @@
     }
   },
   "gallery": {
-    "rowLabel": "Gallery highlights",
-    "cardLabel": "Open the gallery ({index} of {total})"
+    "rowLabel": "ຮູບເດັ່ນຈາກຄັງຮູບພາບ",
+    "cardLabel": "ເປີດຄັງຮູບພາບ ({index} ຈາກ {total})"
   },
   "notFound": {
-    "title": "Page not found",
-    "description": "The page you are looking for does not exist or has moved.",
-    "action": "Back to the home page"
+    "title": "ບໍ່ພົບໜ້ານີ້",
+    "description": "ໜ້າທີ່ທ່ານຊອກຫາບໍ່ມີຢູ່ ຫຼື ຖືກຍ້າຍໄປແລ້ວ.",
+    "action": "ກັບໄປໜ້າຫຼັກ"
   },
   "error": {
-    "title": "Something went wrong",
-    "description": "We could not show this page. Please try again.",
-    "retry": "Try again"
+    "title": "ເກີດຂໍ້ຜິດພາດ",
+    "description": "ພວກເຮົາບໍ່ສາມາດສະແດງໜ້ານີ້ໄດ້. ກະລຸນາລອງໃໝ່ອີກຄັ້ງ.",
+    "retry": "ລອງໃໝ່"
   },
   "preview": {
-    "banner": "Preview mode: you are viewing unpublished content",
-    "exit": "Exit preview",
-    "expired": "This preview link has expired. Ask the editor for a new one."
+    "banner": "ໂໝດເບິ່ງຕົວຢ່າງ: ທ່ານກຳລັງເບິ່ງເນື້ອຫາທີ່ຍັງບໍ່ໄດ້ເຜີຍແຜ່",
+    "exit": "ອອກຈາກການເບິ່ງຕົວຢ່າງ",
+    "expired": "ລິ້ງເບິ່ງຕົວຢ່າງນີ້ໝົດອາຍຸແລ້ວ. ກະລຸນາຂໍລິ້ງໃໝ່ຈາກຜູ້ແກ້ໄຂເນື້ອຫາ."
   }
 }

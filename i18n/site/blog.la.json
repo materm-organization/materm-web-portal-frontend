@@ -1,58 +1,58 @@
 {
   "_todoTranslate": true,
-  "categoryNavLabel": "Blog categories",
+  "categoryNavLabel": "ໝວດໝູ່ບລັອກ",
   "categories": {
-    "all": "All",
-    "music": "Music",
-    "camping": "Camping",
-    "outdoor": "Outdoor",
+    "all": "ທັງໝົດ",
+    "music": "ດົນຕີ",
+    "camping": "ຕັ້ງແຄ້ມ",
+    "outdoor": "ກິດຈະກຳກາງແຈ້ງ",
     "avenger": "Avenger",
-    "hiking": "Hiking"
+    "hiking": "ຍ່າງປ່າ"
   },
   "months": [
-    "Jan",
-    "Feb",
-    "Mar",
-    "Apr",
-    "May",
-    "Jun",
-    "Jul",
-    "Aug",
-    "Sep",
-    "Oct",
-    "Nov",
-    "Dec"
+    "ມັງກອນ",
+    "ກຸມພາ",
+    "ມີນາ",
+    "ເມສາ",
+    "ພຶດສະພາ",
+    "ມິຖຸນາ",
+    "ກໍລະກົດ",
+    "ສິງຫາ",
+    "ກັນຍາ",
+    "ຕຸລາ",
+    "ພະຈິກ",
+    "ທັນວາ"
   ],
-  "dateFormat": "{month}. {day}.{year}",
+  "dateFormat": "{day} {month} {year}",
   "article": {
-    "galleryEyebrow": "Gallery"
+    "galleryEyebrow": "ຄັງຮູບພາບ"
   },
   "index": {
-    "metaTitle": "The Blog",
-    "metaDescription": "Stories, recaps and field notes from Materm at Phou Khao Khouay.",
-    "title": "The Blog",
-    "subtitle": "Stories and recaps from the slope of Phou Khao Khouay",
-    "listLabel": "Blog posts",
+    "metaTitle": "ບລັອກ",
+    "metaDescription": "ເລື່ອງລາວ, ບົດສະຫຼຸບ ແລະ ບັນທຶກຈາກພາກສະໜາມຂອງ Materm ທີ່ພູເຂົາຄວາຍ.",
+    "title": "ບລັອກ",
+    "subtitle": "ເລື່ອງລາວ ແລະ ບົດສະຫຼຸບຈາກເນີນພູເຂົາຄວາຍ",
+    "listLabel": "ບົດຄວາມບລັອກ",
     "empty": {
-      "title": "No posts in this category yet",
-      "description": "We have not published anything under {category} yet. Check back soon, or browse all posts.",
-      "action": "View all posts"
+      "title": "ຍັງບໍ່ມີບົດຄວາມໃນໝວດໝູ່ນີ້",
+      "description": "ພວກເຮົາຍັງບໍ່ໄດ້ເຜີຍແຜ່ບົດຄວາມໃດໃນໝວດ {category}. ກະລຸນາກັບມາເບິ່ງໃໝ່ໄວໆນີ້ ຫຼື ເບິ່ງບົດຄວາມທັງໝົດ.",
+      "action": "ເບິ່ງບົດຄວາມທັງໝົດ"
     }
   },
   "posts": {
     "musicNight": {
-      "title": "Music Night Under the Stars — a recap",
-      "categoryLabel": "Music Night",
-      "location": "Phou Khao Khouay · Community journal",
-      "heroAlt": "Snow-capped mountains above a forest lake under heavy clouds",
+      "title": "ຄ່ຳຄືນດົນຕີໃຕ້ແສງດາວ — ບົດສະຫຼຸບ",
+      "categoryLabel": "ຄ່ຳຄືນດົນຕີ",
+      "location": "ພູເຂົາຄວາຍ · ບັນທຶກຊຸມຊົນ",
+      "heroAlt": "ພູເຂົາທີ່ມີຫິມະປົກຄຸມ ຢູ່ເໜືອທະເລສາບໃນປ່າ ພາຍໃຕ້ເມກໜາ",
       "intro": [
-        "On one weekend night in September, the slope of Phou Khao Khouay where Materm’s treehouses sit turned into an impromptu music stage. Three local bands took turns playing. A familiar place became a place to listen.",
-        "Music Night belongs to the same story as the treehouses: a reason to come together, with the landscape still at the centre. This recap is a reflection on that meeting of music, community and place — and on what it means to make room for something shared, outdoors."
+        "ໃນຄືນທ້າຍອາທິດໜຶ່ງຂອງເດືອນກັນຍາ, ເນີນພູເຂົາຄວາຍ ບ່ອນທີ່ເຮືອນເທິງຕົ້ນໄມ້ຂອງ Materm ຕັ້ງຢູ່ ໄດ້ກາຍເປັນເວທີດົນຕີແບບບໍ່ໄດ້ນັດໝາຍ. ວົງດົນຕີທ້ອງຖິ່ນສາມວົງ ຜັດປ່ຽນກັນຂຶ້ນສະແດງ. ສະຖານທີ່ທີ່ຄຸ້ນເຄີຍ ໄດ້ກາຍເປັນບ່ອນສຳລັບການຮັບຟັງ.",
+        "ຄ່ຳຄືນດົນຕີ ແມ່ນສ່ວນໜຶ່ງຂອງເລື່ອງລາວດຽວກັນກັບເຮືອນເທິງຕົ້ນໄມ້: ເຫດຜົນທີ່ຈະມາພົບກັນ ໂດຍມີທຳມະຊາດເປັນຈຸດໃຈກາງ. ບົດສະຫຼຸບນີ້ ເປັນການທົບທວນເຖິງການພົບກັນຂອງດົນຕີ, ຊຸມຊົນ ແລະ ສະຖານທີ່ — ແລະ ຄວາມໝາຍຂອງການສ້າງພື້ນທີ່ສຳລັບສິ່ງທີ່ແບ່ງປັນຮ່ວມກັນ ກາງແຈ້ງ."
       ],
       "gallery": {
-        "heading": "A visual walk-through is coming",
-        "description": "What started as a small treehouse site in 2020 has grown into a place where campers, musicians, food lovers, and first-time visitors return to share the same slope of Phou Khao Khouay. Read the full story of how Materm came together.",
-        "photoAlt": "Music Night photo {number} of {total}: a forest stream with ferns and small waterfalls"
+        "heading": "ພາບບັນຍາກາດກຳລັງຈະມາ",
+        "description": "ຈາກທີ່ເລີ່ມຕົ້ນເປັນພື້ນທີ່ເຮືອນເທິງຕົ້ນໄມ້ນ້ອຍໆໃນປີ 2020, ບັດນີ້ໄດ້ກາຍເປັນບ່ອນທີ່ນັກຕັ້ງແຄ້ມ, ນັກດົນຕີ, ຄົນຮັກອາຫານ ແລະ ຜູ້ມາຢ້ຽມຢາມຄັ້ງທຳອິດ ກັບມາແບ່ງປັນເນີນພູເຂົາຄວາຍດຽວກັນ. ອ່ານເລື່ອງລາວທັງໝົດຂອງການກຳເນີດ Materm.",
+        "photoAlt": "ຮູບຄ່ຳຄືນດົນຕີທີ {number} ຈາກ {total}: ລຳທານໃນປ່າ ທີ່ມີເຟີນ ແລະ ນ້ຳຕົກຕາດນ້ອຍໆ"
       }
     }
   }
