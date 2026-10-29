@@ -276,7 +276,8 @@ export interface PostQuery {
 export interface PostDetail extends PostListItem {
   locale: string;
   body: RichTextDoc | null;
-  hero: { media_id: number; alt: Text };
+  /** null on a DRAFT preview without a hero image (a published post always has one) */
+  hero: { media_id: number; alt: Text } | null;
   gallery: { heading: Text; description: Text; items: { media_id: number; alt: Text; caption: Text }[] };
   tags: { key: string; name: string; slug: string }[];
   seo: { title: string; description: Text; og_image: { media_id: number } | null; canonical: string; noindex: boolean };

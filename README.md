@@ -78,7 +78,7 @@ An editor previews an unpublished page from the admin. The admin issues a link
 `https://<site>/api/preview?token=<raw>&path=/our-path&locale=en` (open it in a NEW tab; an iframe is not built, the
 `frame-ancestors` CSP of doc/08 §3.9 is not set). Preview needs `CMS_MODE=api` (the real portal-backend) or
 `CMS_MODE=mock` (`npm run cms:mock`, see below); in `bundle` mode `/api/preview` answers a clear
-"preview needs `CMS_MODE=api`" page and a preview cookie is ignored. Only **pages** can be previewed (posts: M5).
+"preview needs `CMS_MODE=api`" page and a preview cookie is ignored. **Pages** (`/our-path`) and **posts** (`/blog/<slug>`, M5) can be previewed: a post link renders the article page from `data.post` of `GET /preview/resolve` (same markup as the published article, plus the banner and `noindex`; no 308, no data cache).
 
 ```bash
 npm run cms:mock                       # in one terminal (MOCK_LOG=1 prints one line per request)
@@ -140,12 +140,29 @@ rate limited (429), broken (500), malformed / missing token (422), same response
 ## Contact form
 
 `/contact` has a form (`src/components/contact/contact-form.tsx`, server action in
-`src/app/(public)/contact/actions.ts`, shared rules in `contact-validation.ts`). Set the **server-only**
-env var `CONTACT_ENDPOINT` (never `NEXT_PUBLIC_*`) to the URL that should receive each message: it gets a
-JSON `POST` `{ name, email, phone, topic, message, locale, submittedAt }` (10 s timeout; a non-2xx answer
-shows the generic error). Without it, dev/test simulates success after ~600 ms (nothing is sent), and
-production shows an "unconfigured" error so the site never pretends to send. TODO: connect a real
-mail/CRM endpoint before launch.
+`src/app/(public)/contact/actions.ts`, the delivery rules in `src/lib/forms/submit.ts`, shared field rules in
+`contact-validation.ts`). A valid submission is posted **server-side** to the portal backend, `POST
+/api/v1/public/forms/{slug}/submissions` (P-15, `X-Portal-Key` from `PORTAL_API_KEY`; the browser never calls a backend).
+Messages are stored and e-mailed by the admin side; there is no other delivery URL.
+
+- **Anti-spam contract** (doc/08 section 6.3, backend `modules/forms`): the hidden honeypot field `company` is forwarded as
+  `honeypot` (the backend scores it and still answers 200, a bot learns nothing); `elapsed_ms` comes from a **signed fill
+  time** (hidden field `rt`, minted by the server in `ContactSection`, checked by the action with `FORM_RENDER_SECRET`);
+  `X-Client-IP` (`x-nf-client-connection-ip`, then `x-real-ip`, then the first `x-forwarded-for`) and `X-Client-User-Agent`
+  carry the visitor, otherwise the whole site would share one rate-limit bucket.
+- **`FORM_RENDER_SECRET`**: server-only secret, >= 32 characters, **required in production** (without it no visitor can prove
+  a fill time and every real message would be stored as spam, so the form answers "unconfigured" instead). Unset in development:
+  a random per-process secret is used.
+- **Modes**: production always calls the real API, whatever `CMS_MODE` says (`CMS_MODE` only decides where content is read
+  from). Production without an API base URL: "unconfigured". Outside production a message is only sent with `CMS_MODE=api`
+  and an API base URL; in every other dev setup (bundle, mock, no URL) the form simulates success after ~600 ms and nothing is
+  sent, so the site runs without a backend.
+- **Errors** (backend answer -> text from `forms.errors.*`, overridable per form): 422 on `/data/<field>` -> that field's
+  message; 429 -> `rateLimited`; 404 -> `unconfigured`; 5xx, timeout (10 s), network, wrong portal key -> `unavailable`;
+  400 / 413 / 415 and a 422 without a field the form can show -> `generic`. A POST is never retried.
+- Try the error paths without a backend: `npm run cms:mock` answers P-15 and reacts to the addresses `limited@example.test`
+  (429), `invalid@example.test` (422), `gone@example.test` (404), `down@example.test` (503); use `CMS_MODE=api` with
+  `CMS_API_BASE_URL=http://127.0.0.1:4010/api/v1`. `npm run forms:selftest` checks all of it.
 
 ## Translations
 

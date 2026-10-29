@@ -4,14 +4,11 @@
 // (instant feedback) and the server action (the real check), so the two always
 // apply the same rules.
 //
-// Contact form delivery (see `src/app/(public)/contact/actions.ts`):
-//   CONTACT_ENDPOINT  server-only env var (never NEXT_PUBLIC_*). When set, each
-//                     valid submission is POSTed to it as JSON
-//                     { name, email, phone, topic, message, locale, submittedAt }
-//                     with a 10 s timeout; a non-2xx answer shows the generic
-//                     error. When unset: dev/test simulates success after
-//                     ~600 ms, production shows the "unconfigured" error so the
-//                     site never pretends to send a message.
+// Contact form delivery (see `src/app/(public)/contact/actions.ts` and `src/lib/forms/submit.ts`): a valid submission is
+// POSTed server-side to the portal backend (P-15, `POST /public/forms/{slug}/submissions`, X-Portal-Key); the backend
+// validates again with the same rules and applies the anti-spam contract (honeypot, fill time, rate limit). Its errors
+// come back as the codes below (`errors`) or as a form-level `code`. Outside production a simulated success replaces
+// delivery unless CMS_MODE=api.
 
 export const CONTACT_TOPICS = ["booking", "events", "camping", "other"] as const;
 export type ContactTopic = (typeof CONTACT_TOPICS)[number];
@@ -31,10 +28,13 @@ export interface ContactValues {
   message: string;
 }
 
+/** Form-level failures (`forms.errors.*`): the portal API said 404 / 4xx / 429 / 5xx or could not be reached. */
+export type ContactFormError = "unconfigured" | "generic" | "rateLimited" | "unavailable";
+
 export interface ContactActionState {
   status: "idle" | "success" | "error";
   errors?: ContactErrors;
-  code?: "unconfigured" | "generic";
+  code?: ContactFormError;
   values?: ContactValues;
 }
 

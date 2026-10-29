@@ -114,6 +114,19 @@ try {
     ...over,
   });
   const okOutcome = () => ({ kind: "ok", data: R.parseResolveData(pageData()) });
+  // M5 (doc/05 PT-18): the answer for a post link. `post` is the P-08 data object; a DRAFT may lack hero / category / body.
+  const postData = (over = {}, post = {}) => ({
+    locale: "en",
+    kind: "post",
+    post: {
+      id: 9, slug: "draft-article", href: "/blog/draft-article", title: "Draft article", date: "Oct. 29.2026", date_time: "2026-10-29T00:00:00Z",
+      category: null, hero: null, body: null, gallery: { heading: null, description: null, items: [] }, tags: [], media: {},
+      seo: { title: "Draft article", description: null, og_image: { media_id: 3 }, canonical: "https://x.example/blog/draft-article", noindex: false },
+      ...post,
+    },
+    preview: { entity_type: "cms.posts", entity_id: 9, locale: "en", warnings: [{ code: "reference_not_published", path: "/post/category_id", message: "x" }] },
+    ...over,
+  });
 
   // ---------------------------------------------------------------- token / path validation
   await test("token shape: 32-256 chars of [A-Za-z0-9._~-] only", () => {
@@ -243,6 +256,26 @@ try {
     assert.equal(calls[0].locale, "la"); // no cookie, no link locale -> the site default
   });
 
+  await test("/api/preview (post): the link path /blog/<slug> is the cookie path and the redirect; without a path the backend's post.href is used", async () => {
+    const outcome = { kind: "ok", data: R.parseResolveData(postData()) };
+    let x = await start(`token=${TOKEN}&path=/blog/draft-article&locale=en`, { outcome });
+    assert.equal(x.r.status, 307);
+    assert.equal(x.r.location, "/blog/draft-article");
+    assert.ok(!x.r.location.includes(TOKEN) && !x.r.location.includes("?"));
+    assert.equal(x.r.draft, "enable");
+    assert.deepEqual(x.calls[0], { token: TOKEN, path: "/blog/draft-article", locale: "en" });
+    assert.deepEqual(S.parseSession(S.readCookie(x.r.setCookies[0].split("; ")[0], "materm_preview")), { token: TOKEN, path: "/blog/draft-article" });
+    x = await start(`token=${TOKEN}`, { outcome });
+    assert.equal(x.r.location, "/blog/draft-article");
+    assert.equal(x.calls[0].path, null);
+    // a post path is a valid whitelist entry, a path that could escape the blog is still not
+    for (const bad of ["/blog/../admin", "/blog//x", "/blog/x?y=1", "/blog/%2e%2e"]) {
+      x = await start(`token=${TOKEN}&path=${encodeURIComponent(bad)}`, { outcome });
+      assert.equal(x.r.location, expiredLoc, bad);
+      assert.equal(x.calls.length, 0, bad);
+    }
+  });
+
   await test("/api/preview: locale from the link only when we ship it; else the visitor's locale cookie", async () => {
     let x = await start(`token=${TOKEN}&path=/our-path&locale=fr`);
     assert.equal(x.calls[0].locale, "la");
@@ -321,11 +354,38 @@ try {
     assert.deepEqual(d.page.media, {});
     // lenient where harmless, strict where it matters
     assert.deepEqual(R.parseResolveData(pageData({ preview: { entity_type: "cms.pages", entity_id: 1, locale: "en" } })).preview.warnings, []);
-    assert.equal(R.parseResolveData(pageData({ kind: "post" })), null);
+    assert.equal(R.parseResolveData(pageData({ kind: "post" })), null, "a post answer without data.post is unusable");
+    assert.equal(R.parseResolveData(pageData({ kind: "album" })), null);
     assert.equal(R.parseResolveData(pageData({ page: undefined })), null);
     assert.equal(R.parseResolveData(pageData({ page: { page: {}, sections: [] } })), null);
     assert.equal(R.parseResolveData(null), null);
     assert.equal(R.parseResolveData("x"), null);
+  });
+
+  await test("resolve answer (post): P-08 data object inside data.post; a draft's null parts are filled, noindex forced, og image dropped", () => {
+    const d = R.parseResolveData(postData());
+    assert.equal(d.kind, "post");
+    assert.equal(d.post.title, "Draft article");
+    assert.equal(d.post.hero, null);
+    assert.equal(d.post.category, null);
+    assert.equal(d.post.body, null);
+    assert.deepEqual(d.post.gallery, { heading: null, description: null, items: [] });
+    assert.deepEqual(d.post.tags, []);
+    assert.deepEqual(d.post.media, {});
+    assert.equal(d.post.seo.noindex, true, "a preview is never indexed, whatever the backend says");
+    assert.equal(d.post.seo.og_image, null);
+    assert.equal(d.post.locale, "en");
+    assert.deepEqual(d.preview.warnings, [{ code: "reference_not_published", path: "/post/category_id" }]);
+    // a sparse backend answer never leaves a container undefined for the article page
+    const sparse = R.parseResolveData(postData({}, { gallery: undefined, tags: undefined, media: undefined, seo: undefined, date: undefined }));
+    assert.deepEqual([sparse.post.gallery.items, sparse.post.tags, sparse.post.media, sparse.post.date], [[], [], {}, ""]);
+    assert.equal(sparse.post.seo.title, "Draft article");
+    // strict where it matters
+    assert.equal(R.parseResolveData(postData({ post: undefined })), null);
+    assert.equal(R.parseResolveData(postData({}, { slug: 5 })), null);
+    assert.equal(R.parseResolveData(postData({}, { href: undefined })), null);
+    assert.equal(R.parseResolveData(postData({ preview: undefined })), null);
+    assert.equal(R.classifyResolve({ kind: "ok", ok: true, status: 200, data: postData(), source: "api" }).kind, "ok");
   });
 
   await test("resolve status handling: 401 INVALID_TOKEN / 422 = invalid, 429 = busy, 401 other + 5xx + timeout + bad body = unavailable", () => {
@@ -448,6 +508,22 @@ try {
       assert.equal(o.data.page.sections.find((s) => s.key === "hero_brand").props.background, null);
       assert.deepEqual(o.data.page.sections.find((s) => s.key === "about_blocks").props.items, []);
 
+      // M5: a post link (kind "post", P-08 body inside data.post), and an incomplete draft of it
+      o = await P.resolvePreview(PREVIEW_TOKENS.post, { path: "/blog/music-night-under-the-stars", locale: "en" });
+      assert.equal(o.kind, "ok");
+      assert.equal(o.data.kind, "post");
+      assert.ok(o.data.post.title.endsWith("(draft)"));
+      assert.equal(o.data.post.href, "/blog/music-night-under-the-stars");
+      assert.equal(o.data.post.seo.noindex, true);
+      assert.ok(o.data.post.hero && Object.keys(o.data.post.media).length > 0);
+      assert.equal(o.data.preview.entity_type, "cms.posts");
+      o = await P.resolvePreview(PREVIEW_TOKENS.postDraft, { path: "/blog/music-night-under-the-stars", locale: "en" });
+      assert.equal(o.kind, "ok");
+      assert.deepEqual([o.data.post.hero, o.data.post.category, o.data.post.body], [null, null, null]);
+      assert.deepEqual(o.data.preview.warnings.map((w) => w.code), ["reference_not_published", "post_not_published"]);
+      assert.equal((await P.resolvePreview(PREVIEW_TOKENS.post, { path: "/our-path", locale: "en" })).kind, "invalid", "a post token on a page path looks like any dead token");
+      assert.equal((await P.resolvePreview(PREVIEW_TOKENS.valid, { path: "/blog/music-night-under-the-stars", locale: "en" })).kind, "invalid", "a page token on a post path too");
+
       for (const t of [PREVIEW_TOKENS.expired, "mock-preview-never-issued-token-0123456789abc"]) {
         assert.equal((await P.resolvePreview(t, { path: "/our-path", locale: "en" })).kind, "invalid", t);
       }
@@ -458,7 +534,7 @@ try {
 
       // every request: header token, never in the query; replies are no-store on the wire
       const previewReqs = mock.requests.filter((r) => r.path.endsWith("/preview/resolve"));
-      assert.ok(previewReqs.length >= 9);
+      assert.ok(previewReqs.length >= 13);
       for (const r of previewReqs) {
         assert.ok(!("token" in r.query) && !Object.values(r.query).some((v) => String(v).includes("mock-preview")));
         assert.equal(r.headers["x-portal-key"], SECRET_KEY);
@@ -550,6 +626,11 @@ try {
     assert.ok(!/token/i.test(banner.replace(/\/\/.*$/gm, "")), "the banner must not know the token");
     const page = read("src/app/(public)/[[...path]]/page.tsx");
     assert.ok(!/<PreviewBanner[^>]*token/i.test(page));
+    // the article page: the preview branch is decided by the cookie path BEFORE getPost (no 308, no data cache), the banner gets no token
+    const article = read("src/app/(public)/blog/[slug]/page.tsx");
+    assert.ok(!/<PreviewBanner[^>]*token/i.test(article));
+    assert.ok(article.indexOf("getPreviewPage(") !== -1 && article.indexOf("getPreviewPage(") < article.indexOf("getPost(slug"), "preview branch comes first");
+    assert.ok(/session\.path === path/.test(article) && article.includes("PREVIEW_ROBOTS"));
     for (const f of ["src/lib/preview/session.ts", "src/lib/preview/resolve.ts", "src/lib/preview/handlers.ts", "src/lib/preview/respond.ts", "src/app/api/preview/route.ts", "src/app/api/preview/exit/route.ts", "src/proxy.ts"]) {
       assert.ok(!/console\.|NEXT_PUBLIC_[A-Z_]*TOKEN/.test(read(f)), `${f} logs or leaks`);
     }

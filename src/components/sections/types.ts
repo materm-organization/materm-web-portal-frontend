@@ -56,7 +56,7 @@ export interface RichTextDoc {
 // ---------------------------------------------------------------- per-section props
 
 /** Hints only a PREVIEW page carries (editor-only copy, `i18n/site/preview.*.json` `hints.*`). */
-export type PreviewHintCode = "no_background_image";
+export type PreviewHintCode = "no_background_image" | "no_hero_image";
 
 export interface HeroBrandProps {
   title: string;

@@ -1,14 +1,11 @@
 "use server";
 
+import { headers } from "next/headers";
 import { getLocale } from "next-intl/server";
 
-import {
-  sanitizeContactValues,
-  validateContact,
-  type ContactActionState,
-} from "@/components/contact/contact-validation";
-
-const DELIVERY_TIMEOUT_MS = 10_000;
+import type { ContactActionState, ContactField } from "@/components/contact/contact-validation";
+import { CONTACT_FIELDS } from "@/components/contact/contact-validation";
+import { clientIpFromHeaders, clientUserAgent, submitContactForm } from "@/lib/forms/submit";
 
 function field(formData: FormData, name: string): string {
   const value = formData.get(name);
@@ -16,81 +13,35 @@ function field(formData: FormData, name: string): string {
 }
 
 /**
- * Contact form server action (used through `useActionState`). Never throws to
- * the client: every outcome is a `ContactActionState`.
+ * Contact form server action (used through `useActionState`). Never throws to the client: every outcome is a
+ * `ContactActionState`.
  *
- * Delivery: `CONTACT_ENDPOINT` (server-only env var) receives a JSON POST
- * { name, email, phone, topic, message, locale, submittedAt }.
+ * Delivery: `POST /api/v1/public/forms/{slug}/submissions` of the portal backend (P-15), server to server, with the
+ * visitor's address, the honeypot and the signed fill time. The rules (modes, error mapping, spam contract) live in
+ * `src/lib/forms/submit.ts` (this file may only export async functions).
  */
-export async function submitContact(
-  _prevState: ContactActionState,
-  formData: FormData,
-): Promise<ContactActionState> {
-  // Honeypot: bots fill the hidden `company` input. Pretend it worked.
-  if (field(formData, "company").trim() !== "") {
-    return { status: "success" };
-  }
-
-  const values = sanitizeContactValues({
-    name: field(formData, "name"),
-    email: field(formData, "email"),
-    phone: field(formData, "phone"),
-    topic: field(formData, "topic"),
-    message: field(formData, "message"),
-  });
-
+export async function submitContact(_prevState: ContactActionState, formData: FormData): Promise<ContactActionState> {
   try {
-    const errors = validateContact(values);
-    if (Object.keys(errors).length > 0) {
-      return { status: "error", errors, values };
-    }
-
-    const endpoint = process.env.CONTACT_ENDPOINT?.trim();
-
-    if (!endpoint) {
-      if (process.env.NODE_ENV !== "production") {
-        // ---------------------------------------------------------------
-        // TODO: connect a real mail/CRM endpoint before launch.
-        // DEV/DEMO MOCK ONLY: nothing is sent anywhere. Set CONTACT_ENDPOINT
-        // (server env) to deliver messages. In production the missing
-        // endpoint is reported as an error instead of faking success.
-        // ---------------------------------------------------------------
-        await new Promise((resolve) => setTimeout(resolve, 600));
-        return { status: "success" };
-      }
-      console.error("[contact] CONTACT_ENDPOINT is not configured; message not delivered");
-      return { status: "error", code: "unconfigured", values };
-    }
-
+    const h = await headers();
+    const get = (name: string) => h.get(name);
     let locale = "la";
     try {
       locale = await getLocale();
     } catch {
       // keep the default locale
     }
-
-    const response = await fetch(endpoint, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        ...values,
-        locale,
-        submittedAt: new Date().toISOString(),
-      }),
-      cache: "no-store",
-      signal: AbortSignal.timeout(DELIVERY_TIMEOUT_MS),
+    return await submitContactForm({
+      fields: Object.fromEntries(CONTACT_FIELDS.map((name: ContactField) => [name, field(formData, name)])),
+      honeypot: field(formData, "company"),
+      stamp: field(formData, "rt"),
+      slug: field(formData, "form"),
+      locale,
+      ip: clientIpFromHeaders(get),
+      userAgent: clientUserAgent(get),
     });
-
-    if (!response.ok) {
-      // Status only: never log the message body or the visitor's email.
-      console.error(`[contact] delivery failed with HTTP ${response.status}`);
-      return { status: "error", code: "generic", values };
-    }
-
-    return { status: "success" };
   } catch {
-    // Timeout / network failure. No payload in the log.
-    console.error("[contact] delivery failed (network error or timeout)");
-    return { status: "error", code: "generic", values };
+    // Unexpected failure. No payload in the log.
+    console.error("[contact] delivery failed (unexpected error)");
+    return { status: "error", code: "unavailable" };
   }
 }

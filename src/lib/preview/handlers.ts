@@ -72,8 +72,8 @@ export async function handleStart({ url, cookieHeader, mode, secure, resolve }: 
   if (outcome.kind === "busy") return { status: 307, location: statusLocation("busy"), setCookies: [], draft: "disable" };
   if (outcome.kind === "unavailable") return { status: 307, location: statusLocation("unavailable"), setCookies: [], draft: "disable" };
 
-  // the link without `path`: go where the backend says the page lives
-  const target = path ?? normalizePreviewPath(outcome.data.page.page.path);
+  // the link without `path`: go where the backend says the page (or the post) lives
+  const target = path ?? normalizePreviewPath(outcome.data.kind === "post" ? outcome.data.post.href : outcome.data.page.page.path);
   if (!target) return { status: 307, location: statusLocation("unavailable"), setCookies: [], draft: "disable" };
 
   const setCookies = [setSessionCookie({ token, path: target }, secure)];

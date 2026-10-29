@@ -4,9 +4,9 @@
   "warningsTitle": "Not everything could be shown ({count})",
   "warningAt": "at {path}",
   "warnings": {
-    "reference_not_published": "A section refers to content that is not published yet, so that part is left empty or hidden.",
+    "reference_not_published": "Something this refers to is not published yet (a section's album, FAQ group or form, or a post's category or tag), so that part is left empty or hidden.",
     "link_page_not_published": "A link points to a page that is not published yet.",
-    "post_not_published": "A section refers to a post that is not published yet.",
+    "post_not_published": "A section or a link refers to a post that is not published yet.",
     "section_type_unknown": "A section of an unknown type was skipped.",
     "shared_section_unavailable": "A shared section is not available and was left out.",
     "unknown": "Something in this preview could not be shown."
@@ -25,7 +25,8 @@
   },
   "hints": {
     "no_background_image": "No background image yet",
-    "placeholder": "This section cannot be shown yet. Missing: {fields}"
+    "placeholder": "This section cannot be shown yet. Missing: {fields}",
+    "no_hero_image": "No hero image yet"
   },
   "placeholderTitle": "Section not shown yet"
 }

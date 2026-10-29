@@ -31,13 +31,14 @@ npm run check:shadows   # fails on any shadow/ring utility in the site scope
 npm run check:i18n      # en/la key parity of the message files
 npm run cms:check       # bundle + exports are current and valid (cms:export regenerates; cms:mock = mock API; cms:selftest)
 npm run site:selftest   # /api/revalidate logic (HMAC, replay, allow-list, limits) + header/footer/switcher data
+npm run forms:selftest   # contact form delivery to P-15 (stamp, modes, error mapping, request contract) against the mock API
 npm run preview:selftest # preview flow (PF-10) + draft sections (B5): token/path validation, cookie, sliding refresh, handlers, resolve answer, mock API, adapters on drafts
 ```
 
 Env vars: `CMS_MODE` (`bundle` default | `mock` | `api`), `NEXT_PUBLIC_API_BASE_URL` / `CMS_API_BASE_URL`, `PORTAL_API_KEY`
 (secret), `CMS_FETCH_TIMEOUT_MS`, `MEDIA_BASE_URL` (BUILD time: file-service host for `next/image`), `SITE_ENV` / `CONTEXT`
 (robots), `REVALIDATE_SECRET` (secret, >= 32 chars; missing = `/api/revalidate` answers 503), `REVALIDATE_SECRET_PREVIOUS` (rotation),
-`REVALIDATE_MAX_SKEW_SECONDS` (default 300), `REVALIDATE_RATE_LIMIT_PER_MINUTE` (default 120); the endpoint contract is in `README.md`. No secrets in the tracked `.env.*` files (`NEXT_PUBLIC_*` is baked into the client bundle).
+`REVALIDATE_MAX_SKEW_SECONDS` (default 300), `REVALIDATE_RATE_LIMIT_PER_MINUTE` (default 120), `FORM_RENDER_SECRET` (secret, >= 32 chars, REQUIRED in production for the contact form's signed fill time, see "Contact form"); the endpoint contract is in `README.md`. No secrets in the tracked `.env.*` files (`NEXT_PUBLIC_*` is baked into the client bundle).
 
 ## Code layout
 
@@ -51,7 +52,7 @@ Env vars: `CMS_MODE` (`bundle` default | `mock` | `api`), `NEXT_PUBLIC_API_BASE_
 - `src/components/site/` — shared site building blocks (header, footer, page hero, section heading,
   CTA link, torn edge, gallery card, chrome link). **Read `src/components/site/README.md` (the
   contract: rules, components, tokens) before touching a page.**
-- `src/components/{home,our-path,blog,gallery,contact}/` — the few page-specific pieces left (the sections themselves are in `components/sections/`). `/contact` is code-designed, no Figma; its phone / email / address / hours are placeholders in `src/content/cms-seed/source/page.contact.json` (`info_items`), later the CMS; the form uses the server action `contact/actions.ts` (`CONTACT_ENDPOINT`), not the portal backend's form endpoint.
+- `src/components/{home,our-path,blog,gallery,contact}/` — the few page-specific pieces left (the sections themselves are in `components/sections/`). `/contact` is code-designed, no Figma; its phone / email / address / hours are placeholders in `src/content/cms-seed/source/page.contact.json` (`info_items`), later the CMS; the form posts to the portal backend's form endpoint P-15 through the server action `contact/actions.ts` and `src/lib/forms/submit.ts` (see "Contact form").
 - `src/components/global/language-switcher.tsx` — `useSwitchLocale` (sets the `locale` cookie and soft-refreshes the route with `router.refresh()`, no reload); used by `SiteHeader`. The languages offered are the ones the API returns.
 - `src/lib/cms/site-chrome.ts` — `buildSiteChrome(getSite(locale), t)`: header nav, footer nav, social links, brand/footer settings and the language list from the P-05 bundle (items without a published target are skipped, i18n/code defaults when a menu is empty); `(public)/layout.tsx` passes the result to `SiteHeader` / `SiteFooter`.
 - `src/app/api/revalidate/route.ts` + `src/lib/revalidate/` — the HMAC-signed revalidation webhook (PF-8).
@@ -77,7 +78,7 @@ backend slower than this timeout (portal-backend `pkg/redisguard`). Tests: `npm 
 
 ## Preview (PF-10)
 
-Editor preview of unpublished PAGES (T1.4.6; posts are M5). Full description in `README.md` ("Preview"). Short version:
+Editor preview of unpublished PAGES (T1.4.6) and POSTS (T1.5.8, M5). Full description in `README.md` ("Preview"). Short version:
 
 - Link from the admin: `/api/preview?token=<raw>&path=/our-path&locale=en`. `src/app/api/preview/route.ts` (logic in
   `src/lib/preview/handlers.ts`) validates token shape and path (whitelist = CMS page path), calls `GET /preview/resolve`
@@ -91,6 +92,12 @@ Editor preview of unpublished PAGES (T1.4.6; posts are M5). Full description in 
 - `src/proxy.ts` (Next 16 "proxy" = middleware) is the only place that refreshes the cookie (sliding 30 min), matcher gated on the cookie.
   Pure logic in `src/lib/preview/session.ts`. Clearing a cookie needs `Expires` in the past as well as `Max-Age=0` (Next drops `Max-Age=0`
   when it merges the Draft Mode cookies).
+- Posts (M5): the link is `/api/preview?token=...&path=/blog/<slug>&locale=en`; `GET /preview/resolve` answers `kind:"post"` with the
+  P-08 body in `data.post` (`src/lib/preview/resolve.ts` is a union over `page` / `post`; a draft's `hero` / `category` / `body`
+  may be `null`). `blog/[slug]/page.tsx` renders it when the cookie path equals `/blog/<slug>` (BEFORE `getPost`: no 308, no
+  data cache; same banner / `noindex` / 401 -> exit / 429 -> status as pages; no hero image gets the editor hint
+  `hints.no_hero_image`); on any other article an open session shows the "elsewhere" banner. Fixture tokens in the mock API:
+  `mock-preview-post-token-0123456789abcdefghij` and `mock-preview-postdraft-token-0123456789abcdef` (path `/blog/music-night-under-the-stars`).
 - Modes: `api` / `mock` only; `bundle` answers `/preview-status?s=unsupported` and ignores the cookie. The preview banner is `fixed top-0`
   (an `invisible` twin reserves its height), solid colours, no token prop. Editor copy: `i18n/site/preview.*.json` via
   `src/lib/preview/messages.ts` (not a next-intl namespace); the shared `site.preview.banner|exit|expired` keys are existing UI strings.
@@ -103,6 +110,20 @@ Editor preview of unpublished PAGES (T1.4.6; posts are M5). Full description in 
   except that a hero whose image host is not in `MEDIA_BASE_URL` now keeps its title on the neutral background instead of vanishing. Fixture token
   `mock-preview-draft-token-0123456789abcdefgh` (`/our-path`: hero without image, `about_blocks` without items, `gallery_cards` without cards).
 - Tests: `npm run preview:selftest` (28) + `scripts/cms/mock-api.mjs` fixture tokens (`PREVIEW_TOKENS`). Never log or echo a token.
+
+## Contact form
+
+`ContactSection` (server) signs the render time into a hidden field (`mintRenderStamp(form.slug)`, `src/lib/forms/render-stamp.ts`,
+HMAC with `FORM_RENDER_SECRET`); `ContactForm` (client) posts it with the form slug and the honeypot `company` to the server
+action `app/(public)/contact/actions.ts`, which collects the headers and calls `submitContactForm` (`src/lib/forms/submit.ts`):
+local validation (`contact-validation.ts`) -> `POST /public/forms/{slug}/submissions` via `cmsFetch(..., { forceApi: true })`
+(10 s, never retried) with `honeypot`, `elapsed_ms` (0 for a missing / forged stamp), `rendered_at`, `X-Client-IP`,
+`X-Client-User-Agent` -> `mapSubmitResult`: 422 `/data/<field>` -> inline field error, 429 `rateLimited`, 404 `unconfigured`,
+5xx / timeout / network / wrong key `unavailable`, other 4xx `generic` (texts: `forms.errors.*`). PRODUCTION always sends (even with
+`CMS_MODE=bundle`; no API URL or no `FORM_RENDER_SECRET` = `unconfigured`, never a fake success); outside production only
+`CMS_MODE=api` + an API URL sends, every other dev setup simulates success after 600 ms. A genuinely signed stamp older than 24 h
+counts as 24 h. Never log the body / e-mail / address. Tests: `npm run forms:selftest`; mock API answers P-15 (magic e-mail addresses
+in `scripts/cms/mock-api.mjs`).
 
 ## i18n
 

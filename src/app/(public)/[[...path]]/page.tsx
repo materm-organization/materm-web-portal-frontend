@@ -55,7 +55,11 @@ async function loadPage(segments: string[] | undefined): Promise<Loaded | null> 
   const session = await readPreviewSession(); // null without the cookie / in bundle mode
   if (session && session.path === path) {
     const outcome = await getPreviewPage(session.token, path, locale); // React cache(): shared by generateMetadata and the page
-    if (outcome.kind === "ok") return { kind: "page", page: outcome.data.page, locale, path, preview: outcome.data.preview, elsewhereOf: null };
+    // a post token never answers for a page path (the backend ties a token to ONE entity); if it ever did, show nothing
+    if (outcome.kind === "ok" && outcome.data.kind === "page") {
+      return { kind: "page", page: outcome.data.page, locale, path, preview: outcome.data.preview, elsewhereOf: null };
+    }
+    if (outcome.kind === "ok") return { kind: "preview-failed", to: statusLocation("unavailable") };
     if (outcome.kind === "invalid") return { kind: "preview-failed", to: "/api/preview/exit?reason=expired" };
     return { kind: "preview-failed", to: statusLocation(outcome.kind === "busy" ? "busy" : "unavailable") };
   }

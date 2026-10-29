@@ -27,6 +27,11 @@ export interface CmsFetchOptions {
   noStore?: boolean;
   /** extra request headers (preview: `X-Preview-Token`). Use together with `noStore`: a header is part of Next's cache key. */
   headers?: Record<string, string>;
+  /**
+   * Talk to the real portal API whatever `CMS_MODE` says (`bundle` / `mock` only decide where CONTENT is read from).
+   * The contact form uses it: a submission must never be answered by the mock server or silently dropped.
+   */
+  forceApi?: boolean;
 }
 
 /** pause before the single retry of a fast failure (ms) */
@@ -46,7 +51,7 @@ export function buildUrl(baseUrl: string, path: string, locale: string | undefin
 
 /** `path` starts with "/public/..." (relative to NEXT_PUBLIC_API_BASE_URL / CMS_MOCK_URL) */
 export async function cmsFetch<T>(path: string, opts: CmsFetchOptions): Promise<CmsResult<T>> {
-  const mode = getCmsMode();
+  const mode = opts.forceApi ? "api" : getCmsMode();
   const source = mode === "mock" ? "mock" : "api";
   const cfg = getApiConfig(mode);
   if (!cfg.baseUrl) return { kind: "error", ok: false, status: "unconfigured", down: true, source };

@@ -16,10 +16,18 @@
 //   mock-preview-warnings-token-0123456789abcdef    /contact    contact_section + faq with `resolved: {}` and 3 warnings
 //   mock-preview-draft-token-0123456789abcdefgh     /our-path   DRAFT: hero without background image, about_blocks without items,
 //                                                               gallery_cards without cards (B5: incomplete sections in preview)
+//   mock-preview-post-token-0123456789abcdefghij    /blog/music-night-under-the-stars   POST snapshot (title changed), no warnings;
+//                                                               data = { kind: "post", post: <P-08 body>, preview } (M5, doc/05 PT-18)
+//   mock-preview-postdraft-token-0123456789abcdef   /blog/music-night-under-the-stars   DRAFT post: no hero, no category, no
+//                                                               excerpt, empty body/gallery + 2 warnings
 //   mock-preview-expired-token-0123456789abcdef     401 INVALID_TOKEN   (same body as unknown / revoked / path mismatch)
 //   mock-preview-ratelimit-token-0123456789abcd     429 RATE_LIMITED + Retry-After
 //   mock-preview-broken-token-0123456789abcdefg     500
 //   missing header, length outside 32-256 or characters outside [A-Za-z0-9._~-]   422 VALIDATION_FAILED
+// Form submission (P-15): POST /api/v1/public/forms/{slug}/submissions (JSON, X-Portal-Key) answers 200 {status:"received"},
+// keeps the accepted body in `server.submissions`, and reacts to magic e-mail addresses so the contact form's error
+// mapping can be tried without a backend: limited@example.test -> 429 (+Retry-After), invalid@example.test -> 422 with
+// errors[/data/email = email], gone@example.test -> 404, down@example.test -> 503.
 // Replies carry Cache-Control: no-store, X-Robots-Tag: noindex, nofollow, noarchive and Vary: X-Preview-Token.
 // Same routes/status codes as src/lib/cms/bundle.ts; scripts/cms/selftest.mjs asserts both agree.
 import { createServer } from "node:http";
@@ -45,6 +53,8 @@ export const PREVIEW_TOKENS = {
   home: "mock-preview-home-token-0123456789abcdefgh",
   warnings: "mock-preview-warnings-token-0123456789abcdef",
   draft: "mock-preview-draft-token-0123456789abcdefgh",
+  post: "mock-preview-post-token-0123456789abcdefghij",
+  postDraft: "mock-preview-postdraft-token-0123456789abcdef",
   expired: "mock-preview-expired-token-0123456789abcdef",
   rateLimited: "mock-preview-ratelimit-token-0123456789abcd",
   broken: "mock-preview-broken-token-0123456789abcdefg",
@@ -158,6 +168,33 @@ export function createMockApi(dataDir = DATA_DIR) {
     },
   };
 
+  // post fixtures: the bundled P-08 body of the sample article, changed like a draft would be
+  const POST_SLUG = "music-night-under-the-stars";
+  const postFixtures = {
+    [PREVIEW_TOKENS.post]: {
+      mutate: (post) => {
+        post.title = `${post.title} (draft)`;
+        post.seo.title = post.title;
+      },
+      warnings: [],
+    },
+    [PREVIEW_TOKENS.postDraft]: {
+      mutate: (post) => {
+        post.title = "Untitled draft";
+        post.hero = null;
+        post.category = null;
+        post.excerpt = null;
+        post.image = null;
+        post.body = null;
+        post.gallery = { heading: null, description: null, items: [] };
+      },
+      warnings: [
+        { code: "reference_not_published", path: "/post/category_id", message: "the category is not published" },
+        { code: "post_not_published", path: "/translations/0/body", message: "a linked post is not published" },
+      ],
+    },
+  };
+
   /** P-19. `headers` are the lower-cased request headers. */
   function previewResolve(q, headers) {
     const token = headers["x-preview-token"];
@@ -173,6 +210,24 @@ export function createMockApi(dataDir = DATA_DIR) {
       return { status: 429, headers: { ...PREVIEW_HEADERS, "Retry-After": "30" }, body: { success: false, message: "too many requests", code: "RATE_LIMITED" } };
     }
     if (token === PREVIEW_TOKENS.broken) return { status: 500, headers: PREVIEW_HEADERS, body: { success: false, message: "internal error", code: "INTERNAL_ERROR" } };
+    const pfx = own(postFixtures, token);
+    if (pfx) {
+      if (wanted !== undefined && wanted !== `/blog/${POST_SLUG}`) return invalidToken();
+      const ploc = localeOf(q.locale);
+      const penv = file(`${ploc}/posts/${POST_SLUG}.json`);
+      if (!penv) return invalidToken();
+      const post = structuredClone(penv.data);
+      pfx.mutate(post);
+      post.seo.noindex = true;
+      return {
+        status: 200,
+        headers: PREVIEW_HEADERS,
+        body: {
+          success: true,
+          data: { locale: ploc, kind: "post", post, preview: { entity_type: "cms.posts", entity_id: post.id, locale: ploc, warnings: pfx.warnings } },
+        },
+      };
+    }
     const fx = own(previewFixtures, token);
     if (!fx) return invalidToken(); // unknown, expired, revoked: one answer
     if (wanted !== undefined && wanted !== fx.path) return invalidToken(); // path mismatch: the same answer
@@ -264,7 +319,38 @@ export function createMockServer({ dataDir = DATA_DIR, key = process.env.MOCK_PO
       res.writeHead(status, { "Content-Type": "application/json; charset=utf-8", "Cache-Control": "public, max-age=30, stale-while-revalidate=300", "X-Mock": "1", ...extra });
       res.end(JSON.stringify(body));
     };
+    const submit = (path, raw) => {
+      const m = /^\/public\/forms\/([a-z0-9_-]{1,64})\/submissions$/.exec(path);
+      if (!m) return reply(404, { success: false, message: "not found", code: "NOT_FOUND" });
+      if (key && req.headers["x-portal-key"] !== key) return reply(401, { success: false, code: "UNAUTHENTICATED" });
+      let body;
+      try {
+        body = JSON.parse(raw);
+      } catch {
+        return reply(400, { success: false, message: "bad request", code: "BAD_REQUEST" }, { "Cache-Control": "no-store" });
+      }
+      const NS = { "Cache-Control": "no-store" };
+      const email = String(body?.data?.email ?? "");
+      if (email === "limited@example.test") return reply(429, { success: false, message: "too many requests", code: "RATE_LIMITED" }, { ...NS, "Retry-After": "30" });
+      if (email === "invalid@example.test") {
+        return reply(422, { success: false, message: "validation failed", code: "VALIDATION_FAILED", errors: [{ in: "body", path: "/data/email", code: "email" }, { in: "body", path: "/locale", code: "invalid_format" }] }, NS);
+      }
+      if (email === "gone@example.test") return reply(404, { success: false, message: "not found", code: "NOT_FOUND" }, NS);
+      if (email === "down@example.test") return reply(503, { success: false, message: "unavailable", code: "SERVICE_UNAVAILABLE" }, { ...NS, "Retry-After": "5" });
+      server.submissions.push({ slug: m[1], body, headers: { "x-portal-key": req.headers["x-portal-key"], "x-client-ip": req.headers["x-client-ip"], "x-client-user-agent": req.headers["x-client-user-agent"], "content-type": req.headers["content-type"] } });
+      reply(200, { success: true, data: { status: "received" } }, NS);
+    };
     const run = () => {
+      if (req.method === "POST") {
+        const chunks = [];
+        let size = 0;
+        req.on("data", (c) => {
+          size += c.length;
+          if (size <= 65536) chunks.push(c);
+        });
+        req.on("end", () => (size > 65536 ? reply(413, { success: false, code: "PAYLOAD_TOO_LARGE" }) : submit(url.pathname.replace(/^\/api\/v1/, ""), Buffer.concat(chunks).toString("utf8"))));
+        return;
+      }
       if (req.method !== "GET") return reply(405, { success: false, code: "METHOD_NOT_ALLOWED" });
       const path = url.pathname.replace(/^\/api\/v1/, "");
       if (failStatus && !path.startsWith("/health")) return reply(failStatus, { success: false, code: "SERVICE_UNAVAILABLE" });
@@ -278,6 +364,7 @@ export function createMockServer({ dataDir = DATA_DIR, key = process.env.MOCK_PO
     else run();
   });
   server.requests = [];
+  server.submissions = [];
   return server;
 }
 

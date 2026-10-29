@@ -2,6 +2,7 @@ import { ContactForm } from "@/components/contact/contact-form";
 import { ContactInfo } from "@/components/contact/contact-info";
 import { Reveal, revealDelay } from "@/components/site/motion";
 import { SectionHeading } from "@/components/site/section-heading";
+import { mintRenderStamp } from "@/lib/forms/render-stamp";
 
 import { subId } from "./dom-id";
 import type { SectionComponentProps } from "./types";
@@ -9,7 +10,8 @@ import type { SectionComponentProps } from "./types";
 // `contact_section`: white main section: intro + contact details on the left (5/12), the form
 // panel on the right (7/12) from `lg`; stacked (info first) below. Padding and 1368px column
 // follow the Home teasers. The form widgets are fixed (name, email, phone, topic, message);
-// their TEXT comes from `form` (rendering arbitrary form definitions is a later task, PF-9).
+// their TEXT comes from `form` (rendering arbitrary form definitions is a later task, PF-9). The server signs the
+// render time into a hidden field (`renderStamp`): the backend's "filled too fast" check needs it (doc/08 §6.3).
 export function ContactSection({
   domId,
   eyebrow,
@@ -54,7 +56,7 @@ export function ContactSection({
         </div>
         {form ? (
           <Reveal delay={0.1} className="min-w-0 lg:col-span-7">
-            <ContactForm form={form} />
+            <ContactForm form={form} renderStamp={mintRenderStamp(form.slug)} />
           </Reveal>
         ) : null}
       </div>

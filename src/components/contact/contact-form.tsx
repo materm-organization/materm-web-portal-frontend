@@ -25,6 +25,7 @@ import {
   type ContactErrors,
   type ContactField as ContactFieldName,
   type ContactFieldError,
+  type ContactFormError,
 } from "@/components/contact/contact-validation";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -33,8 +34,9 @@ import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Textarea } from "@/components/ui/textarea";
 import { cn } from "@/lib/utils";
 
-// Contact form panel. Needs the server-only env var CONTACT_ENDPOINT to deliver
-// messages (see contact-validation.ts and the README "Contact form" section).
+// Contact form panel. The server action posts the message to the portal backend (P-15; see
+// contact-validation.ts and the README "Contact form" section). Two hidden fields feed its anti-spam contract: the
+// form slug and `rt`, the signed render time (`renderStamp`, minted by the server in `ContactSection`).
 //
 // All visible text arrives in the `form` prop (a resolved form definition, doc/08
 // section 2.3.4). Error texts come from `form.messages` first and fall back to the
@@ -87,7 +89,7 @@ function SuccessView({
   );
 }
 
-function ContactFormPanel({ form, onReset }: { form: ResolvedForm; onReset: () => void }) {
+function ContactFormPanel({ form, renderStamp, onReset }: { form: ResolvedForm; renderStamp: string; onReset: () => void }) {
   const tf = useTranslations("forms");
   const baseId = useId();
   const formRef = useRef<HTMLFormElement>(null);
@@ -95,7 +97,7 @@ function ContactFormPanel({ form, onReset }: { form: ResolvedForm; onReset: () =
 
   const [errors, setErrors] = useState<ContactErrors>({});
   const [showSummary, setShowSummary] = useState(false);
-  const [serverCode, setServerCode] = useState<"unconfigured" | "generic" | undefined>();
+  const [serverCode, setServerCode] = useState<ContactFormError | undefined>();
 
   // Adopt each new server result during render (no effect, no extra paint).
   const [seenState, setSeenState] = useState(state);
@@ -317,10 +319,13 @@ function ContactFormPanel({ form, onReset }: { form: ResolvedForm; onReset: () =
           />
         </ContactField>
 
-        {/* Honeypot: invisible to people and assistive tech, bots fill it. */}
+        {/* Honeypot: invisible to people and assistive tech, bots fill it. The server forwards it; the backend decides. */}
         <div aria-hidden="true" className="sr-only">
           <input type="text" name="company" tabIndex={-1} autoComplete="off" defaultValue="" />
         </div>
+        {/* Anti-spam facts for the server action: which form, and when the server rendered it (signed, see lib/forms). */}
+        <input type="hidden" name="form" value={form.slug} />
+        <input type="hidden" name="rt" value={renderStamp} />
 
         <div className="pt-2">
           <Button
@@ -338,8 +343,8 @@ function ContactFormPanel({ form, onReset }: { form: ResolvedForm; onReset: () =
   );
 }
 
-export function ContactForm({ form }: { form: ResolvedForm }) {
+export function ContactForm({ form, renderStamp = "" }: { form: ResolvedForm; renderStamp?: string }) {
   // Bumping the key remounts the panel, which resets `useActionState` to idle.
   const [formKey, setFormKey] = useState(0);
-  return <ContactFormPanel key={formKey} form={form} onReset={() => setFormKey((k) => k + 1)} />;
+  return <ContactFormPanel key={formKey} form={form} renderStamp={renderStamp} onReset={() => setFormKey((k) => k + 1)} />;
 }
