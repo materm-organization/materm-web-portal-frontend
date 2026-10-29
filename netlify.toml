@@ -1,0 +1,52 @@
+# Netlify configuration of the public site (PF-14, local part; doc/08 §7.4, §8.7). NO VALUES in this file:
+# secrets and per-context settings are set in the Netlify UI / CLI (Site configuration -> Environment variables, scoped per context).
+# Netlify detects Next.js 16 and installs its Next runtime itself; do not add the old plugin here unless Netlify's docs say so for 16.3 (Q-08-13, unverified).
+# The cut-over itself (real site, production values) is phase P4, not done here.
+
+[build]
+  command = "npm run build"
+  publish = ".next"
+
+[build.environment]
+  NODE_VERSION = "24"
+  NEXT_TELEMETRY_DISABLED = "1"
+
+# next/image optimises the hosts in MEDIA_BASE_URL (read at BUILD time by next.config.ts, doc/08 §3.12).
+# If Netlify's Image CDN is used, list the same host(s) here as well (domains, no scheme), e.g. remote_images = ["https://<file-service-host>/.*"].
+# [images]
+#   remote_images = []
+
+# Headers: next.config.ts sets none, so these only add what Next does not. API routes must never be cached;
+# no CSP / frame-ancestors on purpose (the preview iframe of doc/08 §3.9 is not built; preview opens in a new tab).
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    X-Frame-Options = "SAMEORIGIN"
+
+[[headers]]
+  for = "/api/*"
+  [headers.values]
+    Cache-Control = "no-store"
+
+# ---------------------------------------------------------------------------------------------------------------------------
+# ENVIRONMENT VARIABLE NAMES per deploy context (set in Netlify; values never in git). Derived from the code (src/, next.config.ts).
+#
+#                          production         deploy-preview / branch-deploy      notes
+# CMS_MODE                 bundle -> api      api (staging backend) or bundle      cut-over order: deploy with bundle, then switch to api (rollback = back to bundle + redeploy)
+# CMS_API_BASE_URL         prod backend       STAGING backend (never prod)         runtime override, incl. /api/v1
+# NEXT_PUBLIC_API_BASE_URL prod backend       staging backend                      BUILD time (baked in); same value as CMS_API_BASE_URL; no secret
+# PORTAL_API_KEY           SECRET             SECRET (staging key)                 X-Portal-Key, server only, one of portal.frontendKeys of the backend
+# CMS_FETCH_TIMEOUT_MS     (optional, 2000)
+# MEDIA_BASE_URL           file-service host  file-service host                    BUILD time; comma list; media on any other host is dropped
+# SITE_ENV                 production         staging / unset                      only "production" lets robots.ts allow crawling (Netlify CONTEXT=production is the fallback)
+# REVALIDATE_SECRET        SECRET >= 32 chars SECRET (different from prod)         /api/revalidate answers 503 without it; must equal the admin backend's REVALIDATE_SECRET
+# REVALIDATE_SECRET_PREVIOUS  (only while rotating)
+# REVALIDATE_MAX_SKEW_SECONDS, REVALIDATE_RATE_LIMIT_PER_MINUTE   (optional, 300 / 120)
+# FORM_RENDER_SECRET       SECRET >= 32 chars SECRET                               server only; production contact form says "unconfigured" without it
+# CMS_MOCK_URL             never set on Netlify (CMS_MODE=mock is for local work)
+# PREVIEW_*                none: the preview constants are in code; preview needs CMS_MODE=api and the portal backend's preview endpoint
+#
+# Never set on Netlify: NEXT_PUBLIC_DISABLE_AUTH_GUARD or anything NEXT_PUBLIC_* that holds a secret (this repo has no auth at all).
+# Scopes: set every SECRET with "contains secret values" ON and scope it per context (production / deploy-preview / branch-deploy).

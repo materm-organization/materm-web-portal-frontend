@@ -32,6 +32,8 @@ npm run check:i18n      # en/la key parity of the message files
 npm run cms:check       # bundle + exports are current and valid (cms:export regenerates; cms:mock = mock API; cms:selftest)
 npm run site:selftest   # /api/revalidate logic (HMAC, replay, allow-list, limits) + header/footer/switcher data
 npm run forms:selftest   # contact form delivery to P-15 (stamp, modes, error mapping, request contract) against the mock API
+npm run cms:down-selftest # PF-12: API-down matrix (refused / timeout / 5xx / 401, 403 / invalid body) x every resource family + form + preview + recovery
+npm run cms:snapshot    # PF-12: read the running portal API into the bundle's shape (--compare, --out, --apply, --best-effort); see "Fallback and rollback"
 npm run preview:selftest # preview flow (PF-10) + draft sections (B5): token/path validation, cookie, sliding refresh, handlers, resolve answer, mock API, adapters on drafts
 ```
 
@@ -75,6 +77,23 @@ sticks (Next's data cache stores only 200 answers, `patch-fetch.js`). `fallback.
 process, which hid a second outage) and caps its maps at 200 keys (page paths are visitor-chosen). Not covered: a route that Next prerenders statically
 (`sitemap.xml`) keeps whatever it rendered, bundle fallback included, until its revalidate; backend side: a Redis outage no longer makes the portal
 backend slower than this timeout (portal-backend `pkg/redisguard`). Tests: `npm run cms:selftest` section `[5b]`.
+
+## Fallback and rollback (PF-12, PF-14 local part)
+
+- **One fallback, not two.** The snapshot doc/08 §3.10 asks for (`src/content/fallback/**`) already exists as `src/content/cms-seed/data/**` + `index.ts`
+  (API response bodies per endpoint and locale, typed with `satisfies BundleData`); the loaders fall back to it and log
+  `{"event":"fallback_used","resource","locale","reason":"api_down:<network|timeout|5xx|401|403|invalid|unconfigured>"}` once per minute per (resource, reason).
+  No `src/content/fallback/` is created. `scripts/cms/snapshot.mjs` reads a RUNNING portal API into the same tree: default = temp dir, `--compare` diffs it with
+  the bundle, `--apply` replaces the bundle with it (`manifest.source = "api"`; `cms:check` then skips the seed rebuild check; `npm run cms:export` returns to the seed),
+  `--best-effort` never fails (for a `prebuild` hook, NOT wired: a build must not depend on the API). Needs `PORTAL_API_KEY` + `--base`/`CMS_API_BASE_URL`.
+  Not in the fallback by design: P-15 (form says `unavailable`), preview (error page), redirects.
+- **Rollback runbook** (site misbehaves in `CMS_MODE=api`): 1) Netlify -> Environment variables -> set `CMS_MODE=bundle` for the context -> trigger a deploy
+  (clear cache not needed). The site then reads the bundled snapshot with no API call; the contact form still posts to the API (it says "unavailable" if the API is down).
+  2) If the bundle is older than the CMS content, refresh it first on a machine that can reach the API: `PORTAL_API_KEY=... npm run cms:snapshot -- --base <api>/api/v1 --compare`,
+  review, then `--apply`, run `npx tsc --noEmit && npm run cms:validate`, commit. 3) Alternatively "Publish deploy" on an earlier successful deploy (no env change).
+  4) Return: set `CMS_MODE=api`, redeploy, watch `fallback_used` in the function logs and 5xx. Env names per context: `netlify.toml` (comments; no values in git).
+- Parity round 3 (2026-10-29, bundle vs api on production builds against a real portal backend + seeded scratch DB): 7 pages x `la`/`en`, HTML identical after
+  normalising the per-build server-action ids, the signed form stamp and the section DOM ids (the seed uses fake UUIDs, the DB real ones).
 
 ## Preview (PF-10)
 

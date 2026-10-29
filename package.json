@@ -16,6 +16,8 @@
     "cms:validate": "node scripts/cms/validate-seed.mjs",
     "cms:mock": "node scripts/cms/mock-api.mjs",
     "cms:selftest": "node scripts/cms/selftest.mjs",
+    "cms:down-selftest": "node scripts/cms/down-selftest.mjs",
+    "cms:snapshot": "node scripts/cms/snapshot.mjs",
     "cms:sync-doc": "node scripts/cms/sync-from-doc.mjs",
     "site:selftest": "node scripts/site/selftest.mjs",
     "preview:selftest": "node scripts/preview/selftest.mjs",

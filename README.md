@@ -72,6 +72,10 @@ node scripts/cms/revalidate-demo.mjs --bad-signature   # 401
 node scripts/cms/revalidate-demo.mjs --stale           # 401
 ```
 
+## Deploy, fallback, rollback
+
+`netlify.toml` holds the build and header settings and, as comments, the environment variable NAMES per deploy context (values live only in Netlify). When the API is down the site serves the bundled snapshot (`src/content/cms-seed`) and logs `fallback_used`; `npm run cms:down-selftest` proves it for every resource family. Rollback = `CMS_MODE=bundle` + redeploy; details in `CLAUDE.md` ("Fallback and rollback").
+
 ## Preview (PF-10, `/api/preview`)
 
 An editor previews an unpublished page from the admin. The admin issues a link

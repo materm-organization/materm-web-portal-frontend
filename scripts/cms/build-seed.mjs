@@ -713,7 +713,7 @@ export function buildSeed(inputs = loadInputs()) {
 
 // ---------------------------------------------------------------------------- index.ts
 
-function renderIndex(paths, localeCodes) {
+export function renderIndex(paths, localeCodes) {
   const ident = (p) => "d_" + p.replace(/\.json$/, "").replace(/[^A-Za-z0-9]+/g, "_");
   const sorted = [...paths].sort();
   const lines = [
@@ -756,7 +756,7 @@ function renderIndex(paths, localeCodes) {
 
 // ---------------------------------------------------------------------------- main
 
-function listJson(dir, base = dir) {
+export function listJson(dir, base = dir) {
   if (!existsSync(dir)) return [];
   return readdirSync(dir).flatMap((f) => {
     const p = join(dir, f);
@@ -767,6 +767,12 @@ function listJson(dir, base = dir) {
 if (isMain(import.meta.url)) {
   const args = parseArgs(process.argv.slice(2));
   const check = !!args.check;
+  // After `npm run cms:snapshot -- --apply` the bundle IS an API snapshot (manifest.source = "api"): it is no longer
+  // generated from source/, so comparing it with a rebuild would always fail. `npm run cms:export` returns to the seed.
+  if (check && existsSync(join(DATA_DIR, "manifest.json")) && readJson(join(DATA_DIR, "manifest.json")).source === "api") {
+    console.log("build-seed --check: skipped, the bundle is an API snapshot (manifest.source = api); `npm run cms:export` rebuilds the seed");
+    process.exit(0);
+  }
   const { files, index } = buildSeed();
   const stale = [];
   for (const [p, v] of files) writeOrCheck(join(DATA_DIR, p), toJsonText(v), { check, stale });
