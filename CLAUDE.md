@@ -94,6 +94,7 @@ backend slower than this timeout (portal-backend `pkg/redisguard`). Tests: `npm 
   4) Return: set `CMS_MODE=api`, redeploy, watch `fallback_used` in the function logs and 5xx. Env names per context: `netlify.toml` (comments; no values in git).
 - Parity round 3 (2026-10-29, bundle vs api on production builds against a real portal backend + seeded scratch DB): 7 pages x `la`/`en`, HTML identical after
   normalising the per-build server-action ids, the signed form stamp and the section DOM ids (the seed uses fake UUIDs, the DB real ones).
+- Not proven yet (state after the M6 code tasks): pixel parity (the check compares HTML, not rendered pixels), the Netlify deploy and Netlify's support for Next 16.3 (`netlify.toml` is the local part of PF-14 only; the cut-over is phase P4), and the `Dockerfile` / `Jenkinsfile` of this repo are inherited (Jenkinsfile still calls shared company jobs). The commits were pushed at the end of M6.
 
 ## Preview (PF-10)
 
@@ -168,8 +169,10 @@ in `scripts/cms/mock-api.mjs`).
   backend); run it after changing those files.
 - To add a namespace: add it to `SITE_NAMESPACES` and a `case` in `loadSiteFile` in `request.ts`,
   and create both locale files.
-- Shell copy comes from i18n (`useTranslations` / `getTranslations`); no hard-coded strings. All `la` files are English
-  copies marked `"_todoTranslate": true`.
+- Shell copy comes from i18n (`useTranslations` / `getTranslations`); no hard-coded strings. The `la` shell files
+  (`common`, `blog`, `forms`, `preview`) and the 39 UI strings are now translated to Lao (`8fc6966`), pending review by a native speaker
+  (CSV `/Users/max/Desktop/materm-lao-review.csv`). The `"_todoTranslate": true` flag stays in every `la` file on purpose:
+  `scripts/i18n/check-parity.mjs` requires it. About 225 Lao strings of the CMS seed (page copy in `cms-seed/source`) are still English.
 
 ## Things to know
 
