@@ -15,6 +15,7 @@ import { cmsFetch } from "./client";
 import { getCmsMode } from "./config";
 import { logFallback } from "./fallback";
 import { normalizeLocaleCode } from "./locale";
+import { validateRedirect, type RedirectTarget } from "./redirects";
 import type { CmsResult } from "./result";
 import { REVALIDATE, TAGS } from "./tags";
 import type {
@@ -191,6 +192,33 @@ export const getForm = cache(async (slug: string, loc: string): Promise<FormDefi
   if (!/^[a-z0-9_-]{1,64}$/.test(slug)) return null;
   const r = await call<FormDefinition>({ resource: `form:${slug}`, path: `/public/forms/${slug}`, locale: l, tags: TAGS.form(), revalidate: REVALIDATE.form, required: false });
   return r.kind === "ok" ? r.data : null;
+});
+
+// --------------------------------------------------------------------------- redirects
+
+/**
+ * P-17, called ONLY by a route that is about to answer 404 (page/post lookup found nothing; a published page wins, BR-26).
+ * null = no redirect: no match (404 from the API), bundle/mock mode (no redirects in the bundle), an unsafe or looping
+ * target, or the API failed (logged once per minute; a failed lookup stays a 404, it is never guessed and never falls back).
+ * React `cache()` shares one result per render; only 200 answers enter Next's data cache (404 / failures are re-asked).
+ */
+export const resolveRedirect = cache(async (path: string, loc: string): Promise<RedirectTarget | null> => {
+  if (getCmsMode() !== "api") return null;
+  const l = locale(loc);
+  if (!path.startsWith("/") || path.length > 500) return null;
+  const res = await cmsFetch<unknown>("/public/redirects/resolve", {
+    locale: l,
+    query: { path },
+    tags: TAGS.redirects(),
+    revalidate: REVALIDATE.redirects,
+  });
+  if (res.kind === "ok") {
+    const valid = validateRedirect(path, res.data);
+    if (!valid) logFallback("redirect", l, "invalid_target");
+    return valid;
+  }
+  if (res.kind === "error" && res.status !== 404) logFallback("redirect", l, `api_down:${res.status}`);
+  return null; // 404 = no redirect; anything else = stay 404
 });
 
 // --------------------------------------------------------------------------- sitemap / robots

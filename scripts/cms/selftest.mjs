@@ -35,7 +35,7 @@ function compile(tmp) {
   mkdirSync(join(tmp, "node_modules", "server-only"), { recursive: true });
   writeFileSync(join(tmp, "node_modules", "server-only", "index.js"), "module.exports = {};\n");
   symlinkSync(join(ROOT, "node_modules", "react"), join(tmp, "node_modules", "react"), "dir");
-  const files = ["loaders", "bundle", "client", "tags", "locale", "media", "image-hosts", "ui-strings", "config", "fallback", "result"].map((f) => join(ROOT, "src/lib/cms", `${f}.ts`));
+  const files = ["loaders", "bundle", "client", "tags", "locale", "media", "image-hosts", "ui-strings", "config", "fallback", "result", "redirects"].map((f) => join(ROOT, "src/lib/cms", `${f}.ts`));
   writeFileSync(
     join(tmp, "tsconfig.json"),
     JSON.stringify({
@@ -73,6 +73,7 @@ function freshModules(out) {
     uiStrings: req(join(out, "lib/cms/ui-strings.js")),
     media: req(join(out, "lib/cms/media.js")),
     seed: req(join(out, "content/cms-seed/index.js")),
+    redirects: req(join(out, "lib/cms/redirects.js")),
   };
 }
 
@@ -357,6 +358,95 @@ export async function main() {
       } finally { w.restore(); }
     });
     await close(modServer);
+
+    // ============================================================ 3b. redirects (P-17)
+    console.log("\n[3b] resolveRedirect: bundle/mock = null, api = P-17 with validation, failures stay 404");
+    {
+      const ok = (data) => new Response(JSON.stringify({ success: true, data }), { status: 200 });
+      const notFound = () => new Response(JSON.stringify({ success: false, code: "NOT_FOUND" }), { status: 404 });
+      const calls3b = [];
+      const answers = {
+        "/old": () => ok({ target: "/new", status_code: 301, hops: 1 }),
+        "/temp": () => ok({ target: "/new", status_code: 302, hops: 1 }),
+        "/ext": () => ok({ target: "https://example.org/x", status_code: 307, hops: 1 }),
+        "/loop": () => ok({ target: "/loop/", status_code: 301, hops: 1 }),
+        "/http": () => ok({ target: "http://example.org/x", status_code: 301, hops: 1 }),
+        "/proto": () => ok({ target: "//evil.example/x", status_code: 301, hops: 1 }),
+        "/js": () => ok({ target: "javascript:alert(1)", status_code: 301, hops: 1 }),
+        "/status": () => ok({ target: "/new", status_code: 200, hops: 1 }),
+        "/junk": () => ok({ nope: true }),
+        "/boom": () => new Response("{}", { status: 503 }),
+        "/limited": () => new Response("{}", { status: 429 }),
+      };
+      const install = () => {
+        globalThis.fetch = async (url, init = {}) => {
+          const u = new URL(String(url));
+          calls3b.push({ url: u, init });
+          return (answers[u.searchParams.get("path")] ?? notFound)();
+        };
+      };
+
+      setEnv({});
+      globalThis.fetch = async () => { throw new Error("no fetch in bundle mode"); };
+      let mm = freshModules(out);
+      await test("bundle mode: null, no fetch", async () => {
+        assert.equal(await mm.loaders.resolveRedirect("/old", "la"), null);
+      });
+
+      setEnv({ CMS_MODE: "mock", CMS_MOCK_URL: "http://127.0.0.1:1/api/v1" });
+      mm = freshModules(out);
+      await test("mock mode: null, no fetch", async () => {
+        assert.equal(await mm.loaders.resolveRedirect("/old", "la"), null);
+      });
+
+      setEnv({ CMS_MODE: "api", NEXT_PUBLIC_API_BASE_URL: BASE, PORTAL_API_KEY: "k".repeat(32) });
+      mm = freshModules(out);
+      install();
+      await test("api: request shape (path + locale query, X-Portal-Key, redirects tag)", async () => {
+        const r = await mm.loaders.resolveRedirect("/old", "la");
+        assert.deepEqual(r, { target: "/new", statusCode: 301, hops: 1 });
+        const c = calls3b.at(-1);
+        assert.equal(c.url.pathname, "/api/v1/public/redirects/resolve");
+        assert.equal(c.url.searchParams.get("path"), "/old");
+        assert.equal(c.url.searchParams.get("locale"), "la");
+        assert.equal(headerOf(c.init, "x-portal-key"), "k".repeat(32));
+        assert.deepEqual(c.init.next.tags, ["redirects"]);
+      });
+      await test("api: 302 and external https pass", async () => {
+        assert.equal((await mm.loaders.resolveRedirect("/temp", "la")).statusCode, 302);
+        assert.equal((await mm.loaders.resolveRedirect("/ext", "la")).target, "https://example.org/x");
+      });
+      await test("api: 404 = null", async () => {
+        assert.equal(await mm.loaders.resolveRedirect("/missing", "la"), null);
+      });
+      await test("api: loop, http, protocol-relative, javascript:, bad status, junk body = null", async () => {
+        for (const p of ["/loop", "/http", "/proto", "/js", "/status", "/junk"]) {
+          assert.equal(await mm.loaders.resolveRedirect(p, "la"), null, p);
+        }
+      });
+      await test("api: 503 / 429 / unreachable = null and logged, never thrown", async () => {
+        const w = captureWarn();
+        try {
+          assert.equal(await mm.loaders.resolveRedirect("/boom", "la"), null);
+          assert.equal(await mm.loaders.resolveRedirect("/limited", "la"), null);
+          globalThis.fetch = async () => { throw Object.assign(new Error("refused"), { name: "TypeError" }); };
+          assert.equal(await mm.loaders.resolveRedirect("/old2", "la"), null);
+        } finally { w.restore(); install(); }
+        const ev = events(w.lines).filter((e) => e.resource === "redirect");
+        assert.ok(ev.length >= 2, JSON.stringify(ev));
+      });
+      await test("status mapping: 301/308 -> permanent (HTTP 308), 302/307 -> temporary (HTTP 307)", async () => {
+        const r = mm.redirects;
+        assert.deepEqual([301, 308, 302, 307].map(r.isPermanentRedirect), [true, true, false, false]);
+        assert.deepEqual([301, 308, 302, 307].map(r.httpStatusFor), [308, 308, 307, 307]);
+      });
+      await test("loop guard ignores trailing slash and query of the source", async () => {
+        assert.equal(mm.redirects.validateRedirect("/a/b", { target: "/a/b/", status_code: 301 }), null);
+        assert.notEqual(mm.redirects.validateRedirect("/a/b", { target: "/a/c", status_code: 301 }), null);
+      });
+      globalThis.fetch = realFetch; // later sections expect the real fetch
+      setEnv({});
+    }
 
     // ============================================================ 4. mock server parity
     console.log("\n[4] CMS_MODE=mock: mock server vs in-process bundle (same routes, same bodies)");

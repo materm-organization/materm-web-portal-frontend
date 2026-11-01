@@ -86,7 +86,7 @@ backend slower than this timeout (portal-backend `pkg/redisguard`). Tests: `npm 
   No `src/content/fallback/` is created. `scripts/cms/snapshot.mjs` reads a RUNNING portal API into the same tree: default = temp dir, `--compare` diffs it with
   the bundle, `--apply` replaces the bundle with it (`manifest.source = "api"`; `cms:check` then skips the seed rebuild check; `npm run cms:export` returns to the seed),
   `--best-effort` never fails (for a `prebuild` hook, NOT wired: a build must not depend on the API). Needs `PORTAL_API_KEY` + `--base`/`CMS_API_BASE_URL`.
-  Not in the fallback by design: P-15 (form says `unavailable`), preview (error page), redirects.
+  Not in the fallback by design: P-15 (form says `unavailable`), preview (error page), redirects (a failed redirect lookup stays a 404).
 - **Rollback runbook** (site misbehaves in `CMS_MODE=api`): 1) Netlify -> Environment variables -> set `CMS_MODE=bundle` for the context -> trigger a deploy
   (clear cache not needed). The site then reads the bundled snapshot with no API call; the contact form still posts to the API (it says "unavailable" if the API is down).
   2) If the bundle is older than the CMS content, refresh it first on a machine that can reach the API: `PORTAL_API_KEY=... npm run cms:snapshot -- --base <api>/api/v1 --compare`,
@@ -95,6 +95,19 @@ backend slower than this timeout (portal-backend `pkg/redisguard`). Tests: `npm 
 - Parity round 3 (2026-10-29, bundle vs api on production builds against a real portal backend + seeded scratch DB): 7 pages x `la`/`en`, HTML identical after
   normalising the per-build server-action ids, the signed form stamp and the section DOM ids (the seed uses fake UUIDs, the DB real ones).
 - Not proven yet (state after the M6 code tasks): pixel parity (the check compares HTML, not rendered pixels), the Netlify deploy and Netlify's support for Next 16.3 (`netlify.toml` is the local part of PF-14 only; the cut-over is phase P4), and the `Dockerfile` / `Jenkinsfile` of this repo are inherited (Jenkinsfile still calls shared company jobs). The commits were pushed at the end of M6.
+
+## CMS redirects (P-17)
+
+`resolveRedirect(path, locale)` in `src/lib/cms/loaders.ts` calls `GET /public/redirects/resolve?path=&locale=` (X-Portal-Key, the normal fetch timeout, tag `redirects`,
+revalidate 600). It is called ONLY when the catch-all (`[[...path]]/page.tsx`, `loadPage`) or `blog/[slug]` (`loadPost`) found no published page / post, BEFORE `notFound()`,
+so a published page always wins (BR-26). `bundle` and `mock` modes return null without any request (no new env vars). Pure validation in `src/lib/cms/redirects.ts`
+(`validateRedirect`): target must be an internal `/path` or an `https://` URL (protocol-relative, `http:`, `javascript:`, whitespace, unknown status = ignored) and must not equal
+the requested path (trailing slash / query ignored, loop guard). 404 from the API = no redirect; any other failure (5xx, 429, timeout, network, bad body) = null, logged as
+`fallback_used` resource `redirect` (once per minute), the visitor gets the 404; there is no bundle fallback. `generateMetadata` returns `{}` for a redirect, sitemap is untouched.
+No `loading.tsx` / Suspense (the status must be decided before streaming).
+
+Status mapping (Next sends only 307 / 308 from a Server Component): 301 -> `permanentRedirect()` = **308**; 308 -> 308; 302 -> `redirect()` = **307**; 307 -> 307.
+Crawlers treat 301/308 and 302/307 alike for GET. Tests: `npm run cms:selftest` section `[3b]`.
 
 ## Preview (PF-10)
 

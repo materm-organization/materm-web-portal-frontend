@@ -1,11 +1,12 @@
 import type { Metadata } from "next";
-import { notFound, redirect } from "next/navigation";
+import { notFound, permanentRedirect, redirect } from "next/navigation";
 
 import { adaptPage } from "@/components/sections/adapt-page";
 import { SectionRenderer } from "@/components/sections/section-renderer";
 import { PreviewBanner } from "@/components/site/preview-banner";
 import { getRequestLocale } from "@/lib/cms/locale";
-import { getPage } from "@/lib/cms/loaders";
+import { getPage, resolveRedirect } from "@/lib/cms/loaders";
+import { isPermanentRedirect, type RedirectTarget } from "@/lib/cms/redirects";
 import { getPreviewPage, readPreviewSession } from "@/lib/cms/preview";
 import type { PageData } from "@/lib/cms/types";
 import type { PreviewInfo } from "@/lib/preview/resolve";
@@ -45,7 +46,8 @@ function toPagePath(segments: string[] | undefined): string | null {
 
 type Loaded =
   | { kind: "page"; page: PageData; locale: string; path: string; preview: PreviewInfo | null; elsewhereOf: string | null }
-  | { kind: "preview-failed"; to: string };
+  | { kind: "preview-failed"; to: string }
+  | { kind: "redirect"; redirect: RedirectTarget };
 
 async function loadPage(segments: string[] | undefined): Promise<Loaded | null> {
   const path = toPagePath(segments);
@@ -65,12 +67,16 @@ async function loadPage(segments: string[] | undefined): Promise<Loaded | null> 
   }
 
   const page = await getPage(path, locale); // React cache(): shared by generateMetadata and the page
-  return page ? { kind: "page", page, locale, path, preview: null, elsewhereOf: session?.path ?? null } : null;
+  if (page) return { kind: "page", page, locale, path, preview: null, elsewhereOf: session?.path ?? null };
+  // nothing published here: a CMS redirect (P-17) may take over before the 404 (React cache(): one call per render)
+  const found = await resolveRedirect(path, locale);
+  return found ? { kind: "redirect", redirect: found } : null;
 }
 
 export async function generateMetadata({ params }: CatchAllProps): Promise<Metadata> {
   const loaded = await loadPage((await params).path);
   if (!loaded) return {};
+  if (loaded.kind === "redirect") return {};
   if (loaded.kind === "preview-failed") return { robots: PREVIEW_ROBOTS };
   // drafts are never indexed; a published page seen from an open preview session is not indexed either
   return withPreviewRobots(createPageMetadata(loaded.page), loaded.preview !== null || loaded.elsewhereOf !== null);
@@ -79,6 +85,11 @@ export async function generateMetadata({ params }: CatchAllProps): Promise<Metad
 export default async function CmsPage({ params, searchParams }: CatchAllProps) {
   const loaded = await loadPage((await params).path);
   if (!loaded) notFound();
+  if (loaded.kind === "redirect") {
+    // 301/308 -> HTTP 308, 302/307 -> HTTP 307 (src/lib/cms/redirects.ts); the lookup ran before streaming (no loading.tsx)
+    if (isPermanentRedirect(loaded.redirect.statusCode)) permanentRedirect(loaded.redirect.target);
+    redirect(loaded.redirect.target);
+  }
   if (loaded.kind === "preview-failed") redirect(loaded.to);
 
   const { category } = await searchParams;

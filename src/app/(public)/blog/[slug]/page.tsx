@@ -12,7 +12,8 @@ import { Reveal } from "@/components/site/motion";
 import { PageHero } from "@/components/site/page-hero";
 import { PreviewBanner } from "@/components/site/preview-banner";
 import { PreviewHint } from "@/components/site/preview-hint";
-import { getCategories, getPost } from "@/lib/cms/loaders";
+import { getCategories, getPost, resolveRedirect } from "@/lib/cms/loaders";
+import { isPermanentRedirect, type RedirectTarget } from "@/lib/cms/redirects";
 import { getRequestLocale } from "@/lib/cms/locale";
 import { resolveImage } from "@/lib/cms/media";
 import { getPreviewPage, readPreviewSession } from "@/lib/cms/preview";
@@ -38,6 +39,7 @@ interface BlogArticlePageProps {
 type Loaded =
   | { kind: "post"; post: PostDetail; locale: string; path: string; preview: PreviewInfo | null; elsewhereOf: string | null }
   | { kind: "redirect"; location: string }
+  | { kind: "cms_redirect"; redirect: RedirectTarget }
   | { kind: "not_found" }
   | { kind: "preview-failed"; to: string };
 
@@ -59,7 +61,10 @@ async function loadPost(params: BlogArticlePageProps["params"]): Promise<Loaded 
 
   const result = await getPost(slug, locale); // React cache(): shared by generateMetadata and the page
   if (result.kind === "redirect") return { kind: "redirect", location: result.location, locale };
-  if (result.kind !== "post") return { kind: "not_found", locale };
+  if (result.kind !== "post") {
+    const found = await resolveRedirect(path, locale); // P-17 only when the post is not found (a published post wins)
+    return found ? { kind: "cms_redirect", redirect: found, locale } : { kind: "not_found", locale };
+  }
   return { kind: "post", post: result.post, locale, path, preview: null, elsewhereOf: session?.path ?? null };
 }
 
@@ -74,6 +79,10 @@ export async function generateMetadata({ params }: BlogArticlePageProps): Promis
 export default async function BlogArticlePage({ params }: BlogArticlePageProps) {
   const loaded = await loadPost(params);
   if (loaded.kind === "redirect") permanentRedirect(loaded.location);
+  if (loaded.kind === "cms_redirect") {
+    if (isPermanentRedirect(loaded.redirect.statusCode)) permanentRedirect(loaded.redirect.target);
+    redirect(loaded.redirect.target);
+  }
   if (loaded.kind === "preview-failed") redirect(loaded.to);
   if (loaded.kind !== "post") notFound();
 
