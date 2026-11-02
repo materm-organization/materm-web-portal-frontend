@@ -566,7 +566,10 @@ try {
   // ---------------------------------------------------------------- B5: draft sections in preview
   const MEDIA = {
     7: { id: 7, url: "/images/site/hero.jpg", alt: "a hero", width: 100, height: 50 },
-    8: { id: 8, url: "https://not-allowed.example.test/hero.jpg", alt: "", width: 100, height: 50 }, // host not in MEDIA_BASE_URL
+    8: { id: 8, url: "https://files.example.test:8080/hero.jpg", alt: "", width: 100, height: 50 }, // any absolute http(s) host is fine
+    9: { id: 9, url: "javascript:alert(1)", alt: "", width: 100, height: 50 },
+    10: { id: 10, url: "//evil.example.test/x.jpg", alt: "", width: 100, height: 50 },
+    11: { id: 11, url: "data:image/png;base64,AAAA", alt: "", width: 100, height: 50 },
   };
   const heroSection = (props) => ({ id: "h", key: "hero_brand", version: 1, props: { title: "Draft title", ...props }, resolved: undefined });
   await test("hero_brand without a background image: title and text stay, background null, hint only in preview", () => {
@@ -582,12 +585,16 @@ try {
     assert.ok(!("previewHint" in withImage), "no hint when the image is there");
   });
 
-  await test("hero_brand / hero_article: an unknown media id or an image on a disallowed host is 'no image', the title stays; no title = nothing to draw", () => {
+  await test("hero_brand / hero_article: an unknown media id or an unsafe URL (javascript:, data:, protocol-relative) is 'no image', the title stays; no title = nothing to draw", () => {
     const ctx = { locale: "en", media: MEDIA, category: null, preview: true };
     assert.equal(A.ADAPTERS.hero_brand(heroSection({ background: { media_id: 999 } }), ctx).background, null);
-    const offHost = A.ADAPTERS.hero_brand(heroSection({ background: { media_id: 8 } }), { ...ctx, preview: false });
-    assert.equal(offHost.background, null, "next/image would throw on that host: treated as missing");
-    assert.equal(offHost.title, "Draft title");
+    for (const id of [9, 10, 11]) {
+      const unsafe = A.ADAPTERS.hero_brand(heroSection({ background: { media_id: id } }), { ...ctx, preview: false });
+      assert.equal(unsafe.background, null, `media ${id}: unsafe scheme is treated as missing`);
+      assert.equal(unsafe.title, "Draft title");
+    }
+    const remote = A.ADAPTERS.hero_brand(heroSection({ background: { media_id: 8 } }), { ...ctx, preview: false });
+    assert.equal(remote.background.url, "https://files.example.test:8080/hero.jpg", "an absolute file-service URL on any host is present");
     const art = A.ADAPTERS.hero_article({ id: "a", key: "hero_article", version: 1, props: { title: "Article", meta_items: [{ text: "x" }, null, { text: "" }] }, resolved: undefined }, ctx);
     assert.deepEqual([art.title, art.metaItems, art.background, art.previewHint], ["Article", ["x"], null, "no_background_image"]);
     assert.equal(A.ADAPTERS.hero_brand(heroSection({ title: "" }), ctx), null);

@@ -38,7 +38,7 @@ npm run preview:selftest # preview flow (PF-10) + draft sections (B5): token/pat
 ```
 
 Env vars: `CMS_MODE` (`bundle` default | `mock` | `api`), `NEXT_PUBLIC_API_BASE_URL` / `CMS_API_BASE_URL`, `PORTAL_API_KEY`
-(secret), `CMS_FETCH_TIMEOUT_MS`, `MEDIA_BASE_URL` (BUILD time: file-service host for `next/image`), `SITE_ENV` / `CONTEXT`
+(secret), `CMS_FETCH_TIMEOUT_MS`, `SITE_ENV` / `CONTEXT`
 (robots), `REVALIDATE_SECRET` (secret, >= 32 chars; missing = `/api/revalidate` answers 503), `REVALIDATE_SECRET_PREVIOUS` (rotation),
 `REVALIDATE_MAX_SKEW_SECONDS` (default 300), `REVALIDATE_RATE_LIMIT_PER_MINUTE` (default 120), `FORM_RENDER_SECRET` (secret, >= 32 chars, REQUIRED in production for the contact form's signed fill time, see "Contact form"); the endpoint contract is in `README.md`. No secrets in the tracked `.env.*` files (`NEXT_PUBLIC_*` is baked into the client bundle).
 
@@ -66,7 +66,7 @@ Env vars: `CMS_MODE` (`bundle` default | `mock` | `api`), `NEXT_PUBLIC_API_BASE_
   `src/lib/site-metadata.ts` — layout / page / article metadata from the CMS responses;
   `src/lib/constants/locales.ts` — supported locales and the locale cookie name; `src/lib/utils.ts` — `cn`.
 - `src/hooks/use-mobile.ts` — used by `components/ui/sidebar.tsx`.
-- `public/images/site/` — static images, referenced via `next/image`.
+- `public/images/site/` — static images, referenced via `next/image`; CMS media (absolute file-service URLs) are rendered as is by the global loader `src/lib/cms/image-loader.ts`, no host allow-list.
 
 ## API outages (B1)
 
@@ -140,7 +140,7 @@ Editor preview of unpublished PAGES (T1.4.6) and POSTS (T1.5.8, M5). Full descri
   with the editor hint "No background image yet" (`PreviewHint`, `i18n/site/preview.*.json` `hints.*`), and replaces any other section whose adapter
   returned null by a `PreviewPlaceholder` that names the section type and the missing fields (`preview-missing.ts` mirrors each adapter's
   `return null` conditions). Visitors never get the hint or a placeholder: their render is byte-identical to before (checked on a production build, 14 pages)
-  except that a hero whose image host is not in `MEDIA_BASE_URL` now keeps its title on the neutral background instead of vanishing. Fixture token
+  except that a hero whose image URL is unsafe (bad scheme) now keeps its title on the neutral background instead of vanishing. Fixture token
   `mock-preview-draft-token-0123456789abcdefgh` (`/our-path`: hero without image, `about_blocks` without items, `gallery_cards` without cards).
 - Tests: `npm run preview:selftest` (28) + `scripts/cms/mock-api.mjs` fixture tokens (`PREVIEW_TOKENS`). Never log or echo a token.
 

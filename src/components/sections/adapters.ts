@@ -91,9 +91,8 @@ export function toDoc(v: unknown): RichTextDoc | null {
 // ---------------------------------------------------------------- adapters
 
 // A hero without a usable background image still draws its title on a neutral background (the site tokens): publish
-// requires the image, so a visitor never sees this; a draft in preview does, with a hint for the editor. (An image on
-// a host that `next/image` may not load, MEDIA_BASE_URL, now also leaves the title readable instead of dropping
-// the whole hero.) Without a title there is nothing to show: null.
+// requires the image, so a visitor never sees this; a draft in preview does, with a hint for the editor. (An image
+// URL with an unsafe scheme also leaves the title readable instead of dropping the whole hero.) Without a title there is nothing to show: null.
 const heroBrand: SectionAdapter<"hero_brand"> = (s, { media, preview }) => {
   const background = toImage(media, s.props.background);
   const title = strOrNull(s.props.title);

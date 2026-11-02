@@ -109,9 +109,11 @@ and the site layout (nav, footer). An unknown CMS path or article slug calls `no
 ## Images
 
 Media URLs come from the CMS (`resolveImage`, `src/lib/cms/media.ts`): relative `/images/site/*` (bundled) or absolute
-file-service URLs. Absolute hosts must be listed in the BUILD-time env `MEDIA_BASE_URL` (comma-separated URLs,
-`next.config.ts` -> `images.remotePatterns`); a media URL on another host is treated as missing instead of crashing
-`next/image`. Never `unoptimized` for file-service images. Rich text: `@/components/site/rich-text` (`RichText`).
+file-service URLs. There is no host allow-list
+(`images.remotePatterns` and `MEDIA_BASE_URL` are gone): the global loader `src/lib/cms/image-loader.ts`
+(`next.config.ts` -> `images.loaderFile`) returns an absolute http(s) URL as is (not optimized, the browser loads it
+directly) and sends site-relative `/images/*` through the Next optimizer; `<Image>` props stay unchanged. A URL with
+an unsafe scheme (`javascript:`, `data:`, protocol-relative) is treated as missing (`image-url.ts`). Rich text: `@/components/site/rich-text` (`RichText`).
 
 Shared (flat in `public/images/site/`): `materm-logo-white.svg`, `materm-emblem.svg`,
 `hero-forest-stream.jpg` (article/gallery hero), `gallery-card-forest-stream.png`,

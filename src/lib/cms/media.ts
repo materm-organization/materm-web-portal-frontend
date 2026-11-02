@@ -1,9 +1,9 @@
 // Media helpers for components/adapters (pure, usable from Server Components).
-import { isRenderableImageUrl } from "./image-hosts";
+import { isRenderableImageUrl } from "./image-url";
 import type { ImageRef, MediaItem, MediaMap } from "./types";
 
 const warnedHosts = new Set<string>();
-function warnUnrenderable(url: string): void {
+function warnUnsafe(url: string): void {
   let host = "?";
   try {
     host = new URL(url, "http://relative.invalid").host;
@@ -13,7 +13,7 @@ function warnUnrenderable(url: string): void {
   if (warnedHosts.has(host)) return;
   warnedHosts.add(host);
   try {
-    console.warn(JSON.stringify({ event: "media_host_not_allowed", host, hint: "set MEDIA_BASE_URL at build time" }));
+    console.warn(JSON.stringify({ event: "media_url_unsafe", host, hint: "media URL must be a site-relative path or an absolute http(s) URL" }));
   } catch {
     /* logging must never break a page */
   }
@@ -34,7 +34,7 @@ export interface ResolvedImage {
 
 /**
  * Placement alt wins; null -> media alt; decorative -> "". Missing media -> null (render `bg-site-line`).
- * A URL `next/image` cannot load (host not in MEDIA_BASE_URL) also counts as missing: the component would throw.
+ * A URL with an unsafe scheme (javascript:, data:, protocol-relative ...) also counts as missing. Any host is fine.
  */
 export function resolveImage(
   media: MediaMap | undefined,
@@ -44,7 +44,7 @@ export function resolveImage(
   const m = mediaItem(media, ref.media_id);
   if (!m) return null;
   if (!isRenderableImageUrl(m.url)) {
-    warnUnrenderable(m.url);
+    warnUnsafe(m.url);
     return null;
   }
   const alt = ref.decorative ? "" : (ref.alt ?? m.alt ?? "");

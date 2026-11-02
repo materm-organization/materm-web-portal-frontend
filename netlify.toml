@@ -11,10 +11,8 @@
   NODE_VERSION = "24"
   NEXT_TELEMETRY_DISABLED = "1"
 
-# next/image optimises the hosts in MEDIA_BASE_URL (read at BUILD time by next.config.ts, doc/08 §3.12).
-# If Netlify's Image CDN is used, list the same host(s) here as well (domains, no scheme), e.g. remote_images = ["https://<file-service-host>/.*"].
-# [images]
-#   remote_images = []
+# Absolute (file-service) media URLs are rendered as is by the global image loader (src/lib/cms/image-loader.ts);
+# no host allow-list, so no [images] remote_images entry is needed. Bundled /images/* use the optimizer.
 
 # Headers: next.config.ts sets none, so these only add what Next does not. API routes must never be cached;
 # no CSP / frame-ancestors on purpose (the preview iframe of doc/08 §3.9 is not built; preview opens in a new tab).
@@ -39,7 +37,6 @@
 # NEXT_PUBLIC_API_BASE_URL prod backend       staging backend                      BUILD time (baked in); same value as CMS_API_BASE_URL; no secret
 # PORTAL_API_KEY           SECRET             SECRET (staging key)                 X-Portal-Key, server only, one of portal.frontendKeys of the backend
 # CMS_FETCH_TIMEOUT_MS     (optional, 2000)
-# MEDIA_BASE_URL           file-service host  file-service host                    BUILD time; comma list; media on any other host is dropped
 # SITE_ENV                 production         staging / unset                      only "production" lets robots.ts allow crawling (Netlify CONTEXT=production is the fallback)
 # REVALIDATE_SECRET        SECRET >= 32 chars SECRET (different from prod)         /api/revalidate answers 503 without it; must equal the admin backend's REVALIDATE_SECRET
 # REVALIDATE_SECRET_PREVIOUS  (only while rotating)

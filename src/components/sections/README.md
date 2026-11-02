@@ -62,7 +62,7 @@ return <SectionRenderer sections={sections} />;
   `(section: TypedSection<K>, ctx) => props | null` is in `adapters.ts` (`ADAPTERS` is typed so that a new key does
   not compile without one). `ctx = { locale, media, category, getPosts }`.
 - Input is the API shape: snake_case props, `media_id`s resolved through `page.media` (`resolveImage`: placement alt
-  wins, decorative = `""`, a URL on a host that is not in `MEDIA_BASE_URL` counts as missing), `resolved.*`
+  wins, decorative = `""`, a URL with an unsafe scheme (not site-relative, not http(s)) counts as missing; any host is fine), `resolved.*`
   (blog posts, cards, album slots, FAQ items, form definition, categories). Output is the camelCase props of
   `types.ts`.
 - Draft pages (preview): `adaptPage(page, { locale, category, preview: true })` also reaches the adapters as `ctx.preview`. The heroes
