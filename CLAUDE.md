@@ -183,8 +183,8 @@ in `scripts/cms/mock-api.mjs`).
 - To add a namespace: add it to `SITE_NAMESPACES` and a `case` in `loadSiteFile` in `request.ts`,
   and create both locale files.
 - Shell copy comes from i18n (`useTranslations` / `getTranslations`); no hard-coded strings. The `la` shell files
-  (`common`, `blog`, `forms`, `preview`) and the 39 UI strings are now translated to Lao (`8fc6966`), pending review by a native speaker
-  (CSV `/Users/max/Desktop/materm-lao-review.csv`). The `"_todoTranslate": true` flag stays in every `la` file on purpose:
+  (`common`, `blog`, `forms`, `preview`) and the 39 UI strings are now translated to Lao (`8fc6966`), accepted as translated
+  by the user (2026-10-30; no native review wanted). The `"_todoTranslate": true` flag stays in every `la` file on purpose:
   `scripts/i18n/check-parity.mjs` requires it. The Lao page / post / album copy of the CMS seed (`cms-seed/source/{page,post,album}.*.json`, 126 values) is translated too (no native review); still English in `la`: dates, the brand name, and the menu labels / settings / categories / FAQ / form in `source/menus.json` and `source/reference.json` (their admin copies are SQL seeds, not byte copies).
 
 ## Things to know
