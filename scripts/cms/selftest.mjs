@@ -35,7 +35,7 @@ function compile(tmp) {
   mkdirSync(join(tmp, "node_modules", "server-only"), { recursive: true });
   writeFileSync(join(tmp, "node_modules", "server-only", "index.js"), "module.exports = {};\n");
   symlinkSync(join(ROOT, "node_modules", "react"), join(tmp, "node_modules", "react"), "dir");
-  const files = ["loaders", "bundle", "client", "tags", "locale", "media", "image-url", "ui-strings", "config", "fallback", "result", "redirects"].map((f) => join(ROOT, "src/lib/cms", `${f}.ts`));
+  const files = ["loaders", "bundle", "client", "tags", "locale", "media", "image-url", "ui-strings", "config", "fallback", "result", "redirects", "image-loader"].map((f) => join(ROOT, "src/lib/cms", `${f}.ts`));
   writeFileSync(
     join(tmp, "tsconfig.json"),
     JSON.stringify({
@@ -358,6 +358,16 @@ export async function main() {
       } finally { w.restore(); }
     });
     await close(modServer);
+
+    // ============================================================ 3a. image loader (SVG must never go through the optimizer)
+    console.log("\n[3a] image loader: absolute and SVG are returned as is, other site paths use the optimizer");
+    await test("image loader keeps SVG, absolute URLs and optimizes the rest", () => {
+      const loader = createRequire(join(out, "x.js"))(join(out, "lib/cms/image-loader.js")).default;
+      assert.equal(loader({ src: "/images/site/materm-logo-white.svg", width: 640, quality: 75 }), "/images/site/materm-logo-white.svg");
+      assert.equal(loader({ src: "/images/site/x.SVG?v=2", width: 640 }), "/images/site/x.SVG?v=2");
+      assert.equal(loader({ src: "https://files.example.test:8080/buckets/a/b.png", width: 640 }), "https://files.example.test:8080/buckets/a/b.png");
+      assert.equal(loader({ src: "/images/site/hero.jpg", width: 640, quality: 70 }), "/_next/image?url=%2Fimages%2Fsite%2Fhero.jpg&w=640&q=70");
+    });
 
     // ============================================================ 3b. redirects (P-17)
     console.log("\n[3b] resolveRedirect: bundle/mock = null, api = P-17 with validation, failures stay 404");
