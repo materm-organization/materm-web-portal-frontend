@@ -3,22 +3,22 @@
   "data": {
     "slug": "contact",
     "resolved_locale": "la",
-    "title": "Send a message",
-    "description": "We usually reply within two working days.",
-    "submit_label": "Send message",
-    "sending_label": "Sending…",
+    "title": "ສົ່ງຂໍ້ຄວາມຫາພວກເຮົາ",
+    "description": "ປົກກະຕິພວກເຮົາຕອບພາຍໃນສອງວັນເຮັດວຽກ.",
+    "submit_label": "ສົ່ງຂໍ້ຄວາມ",
+    "sending_label": "ກຳລັງສົ່ງ…",
     "success": {
-      "title": "Thank you!",
-      "description": "Your message is on its way. We'll reply as soon as we can.",
-      "again_label": "Send another message"
+      "title": "ຂອບໃຈ!",
+      "description": "ຂໍ້ຄວາມຂອງທ່ານກຳລັງເດີນທາງໄປແລ້ວ. ພວກເຮົາຈະຕອບກັບໂດຍໄວທີ່ສຸດ.",
+      "again_label": "ສົ່ງຂໍ້ຄວາມອີກຄັ້ງ"
     },
     "messages": {
-      "required": "This field is required",
-      "email": "Enter a valid email address",
-      "messageShort": "Please write at least 10 characters",
-      "phone": "Enter a valid phone number",
-      "generic": "Something went wrong. Please try again.",
-      "summary": "Please check the highlighted fields."
+      "required": "ຕ້ອງຕື່ມຂໍ້ມູນຊ່ອງນີ້",
+      "email": "ກະລຸນາປ້ອນທີ່ຢູ່ອີເມວທີ່ຖືກຕ້ອງ",
+      "messageShort": "ກະລຸນາຂຽນຢ່າງໜ້ອຍ 10 ຕົວອັກສອນ",
+      "phone": "ກະລຸນາປ້ອນເບີໂທລະສັບທີ່ຖືກຕ້ອງ",
+      "generic": "ມີບາງຢ່າງຜິດພາດ. ກະລຸນາລອງໃໝ່ອີກຄັ້ງ.",
+      "summary": "ກະລຸນາກວດສອບຊ່ອງທີ່ຖືກເນັ້ນ."
     },
     "honeypot_field": "company",
     "fields": [
@@ -30,8 +30,8 @@
           "minLength": 2,
           "maxLength": 100
         },
-        "label": "Full name",
-        "placeholder": "Your name",
+        "label": "ຊື່ ແລະ ນາມສະກຸນ",
+        "placeholder": "ຊື່ຂອງທ່ານ",
         "help": null
       },
       {
@@ -42,7 +42,7 @@
           "format": "email",
           "maxLength": 254
         },
-        "label": "Email",
+        "label": "ອີເມວ",
         "placeholder": "you@example.com",
         "help": null
       },
@@ -54,7 +54,7 @@
           "maxLength": 30,
           "pattern": "^[0-9 +()\\-.]+$"
         },
-        "label": "Phone (optional)",
+        "label": "ເບີໂທລະສັບ (ບໍ່ບັງຄັບ)",
         "placeholder": "+856 20 0000 0000",
         "help": null
       },
@@ -70,25 +70,25 @@
             "other"
           ]
         },
-        "label": "What is it about?",
+        "label": "ເລື່ອງກ່ຽວກັບຫຍັງ?",
         "placeholder": null,
         "help": null,
         "options": [
           {
             "value": "booking",
-            "label": "Booking & stays"
+            "label": "ການຈອງ ແລະ ທີ່ພັກ"
           },
           {
             "value": "events",
-            "label": "Music nights & events"
+            "label": "ຄືນດົນຕີ ແລະ ງານຕ່າງໆ"
           },
           {
             "value": "camping",
-            "label": "Camping & treks"
+            "label": "ການຕັ້ງແຄ້ມ ແລະ ການຍ່າງປ່າ"
           },
           {
             "value": "other",
-            "label": "Something else"
+            "label": "ເລື່ອງອື່ນໆ"
           }
         ]
       },
@@ -100,8 +100,8 @@
           "minLength": 10,
           "maxLength": 2000
         },
-        "label": "Message",
-        "placeholder": "Tell us how we can help…",
+        "label": "ຂໍ້ຄວາມ",
+        "placeholder": "ບອກພວກເຮົາວ່າຈະຊ່ວຍທ່ານໄດ້ແນວໃດ…",
         "help": null
       }
     ],

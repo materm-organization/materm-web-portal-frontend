@@ -7,7 +7,7 @@
     "items": [
       {
         "id": 1,
-        "question": "How do I get to Materm?",
+        "question": "ເດີນທາງໄປ Materm ແນວໃດ?",
         "answer": {
           "type": "doc",
           "content": [
@@ -16,7 +16,7 @@
               "content": [
                 {
                   "type": "text",
-                  "text": "Materm is inside Phou Khao Khouay National Park in Vientiane Province. Send us a message and we'll share directions and help you plan the journey."
+                  "text": "Materm ຕັ້ງຢູ່ໃນອຸທະຍານແຫ່ງຊາດພູເຂົາຂ່ວຍ ແຂວງວຽງຈັນ. ສົ່ງຂໍ້ຄວາມຫາພວກເຮົາ, ພວກເຮົາຈະສົ່ງເສັ້ນທາງໃຫ້ ແລະ ຊ່ວຍທ່ານວາງແຜນການເດີນທາງ."
                 }
               ]
             }
@@ -25,7 +25,7 @@
       },
       {
         "id": 2,
-        "question": "What are the check-in and opening times?",
+        "question": "ເວລາເຂົ້າພັກ ແລະ ເວລາເປີດບໍລິການແມ່ນຕອນໃດ?",
         "answer": {
           "type": "doc",
           "content": [
@@ -34,7 +34,7 @@
               "content": [
                 {
                   "type": "text",
-                  "text": "We are open every day from 08:00 to 18:00. Check-in and check-out times depend on your stay, so we'll confirm them when you book."
+                  "text": "ພວກເຮົາເປີດທຸກວັນ ຕັ້ງແຕ່ 08:00 ຫາ 18:00. ເວລາເຂົ້າພັກ ແລະ ເວລາອອກຈາກທີ່ພັກຂຶ້ນກັບການພັກຂອງທ່ານ, ພວກເຮົາຈະຢືນຢັນໃຫ້ເມື່ອທ່ານຈອງ."
                 }
               ]
             }
@@ -43,7 +43,7 @@
       },
       {
         "id": 3,
-        "question": "Do you host music nights and events?",
+        "question": "ມີຄືນດົນຕີ ແລະ ງານຕ່າງໆບໍ?",
         "answer": {
           "type": "doc",
           "content": [
@@ -52,7 +52,7 @@
               "content": [
                 {
                   "type": "text",
-                  "text": "Yes, we hold music evenings and small gatherings from time to time. Ask us about upcoming dates before you plan your visit."
+                  "text": "ມີ, ພວກເຮົາຈັດຄືນດົນຕີ ແລະ ການພົບປະສັງສັນນ້ອຍໆເປັນບາງຄັ້ງຄາວ. ສອບຖາມວັນທີທີ່ຈະມາເຖິງກ່ອນວາງແຜນມາຢ້ຽມຢາມ."
                 }
               ]
             }
@@ -61,7 +61,7 @@
       },
       {
         "id": 4,
-        "question": "Can you arrange for groups or special requests?",
+        "question": "ຈັດໃຫ້ກຸ່ມ ຫຼື ຄຳຮ້ອງຂໍພິເສດໄດ້ບໍ?",
         "answer": {
           "type": "doc",
           "content": [
@@ -70,7 +70,7 @@
               "content": [
                 {
                   "type": "text",
-                  "text": "We're happy to help with groups, celebrations and special requirements. Tell us what you have in mind and we'll see how we can make it work."
+                  "text": "ພວກເຮົາຍິນດີຊ່ວຍເຫຼືອກຸ່ມ, ງານສະຫຼອງ ແລະ ຄວາມຕ້ອງການພິເສດ. ບອກພວກເຮົາວ່າທ່ານຄິດຢາກໄດ້ແນວໃດ, ພວກເຮົາຈະຊອກວິທີທີ່ເຮັດໄດ້."
                 }
               ]
             }

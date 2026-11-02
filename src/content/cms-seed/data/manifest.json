@@ -49,7 +49,7 @@
     "social"
   ],
   "source_checksums": {
-    "src/content/cms-seed/exports/media-manifest.json": "68971f7112f792fc172b0e9ff8235d519b42d33cebdb586e5a1be801a0f16cf5",
+    "src/content/cms-seed/exports/media-manifest.json": "2cb9997a440e33f814760c8f9314b601c92d9690b7bfb1f13a680a1d43d87f00",
     "src/content/cms-seed/exports/ui-strings.json": "3afcdeb09408a38b40d94cf1877ed3eccc8910add7fb10b5737dae437e1cf9a2",
     "src/content/cms-seed/schemas/about_blocks.json": "61d4c21e0da61890b04c46e8b09c643e123566385851583fe564f86b587f4e0d",
     "src/content/cms-seed/schemas/blog_strip.json": "8b8601f48bb4de5d0fdb2409849b10890b6851a74be001bdf1566cee4dc571b2",
@@ -65,13 +65,13 @@
     "src/content/cms-seed/schemas/teaser_collage.json": "bdae1bc70f70291a25e57781b5a6a0705214a41dc639c1bd0d19a9d15d81fb9d",
     "src/content/cms-seed/source/album.forest-photo-story.json": "bf983d11bc598928e993c55a67b48d0f93d30aa7964c4c309c16218f0acea5f1",
     "src/content/cms-seed/source/media-manifest.json": "50149db043f025269c8433c9c16ec180e4d5a7a67f8ba808dba8204b7f4404b4",
-    "src/content/cms-seed/source/menus.json": "3ca6071ac6c8f88f61e68ba51013cc062b50d6e94e4af29bab5831e60cd004ce",
+    "src/content/cms-seed/source/menus.json": "a2a53d5ec8a30cada65566a5ba27ad5fb2dbcd284a3ee6c35e8e9ff9267f5fc7",
     "src/content/cms-seed/source/page.blog.json": "4fc2cce9a8c61c8d3392e946b23bcf17a6fc569d12e77fe09facd38150fda7f6",
     "src/content/cms-seed/source/page.contact.json": "2ad01064de381cfcfa214fd6c7ef4564643258666c0071bb8dff9ffef50e0ddd",
     "src/content/cms-seed/source/page.gallery.json": "5259c5412878c24d4715a1268ebf292686c2eb08186c368f329aa5643e02e74b",
     "src/content/cms-seed/source/page.home.json": "d2f23f94bd23b911b706303ca830adfb2d3143085788a877f798c9a607ee9bc9",
     "src/content/cms-seed/source/page.our-path.json": "fd790aa6b051844294eb3f628fec1946b79a43046d76a1b078a821958189aa1c",
     "src/content/cms-seed/source/post.music-night-under-the-stars.json": "818c64c5ba9da9dcf865723db3cb203f6ccb1a43a86fafe17cadb69b0b9d9e94",
-    "src/content/cms-seed/source/reference.json": "9185087eeb522c7cfd240d8676a34188849456b9c3cafd1dc93d490b55d9f578"
+    "src/content/cms-seed/source/reference.json": "7b47876c4fde3272b195debd7c03749d51b9bfde7d5ecf5acaeabaa7caf1c4a5"
   }
 }

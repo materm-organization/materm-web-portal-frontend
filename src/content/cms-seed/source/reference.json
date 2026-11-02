@@ -1,5 +1,5 @@
 {
-  "_comment": "Reference data for the bundled seed that is NOT in doc/content-schemas/examples: authored from doc/sql/seeds 001_locales, 004_settings_menus_pages, 005_taxonomy_faq_forms (+ media ids 23/24 for the brand SVGs, see media-manifest.json). 'la' carries the English copy (doc 02). Feeds scripts/cms/build-seed.mjs; T1.2.5 (admin seed) can consume it too.",
+  "_comment": "Reference data for the bundled seed that is NOT in doc/content-schemas/examples: authored from doc/sql/seeds 001_locales, 004_settings_menus_pages, 005_taxonomy_faq_forms (+ media ids 23/24 for the brand SVGs, see media-manifest.json). 'la' values are Lao copy matching the admin backend seed (migrations/seeds 0040/0050); 'en' is English. Feeds scripts/cms/build-seed.mjs; T1.2.5 (admin seed) can consume it too.",
   "timezone_offset_minutes": 420,
   "locales": [
     {
@@ -73,7 +73,7 @@
       "value_type": "string",
       "localized": true,
       "value": {
-        "la": "MATERM logo",
+        "la": "ໂລໂກ້ MATERM",
         "en": "MATERM logo"
       }
     },
@@ -83,7 +83,7 @@
       "value_type": "string",
       "localized": true,
       "value": {
-        "la": "MATERM emblem",
+        "la": "ສັນຍາລັກ MATERM",
         "en": "MATERM emblem"
       }
     },
@@ -93,7 +93,7 @@
       "value_type": "text",
       "localized": true,
       "value": {
-        "la": "Forging wild paths across the untamed earth. Led by expert survivalists and certified wilderness rescue guides.",
+        "la": "ສ້າງເສັ້ນທາງປ່າດິບຜ່ານແຜ່ນດິນທີ່ຍັງບໍ່ຖືກຄວບຄຸມ. ນຳພາໂດຍຜູ້ຊ່ຽວຊານການເອົາຕົວລອດ ແລະ ໄກດ໌ກູ້ໄພໃນປ່າທີ່ໄດ້ຮັບການຮັບຮອງ.",
         "en": "Forging wild paths across the untamed earth. Led by expert survivalists and certified wilderness rescue guides."
       }
     },
@@ -124,7 +124,7 @@
       "value_type": "string",
       "localized": true,
       "value": {
-        "la": "© 2026 Outdoor Avenger Ltd. All Wilderness Permits Reserved.",
+        "la": "© 2026 Outdoor Avenger Ltd. ສະຫງວນສິດໃບອະນຸຍາດເຂົ້າປ່າທັງໝົດ.",
         "en": "© 2026 Outdoor Avenger Ltd. All Wilderness Permits Reserved."
       }
     },
@@ -148,7 +148,7 @@
       "value_type": "text",
       "localized": true,
       "value": {
-        "la": "Materm - treehouse and camping at Phou Khao Khouay, Laos.",
+        "la": "Materm - ເຮືອນຕົ້ນໄມ້ ແລະ ການຕັ້ງແຄ້ມທີ່ພູເຂົາຂ່ວຍ, ລາວ.",
         "en": "Materm - treehouse and camping at Phou Khao Khouay, Laos."
       }
     },
@@ -172,7 +172,7 @@
       "value_type": "text",
       "localized": true,
       "value": {
-        "la": "Phou Khao Khouay National Park, Vientiane Province, Lao PDR",
+        "la": "ອຸທະຍານແຫ່ງຊາດພູເຂົາຂ່ວຍ, ແຂວງວຽງຈັນ, ສປປ ລາວ",
         "en": "Phou Khao Khouay National Park, Vientiane Province, Lao PDR"
       }
     },
@@ -210,7 +210,7 @@
       "value_type": "string",
       "localized": true,
       "value": {
-        "la": "Every day, 08:00 – 18:00",
+        "la": "ທຸກວັນ, 08:00 – 18:00",
         "en": "Every day, 08:00 – 18:00"
       }
     }
@@ -221,7 +221,7 @@
       "sort_order": 1,
       "translations": {
         "la": {
-          "name": "Music",
+          "name": "ດົນຕີ",
           "slug": "music"
         },
         "en": {
@@ -235,7 +235,7 @@
       "sort_order": 2,
       "translations": {
         "la": {
-          "name": "Camping",
+          "name": "ການຕັ້ງແຄ້ມ",
           "slug": "camping"
         },
         "en": {
@@ -249,7 +249,7 @@
       "sort_order": 3,
       "translations": {
         "la": {
-          "name": "Outdoor",
+          "name": "ກິດຈະກຳກາງແຈ້ງ",
           "slug": "outdoor"
         },
         "en": {
@@ -277,7 +277,7 @@
       "sort_order": 5,
       "translations": {
         "la": {
-          "name": "Hiking",
+          "name": "ການຍ່າງປ່າ",
           "slug": "hiking"
         },
         "en": {
@@ -298,8 +298,8 @@
           "sort_order": 1,
           "translations": {
             "la": {
-              "question": "How do I get to Materm?",
-              "answer": "Materm is inside Phou Khao Khouay National Park in Vientiane Province. Send us a message and we'll share directions and help you plan the journey."
+              "question": "ເດີນທາງໄປ Materm ແນວໃດ?",
+              "answer": "Materm ຕັ້ງຢູ່ໃນອຸທະຍານແຫ່ງຊາດພູເຂົາຂ່ວຍ ແຂວງວຽງຈັນ. ສົ່ງຂໍ້ຄວາມຫາພວກເຮົາ, ພວກເຮົາຈະສົ່ງເສັ້ນທາງໃຫ້ ແລະ ຊ່ວຍທ່ານວາງແຜນການເດີນທາງ."
             },
             "en": {
               "question": "How do I get to Materm?",
@@ -312,8 +312,8 @@
           "sort_order": 2,
           "translations": {
             "la": {
-              "question": "What are the check-in and opening times?",
-              "answer": "We are open every day from 08:00 to 18:00. Check-in and check-out times depend on your stay, so we'll confirm them when you book."
+              "question": "ເວລາເຂົ້າພັກ ແລະ ເວລາເປີດບໍລິການແມ່ນຕອນໃດ?",
+              "answer": "ພວກເຮົາເປີດທຸກວັນ ຕັ້ງແຕ່ 08:00 ຫາ 18:00. ເວລາເຂົ້າພັກ ແລະ ເວລາອອກຈາກທີ່ພັກຂຶ້ນກັບການພັກຂອງທ່ານ, ພວກເຮົາຈະຢືນຢັນໃຫ້ເມື່ອທ່ານຈອງ."
             },
             "en": {
               "question": "What are the check-in and opening times?",
@@ -326,8 +326,8 @@
           "sort_order": 3,
           "translations": {
             "la": {
-              "question": "Do you host music nights and events?",
-              "answer": "Yes, we hold music evenings and small gatherings from time to time. Ask us about upcoming dates before you plan your visit."
+              "question": "ມີຄືນດົນຕີ ແລະ ງານຕ່າງໆບໍ?",
+              "answer": "ມີ, ພວກເຮົາຈັດຄືນດົນຕີ ແລະ ການພົບປະສັງສັນນ້ອຍໆເປັນບາງຄັ້ງຄາວ. ສອບຖາມວັນທີທີ່ຈະມາເຖິງກ່ອນວາງແຜນມາຢ້ຽມຢາມ."
             },
             "en": {
               "question": "Do you host music nights and events?",
@@ -340,8 +340,8 @@
           "sort_order": 4,
           "translations": {
             "la": {
-              "question": "Can you arrange for groups or special requests?",
-              "answer": "We're happy to help with groups, celebrations and special requirements. Tell us what you have in mind and we'll see how we can make it work."
+              "question": "ຈັດໃຫ້ກຸ່ມ ຫຼື ຄຳຮ້ອງຂໍພິເສດໄດ້ບໍ?",
+              "answer": "ພວກເຮົາຍິນດີຊ່ວຍເຫຼືອກຸ່ມ, ງານສະຫຼອງ ແລະ ຄວາມຕ້ອງການພິເສດ. ບອກພວກເຮົາວ່າທ່ານຄິດຢາກໄດ້ແນວໃດ, ພວກເຮົາຈະຊອກວິທີທີ່ເຮັດໄດ້."
             },
             "en": {
               "question": "Can you arrange for groups or special requests?",
@@ -412,20 +412,20 @@
       "success_redirect_url": null,
       "translations": {
         "la": {
-          "title": "Send a message",
-          "description": "We usually reply within two working days.",
-          "submit_label": "Send message",
-          "sending_label": "Sending…",
-          "success_title": "Thank you!",
-          "success_description": "Your message is on its way. We'll reply as soon as we can.",
-          "success_again_label": "Send another message",
+          "title": "ສົ່ງຂໍ້ຄວາມຫາພວກເຮົາ",
+          "description": "ປົກກະຕິພວກເຮົາຕອບພາຍໃນສອງວັນເຮັດວຽກ.",
+          "submit_label": "ສົ່ງຂໍ້ຄວາມ",
+          "sending_label": "ກຳລັງສົ່ງ…",
+          "success_title": "ຂອບໃຈ!",
+          "success_description": "ຂໍ້ຄວາມຂອງທ່ານກຳລັງເດີນທາງໄປແລ້ວ. ພວກເຮົາຈະຕອບກັບໂດຍໄວທີ່ສຸດ.",
+          "success_again_label": "ສົ່ງຂໍ້ຄວາມອີກຄັ້ງ",
           "messages": {
-            "required": "This field is required",
-            "email": "Enter a valid email address",
-            "messageShort": "Please write at least 10 characters",
-            "phone": "Enter a valid phone number",
-            "generic": "Something went wrong. Please try again.",
-            "summary": "Please check the highlighted fields."
+            "required": "ຕ້ອງຕື່ມຂໍ້ມູນຊ່ອງນີ້",
+            "email": "ກະລຸນາປ້ອນທີ່ຢູ່ອີເມວທີ່ຖືກຕ້ອງ",
+            "messageShort": "ກະລຸນາຂຽນຢ່າງໜ້ອຍ 10 ຕົວອັກສອນ",
+            "phone": "ກະລຸນາປ້ອນເບີໂທລະສັບທີ່ຖືກຕ້ອງ",
+            "generic": "ມີບາງຢ່າງຜິດພາດ. ກະລຸນາລອງໃໝ່ອີກຄັ້ງ.",
+            "summary": "ກະລຸນາກວດສອບຊ່ອງທີ່ຖືກເນັ້ນ."
           }
         },
         "en": {
@@ -449,8 +449,8 @@
       "field_translations": {
         "name": {
           "la": {
-            "label": "Full name",
-            "placeholder": "Your name",
+            "label": "ຊື່ ແລະ ນາມສະກຸນ",
+            "placeholder": "ຊື່ຂອງທ່ານ",
             "option_labels": {}
           },
           "en": {
@@ -461,7 +461,7 @@
         },
         "email": {
           "la": {
-            "label": "Email",
+            "label": "ອີເມວ",
             "placeholder": "you@example.com",
             "option_labels": {}
           },
@@ -473,7 +473,7 @@
         },
         "phone": {
           "la": {
-            "label": "Phone (optional)",
+            "label": "ເບີໂທລະສັບ (ບໍ່ບັງຄັບ)",
             "placeholder": "+856 20 0000 0000",
             "option_labels": {}
           },
@@ -485,13 +485,13 @@
         },
         "topic": {
           "la": {
-            "label": "What is it about?",
+            "label": "ເລື່ອງກ່ຽວກັບຫຍັງ?",
             "placeholder": null,
             "option_labels": {
-              "booking": "Booking & stays",
-              "events": "Music nights & events",
-              "camping": "Camping & treks",
-              "other": "Something else"
+              "booking": "ການຈອງ ແລະ ທີ່ພັກ",
+              "events": "ຄືນດົນຕີ ແລະ ງານຕ່າງໆ",
+              "camping": "ການຕັ້ງແຄ້ມ ແລະ ການຍ່າງປ່າ",
+              "other": "ເລື່ອງອື່ນໆ"
             }
           },
           "en": {
@@ -507,8 +507,8 @@
         },
         "message": {
           "la": {
-            "label": "Message",
-            "placeholder": "Tell us how we can help…",
+            "label": "ຂໍ້ຄວາມ",
+            "placeholder": "ບອກພວກເຮົາວ່າຈະຊ່ວຍທ່ານໄດ້ແນວໃດ…",
             "option_labels": {}
           },
           "en": {

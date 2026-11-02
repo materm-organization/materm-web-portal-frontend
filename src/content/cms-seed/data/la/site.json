@@ -59,32 +59,32 @@
     "settings": {
       "brand": {
         "name": "MATERM",
-        "logo_alt": "MATERM logo",
-        "emblem_alt": "MATERM emblem",
-        "statement": "Forging wild paths across the untamed earth. Led by expert survivalists and certified wilderness rescue guides.",
+        "logo_alt": "ໂລໂກ້ MATERM",
+        "emblem_alt": "ສັນຍາລັກ MATERM",
+        "statement": "ສ້າງເສັ້ນທາງປ່າດິບຜ່ານແຜ່ນດິນທີ່ຍັງບໍ່ຖືກຄວບຄຸມ. ນຳພາໂດຍຜູ້ຊ່ຽວຊານການເອົາຕົວລອດ ແລະ ໄກດ໌ກູ້ໄພໃນປ່າທີ່ໄດ້ຮັບການຮັບຮອງ.",
         "logo_media_id": 23,
         "emblem_media_id": 24,
         "favicon_media_id": null
       },
       "footer": {
-        "copyright": "© 2026 Outdoor Avenger Ltd. All Wilderness Permits Reserved."
+        "copyright": "© 2026 Outdoor Avenger Ltd. ສະຫງວນສິດໃບອະນຸຍາດເຂົ້າປ່າທັງໝົດ."
       },
       "seo": {
         "site_name": "Materm",
         "title_template": "%s | Materm",
-        "default_description": "Materm - treehouse and camping at Phou Khao Khouay, Laos.",
+        "default_description": "Materm - ເຮືອນຕົ້ນໄມ້ ແລະ ການຕັ້ງແຄ້ມທີ່ພູເຂົາຂ່ວຍ, ລາວ.",
         "default_og_media_id": null
       },
       "site": {
         "base_url": "https://materm.example"
       },
       "contact": {
-        "address": "Phou Khao Khouay National Park, Vientiane Province, Lao PDR",
+        "address": "ອຸທະຍານແຫ່ງຊາດພູເຂົາຂ່ວຍ, ແຂວງວຽງຈັນ, ສປປ ລາວ",
         "phone": "+8562000000000",
         "phone_display": "+856 20 0000 0000",
         "map_url": null,
         "email": "hello@materm.example",
-        "hours": "Every day, 08:00 – 18:00"
+        "hours": "ທຸກວັນ, 08:00 – 18:00"
       }
     },
     "menus": {
@@ -93,7 +93,7 @@
         "items": [
           {
             "id": 1,
-            "label": "Home",
+            "label": "ໜ້າຫຼັກ",
             "aria_label": null,
             "href": "/",
             "icon": null,
@@ -103,7 +103,7 @@
           },
           {
             "id": 2,
-            "label": "Our Path",
+            "label": "ເສັ້ນທາງຂອງພວກເຮົາ",
             "aria_label": null,
             "href": "/our-path",
             "icon": null,
@@ -113,7 +113,7 @@
           },
           {
             "id": 3,
-            "label": "The Blog",
+            "label": "ບລັອກ",
             "aria_label": null,
             "href": "/blog",
             "icon": null,
@@ -123,7 +123,7 @@
           },
           {
             "id": 4,
-            "label": "Gallery",
+            "label": "ຄັງຮູບພາບ",
             "aria_label": null,
             "href": "/gallery",
             "icon": null,
@@ -133,7 +133,7 @@
           },
           {
             "id": 5,
-            "label": "Contact",
+            "label": "ຕິດຕໍ່ພວກເຮົາ",
             "aria_label": null,
             "href": "/contact",
             "icon": null,
@@ -148,7 +148,7 @@
         "items": [
           {
             "id": 1,
-            "label": "Home",
+            "label": "ໜ້າຫຼັກ",
             "aria_label": null,
             "href": "/",
             "icon": null,
@@ -158,7 +158,7 @@
           },
           {
             "id": 2,
-            "label": "Our Path",
+            "label": "ເສັ້ນທາງຂອງພວກເຮົາ",
             "aria_label": null,
             "href": "/our-path",
             "icon": null,
@@ -168,7 +168,7 @@
           },
           {
             "id": 3,
-            "label": "Blog",
+            "label": "ບລັອກ",
             "aria_label": null,
             "href": "/blog",
             "icon": null,
@@ -178,7 +178,7 @@
           },
           {
             "id": 4,
-            "label": "Contact",
+            "label": "ຕິດຕໍ່ພວກເຮົາ",
             "aria_label": null,
             "href": "/contact",
             "icon": null,
@@ -277,7 +277,7 @@
         "width": 285,
         "height": 245,
         "mime": "image/svg+xml",
-        "alt": "MATERM logo",
+        "alt": "ໂລໂກ້ MATERM",
         "blurhash": null,
         "focal": null,
         "variants": []
@@ -287,7 +287,7 @@
         "width": 78,
         "height": 65,
         "mime": "image/svg+xml",
-        "alt": "MATERM emblem",
+        "alt": "ສັນຍາລັກ MATERM",
         "blurhash": null,
         "focal": null,
         "variants": []

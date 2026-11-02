@@ -64,19 +64,19 @@
           "categories": [
             {
               "key": "music",
-              "name": "Music",
+              "name": "ດົນຕີ",
               "slug": "music",
               "sort_order": 1
             },
             {
               "key": "camping",
-              "name": "Camping",
+              "name": "ການຕັ້ງແຄ້ມ",
               "slug": "camping",
               "sort_order": 2
             },
             {
               "key": "outdoor",
-              "name": "Outdoor",
+              "name": "ກິດຈະກຳກາງແຈ້ງ",
               "slug": "outdoor",
               "sort_order": 3
             },
@@ -88,7 +88,7 @@
             },
             {
               "key": "hiking",
-              "name": "Hiking",
+              "name": "ການຍ່າງປ່າ",
               "slug": "hiking",
               "sort_order": 5
             }

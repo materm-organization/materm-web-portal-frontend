@@ -6,7 +6,7 @@
     "items": [
       {
         "id": 1,
-        "label": "Home",
+        "label": "ໜ້າຫຼັກ",
         "aria_label": null,
         "href": "/",
         "icon": null,
@@ -16,7 +16,7 @@
       },
       {
         "id": 2,
-        "label": "Our Path",
+        "label": "ເສັ້ນທາງຂອງພວກເຮົາ",
         "aria_label": null,
         "href": "/our-path",
         "icon": null,
@@ -26,7 +26,7 @@
       },
       {
         "id": 3,
-        "label": "Blog",
+        "label": "ບລັອກ",
         "aria_label": null,
         "href": "/blog",
         "icon": null,
@@ -36,7 +36,7 @@
       },
       {
         "id": 4,
-        "label": "Contact",
+        "label": "ຕິດຕໍ່ພວກເຮົາ",
         "aria_label": null,
         "href": "/contact",
         "icon": null,
