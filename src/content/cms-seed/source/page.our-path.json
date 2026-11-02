@@ -14,10 +14,10 @@
   "translations": [
     {
       "locale_code": "la",
-      "title": "Our Path",
-      "seo_title": "Our Path",
+      "title": "ເສັ້ນທາງຂອງພວກເຮົາ",
+      "seo_title": "ເສັ້ນທາງຂອງພວກເຮົາ",
       "seo_title_absolute": false,
-      "seo_description": "From a treehouse idea to a gathering community: the story of Materm at Phou Khao Khouay.",
+      "seo_description": "ຈາກແນວຄິດເຮືອນຕົ້ນໄມ້ ສູ່ຊຸມຊົນທີ່ມາລວມຕົວກັນ: ເລື່ອງລາວຂອງ Materm ທີ່ພູເຂົາຂ່ວຍ.",
       "og_image_id": null,
       "canonical_path": null,
       "is_enabled": true
@@ -43,11 +43,11 @@
       "anchor_id": null,
       "props": {
         "title": {
-          "la": "Our Path",
+          "la": "ເສັ້ນທາງຂອງພວກເຮົາ",
           "en": "Our Path"
         },
         "description": {
-          "la": "Travel is all about connecting with the raw beauty of nature. The MATERM logo draws inspiration from majestic mountain peaks, evergreen pine forests, and bold, grounded lines—symbolizing the courage to explore. We invite you to step off the beaten path and immerse yourself in the tranquility, adventure, and freedom of the great outdoors. Start your next adventure with MATERM today.",
+          "la": "ການເດີນທາງຄືການເຊື່ອມຕໍ່ກັບຄວາມງາມດິບຂອງທຳມະຊາດ. ໂລໂກ້ MATERM ໄດ້ແຮງບັນດານໃຈຈາກຍອດພູສູງຕະຫງ່ານ, ປ່າສົນຂຽວຕະຫຼອດປີ ແລະ ເສັ້ນສາຍທີ່ໜັກແໜ້ນ ສະແດງເຖິງຄວາມກ້າຫານໃນການສຳຫຼວດ. ພວກເຮົາເຊີນທ່ານກ້າວອອກຈາກເສັ້ນທາງເດີມ ແລະ ດື່ມດ່ຳກັບຄວາມສະຫງົບ, ການຜະຈົນໄພ ແລະ ອິດສະລະຂອງທຳມະຊາດກວ້າງ. ເລີ່ມການຜະຈົນໄພຄັ້ງຕໍ່ໄປຂອງທ່ານກັບ MATERM ມື້ນີ້.",
           "en": "Travel is all about connecting with the raw beauty of nature. The MATERM logo draws inspiration from majestic mountain peaks, evergreen pine forests, and bold, grounded lines—symbolizing the courage to explore. We invite you to step off the beaten path and immerse yourself in the tranquility, adventure, and freedom of the great outdoors. Start your next adventure with MATERM today."
         },
         "background": {
@@ -67,15 +67,15 @@
       "anchor_id": null,
       "props": {
         "eyebrow": {
-          "la": "Our Path",
+          "la": "ເສັ້ນທາງຂອງພວກເຮົາ",
           "en": "Our Path"
         },
         "title": {
-          "la": "From a treehouse idea to a gathering community",
+          "la": "ຈາກແນວຄິດເຮືອນຕົ້ນໄມ້ ສູ່ຊຸມຊົນທີ່ມາລວມຕົວກັນ",
           "en": "From a treehouse idea to a gathering community"
         },
         "description": {
-          "la": "What started as a small treehouse site in 2020 has grown into a place where campers, musicians, food lovers, and first-time visitors return to share the same slope of Phou Khao Khouay. Read the full story of how Materm came together.",
+          "la": "ສິ່ງທີ່ເລີ່ມຈາກເຮືອນຕົ້ນໄມ້ນ້ອຍໆໃນປີ 2020 ໄດ້ເຕີບໃຫຍ່ເປັນສະຖານທີ່ທີ່ນັກຕັ້ງແຄ້ມ, ນັກດົນຕີ, ຄົນຮັກອາຫານ ແລະ ຜູ້ມາຢ້ຽມຢາມຄັ້ງທຳອິດກັບມາແບ່ງປັນເນີນພູເຂົາຂ່ວຍແຫ່ງດຽວກັນ. ອ່ານເລື່ອງລາວເຕັມຂອງການເກີດຂຶ້ນຂອງ Materm.",
           "en": "What started as a small treehouse site in 2020 has grown into a place where campers, musicians, food lovers, and first-time visitors return to share the same slope of Phou Khao Khouay. Read the full story of how Materm came together."
         }
       }
@@ -95,7 +95,7 @@
               "en": "12.02.2026"
             },
             "title": {
-              "la": "We are the guardians of the great unknown",
+              "la": "ພວກເຮົາຄືຜູ້ປົກປັກຮັກສາສິ່ງທີ່ບໍ່ຮູ້ຈັກອັນຍິ່ງໃຫຍ່",
               "en": "We are the guardians of the great unknown"
             },
             "body": {
@@ -107,7 +107,7 @@
                     "content": [
                       {
                         "type": "text",
-                        "text": "Outdoor Avenger was founded on a simple, raw premise: modern life is too quiet. We believe that to truly find yourself, you must first get comfortably lost in nature."
+                        "text": "Outdoor Avenger ກໍ່ຕັ້ງຂຶ້ນຈາກແນວຄິດງ່າຍໆ: ຊີວິດສະໄໝໃໝ່ງຽບເກີນໄປ. ພວກເຮົາເຊື່ອວ່າ ເພື່ອຊອກພົບຕົນເອງແທ້ໆ ທ່ານຕ້ອງຫຼົງທາງໃນທຳມະຊາດຢ່າງສະບາຍໃຈກ່ອນ."
                       }
                     ]
                   },
@@ -116,7 +116,7 @@
                     "content": [
                       {
                         "type": "text",
-                        "text": "Our logo and craft draw inspiration from the majestic mountain peaks, evergreen pine forests, and bold, grounded lines of the wilderness — symbolizing the courage to explore. We invite you to step off the beaten path and immerse yourself in the adventure and freedom of the deep wild."
+                        "text": "ໂລໂກ້ ແລະ ງານຝີມືຂອງພວກເຮົາໄດ້ແຮງບັນດານໃຈຈາກຍອດພູສູງຕະຫງ່ານ, ປ່າສົນຂຽວຕະຫຼອດປີ ແລະ ເສັ້ນສາຍທີ່ໜັກແໜ້ນຂອງປ່າທຳມະຊາດ ສະແດງເຖິງຄວາມກ້າຫານໃນການສຳຫຼວດ. ພວກເຮົາເຊີນທ່ານກ້າວອອກຈາກເສັ້ນທາງເດີມ ແລະ ດື່ມດ່ຳກັບການຜະຈົນໄພ ແລະ ອິດສະລະຂອງປ່າເລິກ."
                       }
                     ]
                   }
@@ -149,7 +149,7 @@
             "image": {
               "media_id": 11,
               "alt": {
-                "la": "Two kayakers paddling through whitewater rapids between red canyon walls",
+                "la": "ນັກແຈວເຮືອຄາຢັກສອງຄົນແຈວຜ່ານແກ່ງນ້ຳໄຫຼແຮງລະຫວ່າງຜາແດງ",
                 "en": "Two kayakers paddling through whitewater rapids between red canyon walls"
               }
             },
@@ -163,7 +163,7 @@
               "en": "12.02.2026"
             },
             "title": {
-              "la": "We are the guardians of the great unknown",
+              "la": "ພວກເຮົາຄືຜູ້ປົກປັກຮັກສາສິ່ງທີ່ບໍ່ຮູ້ຈັກອັນຍິ່ງໃຫຍ່",
               "en": "We are the guardians of the great unknown"
             },
             "body": {
@@ -175,7 +175,7 @@
                     "content": [
                       {
                         "type": "text",
-                        "text": "Outdoor Avenger was founded on a simple, raw premise: modern life is too quiet. We believe that to truly find yourself, you must first get comfortably lost in nature."
+                        "text": "Outdoor Avenger ກໍ່ຕັ້ງຂຶ້ນຈາກແນວຄິດງ່າຍໆ: ຊີວິດສະໄໝໃໝ່ງຽບເກີນໄປ. ພວກເຮົາເຊື່ອວ່າ ເພື່ອຊອກພົບຕົນເອງແທ້ໆ ທ່ານຕ້ອງຫຼົງທາງໃນທຳມະຊາດຢ່າງສະບາຍໃຈກ່ອນ."
                       }
                     ]
                   },
@@ -184,7 +184,7 @@
                     "content": [
                       {
                         "type": "text",
-                        "text": "Our logo and craft draw inspiration from the majestic mountain peaks, evergreen pine forests, and bold, grounded lines of the wilderness — symbolizing the courage to explore. We invite you to step off the beaten path and immerse yourself in the adventure and freedom of the deep wild."
+                        "text": "ໂລໂກ້ ແລະ ງານຝີມືຂອງພວກເຮົາໄດ້ແຮງບັນດານໃຈຈາກຍອດພູສູງຕະຫງ່ານ, ປ່າສົນຂຽວຕະຫຼອດປີ ແລະ ເສັ້ນສາຍທີ່ໜັກແໜ້ນຂອງປ່າທຳມະຊາດ ສະແດງເຖິງຄວາມກ້າຫານໃນການສຳຫຼວດ. ພວກເຮົາເຊີນທ່ານກ້າວອອກຈາກເສັ້ນທາງເດີມ ແລະ ດື່ມດ່ຳກັບການຜະຈົນໄພ ແລະ ອິດສະລະຂອງປ່າເລິກ."
                       }
                     ]
                   }
@@ -217,7 +217,7 @@
             "image": {
               "media_id": 12,
               "alt": {
-                "la": "Ice climbers ascending a glacier crevasse",
+                "la": "ນັກປີນນ້ຳແຂງກຳລັງປີນຂຶ້ນຮອຍແຍກຂອງແມ່ນ້ຳກ້ອນນ້ຳແຂງ",
                 "en": "Ice climbers ascending a glacier crevasse"
               }
             },
@@ -231,7 +231,7 @@
               "en": "12.02.2026"
             },
             "title": {
-              "la": "We are the guardians of the great unknown",
+              "la": "ພວກເຮົາຄືຜູ້ປົກປັກຮັກສາສິ່ງທີ່ບໍ່ຮູ້ຈັກອັນຍິ່ງໃຫຍ່",
               "en": "We are the guardians of the great unknown"
             },
             "body": {
@@ -243,7 +243,7 @@
                     "content": [
                       {
                         "type": "text",
-                        "text": "Outdoor Avenger was founded on a simple, raw premise: modern life is too quiet. We believe that to truly find yourself, you must first get comfortably lost in nature."
+                        "text": "Outdoor Avenger ກໍ່ຕັ້ງຂຶ້ນຈາກແນວຄິດງ່າຍໆ: ຊີວິດສະໄໝໃໝ່ງຽບເກີນໄປ. ພວກເຮົາເຊື່ອວ່າ ເພື່ອຊອກພົບຕົນເອງແທ້ໆ ທ່ານຕ້ອງຫຼົງທາງໃນທຳມະຊາດຢ່າງສະບາຍໃຈກ່ອນ."
                       }
                     ]
                   },
@@ -252,7 +252,7 @@
                     "content": [
                       {
                         "type": "text",
-                        "text": "Our logo and craft draw inspiration from the majestic mountain peaks, evergreen pine forests, and bold, grounded lines of the wilderness — symbolizing the courage to explore. We invite you to step off the beaten path and immerse yourself in the adventure and freedom of the deep wild."
+                        "text": "ໂລໂກ້ ແລະ ງານຝີມືຂອງພວກເຮົາໄດ້ແຮງບັນດານໃຈຈາກຍອດພູສູງຕະຫງ່ານ, ປ່າສົນຂຽວຕະຫຼອດປີ ແລະ ເສັ້ນສາຍທີ່ໜັກແໜ້ນຂອງປ່າທຳມະຊາດ ສະແດງເຖິງຄວາມກ້າຫານໃນການສຳຫຼວດ. ພວກເຮົາເຊີນທ່ານກ້າວອອກຈາກເສັ້ນທາງເດີມ ແລະ ດື່ມດ່ຳກັບການຜະຈົນໄພ ແລະ ອິດສະລະຂອງປ່າເລິກ."
                       }
                     ]
                   }
@@ -285,7 +285,7 @@
             "image": {
               "media_id": 13,
               "alt": {
-                "la": "Rock climber scaling a steep granite wall above a mountain valley",
+                "la": "ນັກປີນຜາກຳລັງປີນຜາຫີນແກຣນິດຊັນ ເໜືອຮ່ອມພູ",
                 "en": "Rock climber scaling a steep granite wall above a mountain valley"
               }
             },
@@ -305,20 +305,20 @@
       "anchor_id": null,
       "props": {
         "eyebrow": {
-          "la": "Gallery",
+          "la": "ຄັງຮູບພາບ",
           "en": "Gallery"
         },
         "title": {
-          "la": "A visual walk-through is coming",
+          "la": "ການເດີນທາງດ້ວຍພາບຖ່າຍກຳລັງຈະມາເຖິງ",
           "en": "A visual walk-through is coming"
         },
         "description": {
-          "la": "What started as a small treehouse site in 2020 has grown into a place where campers, musicians, food lovers, and first-time visitors return to share the same slope of Phou Khao Khouay. Read the full story of how Materm came together.",
+          "la": "ສິ່ງທີ່ເລີ່ມຈາກເຮືອນຕົ້ນໄມ້ນ້ອຍໆໃນປີ 2020 ໄດ້ເຕີບໃຫຍ່ເປັນສະຖານທີ່ທີ່ນັກຕັ້ງແຄ້ມ, ນັກດົນຕີ, ຄົນຮັກອາຫານ ແລະ ຜູ້ມາຢ້ຽມຢາມຄັ້ງທຳອິດກັບມາແບ່ງປັນເນີນພູເຂົາຂ່ວຍແຫ່ງດຽວກັນ. ອ່ານເລື່ອງລາວເຕັມຂອງການເກີດຂຶ້ນຂອງ Materm.",
           "en": "What started as a small treehouse site in 2020 has grown into a place where campers, musicians, food lovers, and first-time visitors return to share the same slope of Phou Khao Khouay. Read the full story of how Materm came together."
         },
         "cta": {
           "label": {
-            "la": "View more",
+            "la": "ເບິ່ງເພີ່ມເຕີມ",
             "en": "View more"
           },
           "link": {
@@ -336,7 +336,7 @@
             "image": {
               "media_id": 14,
               "alt": {
-                "la": "Jungle stream flowing over rocks beneath tropical ferns (preview 1 of 3)",
+                "la": "ລຳຫ້ວຍໃນປ່າໄຫຼຜ່ານກ້ອນຫີນໃຕ້ຕົ້ນເຟີນເຂດຮ້ອນ (ຕົວຢ່າງ 1 ຈາກ 3)",
                 "en": "Jungle stream flowing over rocks beneath tropical ferns (preview 1 of 3)"
               }
             },
@@ -346,7 +346,7 @@
                 "en": "SEP. 05.2026"
               },
               "title": {
-                "la": "THE ORIGIN STORY, SINCE 2020",
+                "la": "ເລື່ອງລາວຕົ້ນກຳເນີດ, ຕັ້ງແຕ່ປີ 2020",
                 "en": "THE ORIGIN STORY, SINCE 2020"
               }
             }
@@ -355,7 +355,7 @@
             "image": {
               "media_id": 14,
               "alt": {
-                "la": "Jungle stream flowing over rocks beneath tropical ferns (preview 2 of 3)",
+                "la": "ລຳຫ້ວຍໃນປ່າໄຫຼຜ່ານກ້ອນຫີນໃຕ້ຕົ້ນເຟີນເຂດຮ້ອນ (ຕົວຢ່າງ 2 ຈາກ 3)",
                 "en": "Jungle stream flowing over rocks beneath tropical ferns (preview 2 of 3)"
               }
             },
@@ -365,7 +365,7 @@
                 "en": "SEP. 05.2026"
               },
               "title": {
-                "la": "THE ORIGIN STORY, SINCE 2020",
+                "la": "ເລື່ອງລາວຕົ້ນກຳເນີດ, ຕັ້ງແຕ່ປີ 2020",
                 "en": "THE ORIGIN STORY, SINCE 2020"
               }
             }
@@ -374,7 +374,7 @@
             "image": {
               "media_id": 14,
               "alt": {
-                "la": "Jungle stream flowing over rocks beneath tropical ferns (preview 3 of 3)",
+                "la": "ລຳຫ້ວຍໃນປ່າໄຫຼຜ່ານກ້ອນຫີນໃຕ້ຕົ້ນເຟີນເຂດຮ້ອນ (ຕົວຢ່າງ 3 ຈາກ 3)",
                 "en": "Jungle stream flowing over rocks beneath tropical ferns (preview 3 of 3)"
               }
             },
@@ -384,7 +384,7 @@
                 "en": "SEP. 05.2026"
               },
               "title": {
-                "la": "THE ORIGIN STORY, SINCE 2020",
+                "la": "ເລື່ອງລາວຕົ້ນກຳເນີດ, ຕັ້ງແຕ່ປີ 2020",
                 "en": "THE ORIGIN STORY, SINCE 2020"
               }
             }

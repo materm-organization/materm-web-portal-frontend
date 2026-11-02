@@ -14,10 +14,10 @@
   "translations": [
     {
       "locale_code": "la",
-      "title": "The Blog",
-      "seo_title": "The Blog",
+      "title": "ບລັອກ",
+      "seo_title": "ບລັອກ",
       "seo_title_absolute": false,
-      "seo_description": "Stories, recaps and field notes from Materm at Phou Khao Khouay.",
+      "seo_description": "ເລື່ອງລາວ, ບົດສະຫຼຸບ ແລະ ບັນທຶກພາກສະໜາມຈາກ Materm ທີ່ພູເຂົາຂ່ວຍ.",
       "og_image_id": null,
       "canonical_path": null,
       "is_enabled": true
@@ -43,13 +43,13 @@
       "anchor_id": null,
       "props": {
         "title": {
-          "la": "The Blog",
+          "la": "ບລັອກ",
           "en": "The Blog"
         },
         "meta_items": [
           {
             "text": {
-              "la": "Stories and recaps from the slope of Phou Khao Khouay",
+              "la": "ເລື່ອງລາວ ແລະ ບົດສະຫຼຸບຈາກເນີນພູເຂົາຂ່ວຍ",
               "en": "Stories and recaps from the slope of Phou Khao Khouay"
             }
           }

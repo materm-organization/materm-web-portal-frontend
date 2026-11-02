@@ -11,12 +11,12 @@
       "is_home": false,
       "resolved_locale": "la",
       "is_fallback": false,
-      "title": "Gallery",
+      "title": "ຄັງຮູບພາບ",
       "updated_at": "2026-01-01T00:00:00Z",
       "seo": {
-        "title": "Gallery",
+        "title": "ຄັງຮູບພາບ",
         "title_absolute": false,
-        "description": "A visual walk-through of Materm at Phou Khao Khouay: streams, ferns and light beneath the forest canopy.",
+        "description": "ການຍ່າງຊົມດ້ວຍພາບຂອງ Materm ທີ່ພູເຂົາຂ່ວຍ: ລຳຫ້ວຍ, ເຟີນ ແລະ ແສງສະຫວ່າງໃຕ້ຮົ່ມໄມ້.",
         "og_image": {
           "media_id": 15
         },
@@ -33,21 +33,21 @@
         "anchor_id": null,
         "is_fallback": false,
         "props": {
-          "title": "The origin story, since 2020",
+          "title": "ເລື່ອງລາວຕົ້ນກຳເນີດ, ຕັ້ງແຕ່ປີ 2020",
           "meta_items": [
             {
               "text": "Sep. 05.2026"
             },
             {
-              "text": "Music Night"
+              "text": "ຄືນດົນຕີ"
             },
             {
-              "text": "Phou Khao Khouay · Community journal"
+              "text": "ພູເຂົາຂ່ວຍ · ບັນທຶກຊຸມຊົນ"
             }
           ],
           "background": {
             "media_id": 15,
-            "alt": "Rainforest stream flowing past ferns",
+            "alt": "ລຳຫ້ວຍໃນປ່າຝົນໄຫຼຜ່ານຕົ້ນເຟີນ",
             "decorative": false
           },
           "animate_in": true
@@ -70,7 +70,7 @@
                 "content": [
                   {
                     "type": "text",
-                    "text": "Follow the water into a world of green. A quiet visual journey through rushing streams, textured forest floors and light beneath the canopy. Follow the water into a world of green. A quiet visual journey through rushing streams, textured forest floors and light beneath the canopy. Follow the water into a world of green. A quiet visual journey through rushing streams, textured forest floors and light beneath the canopy."
+                    "text": "ຕາມສາຍນ້ຳເຂົ້າສູ່ໂລກສີຂຽວ. ການເດີນທາງດ້ວຍພາບອັນງຽບສະຫງົບຜ່ານລຳຫ້ວຍທີ່ໄຫຼແຮງ, ພື້ນປ່າທີ່ມີເນື້ອສຳຜັດ ແລະ ແສງສະຫວ່າງໃຕ້ຮົ່ມໄມ້. ຕາມສາຍນ້ຳເຂົ້າສູ່ໂລກສີຂຽວ. ການເດີນທາງດ້ວຍພາບອັນງຽບສະຫງົບຜ່ານລຳຫ້ວຍທີ່ໄຫຼແຮງ, ພື້ນປ່າທີ່ມີເນື້ອສຳຜັດ ແລະ ແສງສະຫວ່າງໃຕ້ຮົ່ມໄມ້. ຕາມສາຍນ້ຳເຂົ້າສູ່ໂລກສີຂຽວ. ການເດີນທາງດ້ວຍພາບອັນງຽບສະຫງົບຜ່ານລຳຫ້ວຍທີ່ໄຫຼແຮງ, ພື້ນປ່າທີ່ມີເນື້ອສຳຜັດ ແລະ ແສງສະຫວ່າງໃຕ້ຮົ່ມໄມ້."
                   }
                 ]
               }
@@ -87,7 +87,7 @@
         "anchor_id": null,
         "is_fallback": false,
         "props": {
-          "accessible_heading": "The forest photo story",
+          "accessible_heading": "ເລື່ອງລາວຜ່ານພາບຖ່າຍປ່າໄມ້",
           "album_id": 1,
           "rows": [
             {
@@ -158,33 +158,33 @@
           "slots": {
             "1": {
               "media_id": 18,
-              "alt": "Looking up through tall rainforest trees to a bright patch of sky",
-              "caption_title": "Beneath the canopy",
-              "caption_description": "Layers of green, reaching towards the light."
+              "alt": "ແນມຂຶ້ນຜ່ານຕົ້ນໄມ້ປ່າຝົນສູງ ເຖິງຜືນຟ້າທີ່ສະຫວ່າງ",
+              "caption_title": "ໃຕ້ຮົ່ມໄມ້",
+              "caption_description": "ຊັ້ນສີຂຽວຫຼາຍຊັ້ນ ຂຶ້ນໄປຫາແສງສະຫວ່າງ."
             },
             "2": {
               "media_id": 19,
-              "alt": "Close-up of a fern frond unfurling",
-              "caption_title": "A small unfolding",
-              "caption_description": "The quiet geometry of a fern."
+              "alt": "ພາບໃກ້ຂອງໃບເຟີນທີ່ກຳລັງກາງອອກ",
+              "caption_title": "ການຄ່ອຍໆກາງອອກ",
+              "caption_description": "ຮູບຮ່າງອັນງຽບສະຫງົບຂອງໃບເຟີນ."
             },
             "3": {
               "media_id": 20,
-              "alt": "Clear stream running over mossy stones",
-              "caption_title": "Water over stone",
-              "caption_description": "Moss, ripples and the shapes left by the current."
+              "alt": "ລຳຫ້ວຍໃສໄຫຼຜ່ານກ້ອນຫີນທີ່ມີມອສ",
+              "caption_title": "ນ້ຳເທິງກ້ອນຫີນ",
+              "caption_description": "ມອສ, ຄື້ນນ້ອຍໆ ແລະ ຮູບຮ່າງທີ່ກະແສນ້ຳເຫຼືອໄວ້."
             },
             "4": {
               "media_id": 21,
-              "alt": "Narrow misty forest path between tall trees",
-              "caption_title": "A softer path",
-              "caption_description": "An invitation to wander a little further."
+              "alt": "ທາງເດີນປ່າແຄບໆທີ່ມີໝອກ ລະຫວ່າງຕົ້ນໄມ້ສູງ",
+              "caption_title": "ເສັ້ນທາງທີ່ອ່ອນໂຍນກວ່າ",
+              "caption_description": "ຄຳເຊີນໃຫ້ຍ່າງສຳຫຼວດໄກອອກໄປອີກໜ້ອຍ."
             },
             "5": {
               "media_id": 22,
-              "alt": "Sunbeams filtering through the misty forest",
-              "caption_title": "When the light comes through",
-              "caption_description": "The forest changes, one sunbeam at a time."
+              "alt": "ແສງຕາເວັນສ່ອງຜ່ານປ່າທີ່ມີໝອກ",
+              "caption_title": "ເມື່ອແສງສ່ອງຜ່ານມາ",
+              "caption_description": "ປ່າປ່ຽນໄປ ເທື່ອລະລຳແສງຕາເວັນ."
             }
           }
         }
@@ -197,16 +197,16 @@
         "anchor_id": null,
         "is_fallback": false,
         "props": {
-          "eyebrow": "Gallery",
-          "title": "A visual walk-through is coming",
-          "description": "What started as a small treehouse site in 2020 has grown into a place where campers, musicians, food lovers, and first-time visitors return to share the same slope of Phou Khao Khouay. Read the full story of how Materm came together.",
-          "row_label": "Forest stream photos",
+          "eyebrow": "ຄັງຮູບພາບ",
+          "title": "ການເດີນທາງດ້ວຍພາບຖ່າຍກຳລັງຈະມາເຖິງ",
+          "description": "ສິ່ງທີ່ເລີ່ມຈາກເຮືອນຕົ້ນໄມ້ນ້ອຍໆໃນປີ 2020 ໄດ້ເຕີບໃຫຍ່ເປັນສະຖານທີ່ທີ່ນັກຕັ້ງແຄ້ມ, ນັກດົນຕີ, ຄົນຮັກອາຫານ ແລະ ຜູ້ມາຢ້ຽມຢາມຄັ້ງທຳອິດກັບມາແບ່ງປັນເນີນພູເຂົາຂ່ວຍແຫ່ງດຽວກັນ. ອ່ານເລື່ອງລາວເຕັມຂອງການເກີດຂຶ້ນຂອງ Materm.",
+          "row_label": "ພາບຖ່າຍລຳຫ້ວຍໃນປ່າ",
           "source": "manual",
           "cards": [
             {
               "image": {
                 "media_id": 9,
-                "alt": "Rainforest stream running between ferns and trees",
+                "alt": "ລຳຫ້ວຍໃນປ່າຝົນໄຫຼລະຫວ່າງຕົ້ນເຟີນ ແລະ ຕົ້ນໄມ້",
                 "decorative": false
               }
             },
@@ -231,7 +231,7 @@
             {
               "image": {
                 "media_id": 9,
-                "alt": "Rainforest stream running between ferns and trees",
+                "alt": "ລຳຫ້ວຍໃນປ່າຝົນໄຫຼລະຫວ່າງຕົ້ນເຟີນ ແລະ ຕົ້ນໄມ້",
                 "decorative": false
               },
               "caption": null,
@@ -265,7 +265,7 @@
         "width": 1200,
         "height": 896,
         "mime": "image/jpeg",
-        "alt": "Jungle waterfall and stream surrounded by palms and tropical trees",
+        "alt": "ນ້ຳຕົກ ແລະ ລຳຫ້ວຍໃນປ່າ ອ້ອມຮອບດ້ວຍຕົ້ນປາມ ແລະ ຕົ້ນໄມ້ເຂດຮ້ອນ",
         "blurhash": null,
         "focal": null,
         "variants": []
@@ -275,7 +275,7 @@
         "width": 3456,
         "height": 1902,
         "mime": "image/jpeg",
-        "alt": "Rainforest stream flowing past ferns",
+        "alt": "ລຳຫ້ວຍໃນປ່າຝົນໄຫຼຜ່ານຕົ້ນເຟີນ",
         "blurhash": null,
         "focal": null,
         "variants": []
@@ -285,7 +285,7 @@
         "width": 1376,
         "height": 768,
         "mime": "image/jpeg",
-        "alt": "Looking up through tall rainforest trees to a bright patch of sky",
+        "alt": "ແນມຂຶ້ນຜ່ານຕົ້ນໄມ້ປ່າຝົນສູງ ເຖິງຜືນຟ້າທີ່ສະຫວ່າງ",
         "blurhash": null,
         "focal": null,
         "variants": []
@@ -295,7 +295,7 @@
         "width": 1024,
         "height": 1024,
         "mime": "image/jpeg",
-        "alt": "Close-up of a fern frond unfurling",
+        "alt": "ພາບໃກ້ຂອງໃບເຟີນທີ່ກຳລັງກາງອອກ",
         "blurhash": null,
         "focal": null,
         "variants": []
@@ -305,7 +305,7 @@
         "width": 1200,
         "height": 896,
         "mime": "image/jpeg",
-        "alt": "Clear stream running over mossy stones",
+        "alt": "ລຳຫ້ວຍໃສໄຫຼຜ່ານກ້ອນຫີນທີ່ມີມອສ",
         "blurhash": null,
         "focal": null,
         "variants": []
@@ -315,7 +315,7 @@
         "width": 1024,
         "height": 1024,
         "mime": "image/jpeg",
-        "alt": "Narrow misty forest path between tall trees",
+        "alt": "ທາງເດີນປ່າແຄບໆທີ່ມີໝອກ ລະຫວ່າງຕົ້ນໄມ້ສູງ",
         "blurhash": null,
         "focal": null,
         "variants": []
@@ -325,7 +325,7 @@
         "width": 1152,
         "height": 928,
         "mime": "image/jpeg",
-        "alt": "Sunbeams filtering through the misty forest",
+        "alt": "ແສງຕາເວັນສ່ອງຜ່ານປ່າທີ່ມີໝອກ",
         "blurhash": null,
         "focal": null,
         "variants": []

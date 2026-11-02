@@ -13,11 +13,11 @@
     {
       "locale_code": "la",
       "slug": "music-night-under-the-stars",
-      "title": "Music Night Under the Stars — a recap",
-      "excerpt": "On one weekend night in September, the slope of Phou Khao Khouay where Materm’s treehouses sit turned into an impromptu music stage. Three local bands took turns playing. A familiar place became a place to listen.",
-      "label": "Music Night",
-      "location_label": "Phou Khao Khouay · Community journal",
-      "hero_alt": "Snow-capped mountains above a forest lake under heavy clouds",
+      "title": "ຄືນດົນຕີໃຕ້ດວງດາວ — ບົດສະຫຼຸບ",
+      "excerpt": "ໃນຄືນວັນທ້າຍອາທິດໜຶ່ງຂອງເດືອນກັນຍາ, ເນີນພູເຂົາຂ່ວຍບ່ອນທີ່ເຮືອນຕົ້ນໄມ້ຂອງ Materm ຕັ້ງຢູ່ ໄດ້ກາຍເປັນເວທີດົນຕີແບບບໍ່ໄດ້ນັດໝາຍ. ສາມວົງດົນຕີທ້ອງຖິ່ນຜັດປ່ຽນກັນຫຼິ້ນ. ສະຖານທີ່ທີ່ຄຸ້ນເຄີຍໄດ້ກາຍເປັນບ່ອນສຳລັບຟັງ.",
+      "label": "ຄືນດົນຕີ",
+      "location_label": "ພູເຂົາຂ່ວຍ · ບັນທຶກຊຸມຊົນ",
+      "hero_alt": "ພູເຂົາປົກຄຸມດ້ວຍຫິມະເໜືອທະເລສາບໃນປ່າ ໃຕ້ເມກໜາ",
       "body": {
         "type": "doc",
         "content": [
@@ -26,7 +26,7 @@
             "content": [
               {
                 "type": "text",
-                "text": "On one weekend night in September, the slope of Phou Khao Khouay where Materm’s treehouses sit turned into an impromptu music stage. Three local bands took turns playing. A familiar place became a place to listen."
+                "text": "ໃນຄືນວັນທ້າຍອາທິດໜຶ່ງຂອງເດືອນກັນຍາ, ເນີນພູເຂົາຂ່ວຍບ່ອນທີ່ເຮືອນຕົ້ນໄມ້ຂອງ Materm ຕັ້ງຢູ່ ໄດ້ກາຍເປັນເວທີດົນຕີແບບບໍ່ໄດ້ນັດໝາຍ. ສາມວົງດົນຕີທ້ອງຖິ່ນຜັດປ່ຽນກັນຫຼິ້ນ. ສະຖານທີ່ທີ່ຄຸ້ນເຄີຍໄດ້ກາຍເປັນບ່ອນສຳລັບຟັງ."
               }
             ]
           },
@@ -35,15 +35,15 @@
             "content": [
               {
                 "type": "text",
-                "text": "Music Night belongs to the same story as the treehouses: a reason to come together, with the landscape still at the centre. This recap is a reflection on that meeting of music, community and place — and on what it means to make room for something shared, outdoors."
+                "text": "ຄືນດົນຕີເປັນເລື່ອງດຽວກັບເຮືອນຕົ້ນໄມ້: ເຫດຜົນທີ່ຈະມາຢູ່ນຳກັນ ໂດຍມີທິວທັດເປັນໃຈກາງ. ບົດສະຫຼຸບນີ້ແມ່ນການຄິດຮອດການພົບກັນຂອງດົນຕີ, ຊຸມຊົນ ແລະ ສະຖານທີ່ — ແລະ ຄວາມໝາຍຂອງການເປີດພື້ນທີ່ໃຫ້ສິ່ງທີ່ແບ່ງປັນກັນ ກາງແຈ້ງ."
               }
             ]
           }
         ]
       },
-      "gallery_heading": "A visual walk-through is coming",
-      "gallery_description": "What started as a small treehouse site in 2020 has grown into a place where campers, musicians, food lovers, and first-time visitors return to share the same slope of Phou Khao Khouay. Read the full story of how Materm came together.",
-      "seo_title": "Music Night Under the Stars — a recap",
+      "gallery_heading": "ການເດີນທາງດ້ວຍພາບຖ່າຍກຳລັງຈະມາເຖິງ",
+      "gallery_description": "ສິ່ງທີ່ເລີ່ມຈາກເຮືອນຕົ້ນໄມ້ນ້ອຍໆໃນປີ 2020 ໄດ້ເຕີບໃຫຍ່ເປັນສະຖານທີ່ທີ່ນັກຕັ້ງແຄ້ມ, ນັກດົນຕີ, ຄົນຮັກອາຫານ ແລະ ຜູ້ມາຢ້ຽມຢາມຄັ້ງທຳອິດກັບມາແບ່ງປັນເນີນພູເຂົາຂ່ວຍແຫ່ງດຽວກັນ. ອ່ານເລື່ອງລາວເຕັມຂອງການເກີດຂຶ້ນຂອງ Materm.",
+      "seo_title": "ຄືນດົນຕີໃຕ້ດວງດາວ — ບົດສະຫຼຸບ",
       "seo_description": null,
       "og_image_id": null,
       "is_enabled": true
@@ -95,7 +95,7 @@
       "translations": [
         {
           "locale_code": "la",
-          "alt": "Music Night photo 1 of 9: a forest stream with ferns and small waterfalls",
+          "alt": "ຮູບຄືນດົນຕີ 1 ຈາກ 9: ລຳຫ້ວຍໃນປ່າກັບຕົ້ນເຟີນ ແລະ ນ້ຳຕົກນ້ອຍໆ",
           "caption": null
         },
         {
@@ -111,7 +111,7 @@
       "translations": [
         {
           "locale_code": "la",
-          "alt": "Music Night photo 2 of 9: a forest stream with ferns and small waterfalls",
+          "alt": "ຮູບຄືນດົນຕີ 2 ຈາກ 9: ລຳຫ້ວຍໃນປ່າກັບຕົ້ນເຟີນ ແລະ ນ້ຳຕົກນ້ອຍໆ",
           "caption": null
         },
         {
@@ -127,7 +127,7 @@
       "translations": [
         {
           "locale_code": "la",
-          "alt": "Music Night photo 3 of 9: a forest stream with ferns and small waterfalls",
+          "alt": "ຮູບຄືນດົນຕີ 3 ຈາກ 9: ລຳຫ້ວຍໃນປ່າກັບຕົ້ນເຟີນ ແລະ ນ້ຳຕົກນ້ອຍໆ",
           "caption": null
         },
         {
@@ -143,7 +143,7 @@
       "translations": [
         {
           "locale_code": "la",
-          "alt": "Music Night photo 4 of 9: a forest stream with ferns and small waterfalls",
+          "alt": "ຮູບຄືນດົນຕີ 4 ຈາກ 9: ລຳຫ້ວຍໃນປ່າກັບຕົ້ນເຟີນ ແລະ ນ້ຳຕົກນ້ອຍໆ",
           "caption": null
         },
         {
@@ -159,7 +159,7 @@
       "translations": [
         {
           "locale_code": "la",
-          "alt": "Music Night photo 5 of 9: a forest stream with ferns and small waterfalls",
+          "alt": "ຮູບຄືນດົນຕີ 5 ຈາກ 9: ລຳຫ້ວຍໃນປ່າກັບຕົ້ນເຟີນ ແລະ ນ້ຳຕົກນ້ອຍໆ",
           "caption": null
         },
         {
@@ -175,7 +175,7 @@
       "translations": [
         {
           "locale_code": "la",
-          "alt": "Music Night photo 6 of 9: a forest stream with ferns and small waterfalls",
+          "alt": "ຮູບຄືນດົນຕີ 6 ຈາກ 9: ລຳຫ້ວຍໃນປ່າກັບຕົ້ນເຟີນ ແລະ ນ້ຳຕົກນ້ອຍໆ",
           "caption": null
         },
         {
@@ -191,7 +191,7 @@
       "translations": [
         {
           "locale_code": "la",
-          "alt": "Music Night photo 7 of 9: a forest stream with ferns and small waterfalls",
+          "alt": "ຮູບຄືນດົນຕີ 7 ຈາກ 9: ລຳຫ້ວຍໃນປ່າກັບຕົ້ນເຟີນ ແລະ ນ້ຳຕົກນ້ອຍໆ",
           "caption": null
         },
         {
@@ -207,7 +207,7 @@
       "translations": [
         {
           "locale_code": "la",
-          "alt": "Music Night photo 8 of 9: a forest stream with ferns and small waterfalls",
+          "alt": "ຮູບຄືນດົນຕີ 8 ຈາກ 9: ລຳຫ້ວຍໃນປ່າກັບຕົ້ນເຟີນ ແລະ ນ້ຳຕົກນ້ອຍໆ",
           "caption": null
         },
         {
@@ -223,7 +223,7 @@
       "translations": [
         {
           "locale_code": "la",
-          "alt": "Music Night photo 9 of 9: a forest stream with ferns and small waterfalls",
+          "alt": "ຮູບຄືນດົນຕີ 9 ຈາກ 9: ລຳຫ້ວຍໃນປ່າກັບຕົ້ນເຟີນ ແລະ ນ້ຳຕົກນ້ອຍໆ",
           "caption": null
         },
         {

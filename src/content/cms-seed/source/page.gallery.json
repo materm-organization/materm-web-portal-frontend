@@ -14,10 +14,10 @@
   "translations": [
     {
       "locale_code": "la",
-      "title": "Gallery",
-      "seo_title": "Gallery",
+      "title": "ຄັງຮູບພາບ",
+      "seo_title": "ຄັງຮູບພາບ",
       "seo_title_absolute": false,
-      "seo_description": "A visual walk-through of Materm at Phou Khao Khouay: streams, ferns and light beneath the forest canopy.",
+      "seo_description": "ການຍ່າງຊົມດ້ວຍພາບຂອງ Materm ທີ່ພູເຂົາຂ່ວຍ: ລຳຫ້ວຍ, ເຟີນ ແລະ ແສງສະຫວ່າງໃຕ້ຮົ່ມໄມ້.",
       "og_image_id": null,
       "canonical_path": null,
       "is_enabled": true
@@ -43,7 +43,7 @@
       "anchor_id": null,
       "props": {
         "title": {
-          "la": "The origin story, since 2020",
+          "la": "ເລື່ອງລາວຕົ້ນກຳເນີດ, ຕັ້ງແຕ່ປີ 2020",
           "en": "The origin story, since 2020"
         },
         "meta_items": [
@@ -55,13 +55,13 @@
           },
           {
             "text": {
-              "la": "Music Night",
+              "la": "ຄືນດົນຕີ",
               "en": "Music Night"
             }
           },
           {
             "text": {
-              "la": "Phou Khao Khouay · Community journal",
+              "la": "ພູເຂົາຂ່ວຍ · ບັນທຶກຊຸມຊົນ",
               "en": "Phou Khao Khouay · Community journal"
             }
           }
@@ -69,7 +69,7 @@
         "background": {
           "media_id": 15,
           "alt": {
-            "la": "Rainforest stream flowing past ferns",
+            "la": "ລຳຫ້ວຍໃນປ່າຝົນໄຫຼຜ່ານຕົ້ນເຟີນ",
             "en": "Rainforest stream flowing past ferns"
           }
         },
@@ -93,7 +93,7 @@
                 "content": [
                   {
                     "type": "text",
-                    "text": "Follow the water into a world of green. A quiet visual journey through rushing streams, textured forest floors and light beneath the canopy. Follow the water into a world of green. A quiet visual journey through rushing streams, textured forest floors and light beneath the canopy. Follow the water into a world of green. A quiet visual journey through rushing streams, textured forest floors and light beneath the canopy."
+                    "text": "ຕາມສາຍນ້ຳເຂົ້າສູ່ໂລກສີຂຽວ. ການເດີນທາງດ້ວຍພາບອັນງຽບສະຫງົບຜ່ານລຳຫ້ວຍທີ່ໄຫຼແຮງ, ພື້ນປ່າທີ່ມີເນື້ອສຳຜັດ ແລະ ແສງສະຫວ່າງໃຕ້ຮົ່ມໄມ້. ຕາມສາຍນ້ຳເຂົ້າສູ່ໂລກສີຂຽວ. ການເດີນທາງດ້ວຍພາບອັນງຽບສະຫງົບຜ່ານລຳຫ້ວຍທີ່ໄຫຼແຮງ, ພື້ນປ່າທີ່ມີເນື້ອສຳຜັດ ແລະ ແສງສະຫວ່າງໃຕ້ຮົ່ມໄມ້. ຕາມສາຍນ້ຳເຂົ້າສູ່ໂລກສີຂຽວ. ການເດີນທາງດ້ວຍພາບອັນງຽບສະຫງົບຜ່ານລຳຫ້ວຍທີ່ໄຫຼແຮງ, ພື້ນປ່າທີ່ມີເນື້ອສຳຜັດ ແລະ ແສງສະຫວ່າງໃຕ້ຮົ່ມໄມ້."
                   }
                 ]
               }
@@ -125,7 +125,7 @@
       "anchor_id": null,
       "props": {
         "accessible_heading": {
-          "la": "The forest photo story",
+          "la": "ເລື່ອງລາວຜ່ານພາບຖ່າຍປ່າໄມ້",
           "en": "The forest photo story"
         },
         "album_id": 1,
@@ -204,19 +204,19 @@
       "anchor_id": null,
       "props": {
         "eyebrow": {
-          "la": "Gallery",
+          "la": "ຄັງຮູບພາບ",
           "en": "Gallery"
         },
         "title": {
-          "la": "A visual walk-through is coming",
+          "la": "ການເດີນທາງດ້ວຍພາບຖ່າຍກຳລັງຈະມາເຖິງ",
           "en": "A visual walk-through is coming"
         },
         "description": {
-          "la": "What started as a small treehouse site in 2020 has grown into a place where campers, musicians, food lovers, and first-time visitors return to share the same slope of Phou Khao Khouay. Read the full story of how Materm came together.",
+          "la": "ສິ່ງທີ່ເລີ່ມຈາກເຮືອນຕົ້ນໄມ້ນ້ອຍໆໃນປີ 2020 ໄດ້ເຕີບໃຫຍ່ເປັນສະຖານທີ່ທີ່ນັກຕັ້ງແຄ້ມ, ນັກດົນຕີ, ຄົນຮັກອາຫານ ແລະ ຜູ້ມາຢ້ຽມຢາມຄັ້ງທຳອິດກັບມາແບ່ງປັນເນີນພູເຂົາຂ່ວຍແຫ່ງດຽວກັນ. ອ່ານເລື່ອງລາວເຕັມຂອງການເກີດຂຶ້ນຂອງ Materm.",
           "en": "What started as a small treehouse site in 2020 has grown into a place where campers, musicians, food lovers, and first-time visitors return to share the same slope of Phou Khao Khouay. Read the full story of how Materm came together."
         },
         "row_label": {
-          "la": "Forest stream photos",
+          "la": "ພາບຖ່າຍລຳຫ້ວຍໃນປ່າ",
           "en": "Forest stream photos"
         },
         "source": "manual",
@@ -225,7 +225,7 @@
             "image": {
               "media_id": 9,
               "alt": {
-                "la": "Rainforest stream running between ferns and trees",
+                "la": "ລຳຫ້ວຍໃນປ່າຝົນໄຫຼລະຫວ່າງຕົ້ນເຟີນ ແລະ ຕົ້ນໄມ້",
                 "en": "Rainforest stream running between ferns and trees"
               }
             }

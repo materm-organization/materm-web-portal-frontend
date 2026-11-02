@@ -11,12 +11,12 @@
       "is_home": false,
       "resolved_locale": "la",
       "is_fallback": false,
-      "title": "The Blog",
+      "title": "ບລັອກ",
       "updated_at": "2026-01-01T00:00:00Z",
       "seo": {
-        "title": "The Blog",
+        "title": "ບລັອກ",
         "title_absolute": false,
-        "description": "Stories, recaps and field notes from Materm at Phou Khao Khouay.",
+        "description": "ເລື່ອງລາວ, ບົດສະຫຼຸບ ແລະ ບັນທຶກພາກສະໜາມຈາກ Materm ທີ່ພູເຂົາຂ່ວຍ.",
         "og_image": {
           "media_id": 15
         },
@@ -33,10 +33,10 @@
         "anchor_id": null,
         "is_fallback": false,
         "props": {
-          "title": "The Blog",
+          "title": "ບລັອກ",
           "meta_items": [
             {
-              "text": "Stories and recaps from the slope of Phou Khao Khouay"
+              "text": "ເລື່ອງລາວ ແລະ ບົດສະຫຼຸບຈາກເນີນພູເຂົາຂ່ວຍ"
             }
           ],
           "background": {
@@ -102,7 +102,7 @@
         "width": 3456,
         "height": 1902,
         "mime": "image/jpeg",
-        "alt": "Rainforest stream flowing past ferns",
+        "alt": "ລຳຫ້ວຍໃນປ່າຝົນໄຫຼຜ່ານຕົ້ນເຟີນ",
         "blurhash": null,
         "focal": null,
         "variants": []

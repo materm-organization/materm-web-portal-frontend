@@ -8,7 +8,7 @@
   "translations": [
     {
       "locale_code": "la",
-      "title": "The forest photo story",
+      "title": "ເລື່ອງລາວຜ່ານພາບຖ່າຍປ່າໄມ້",
       "description": null
     },
     {
@@ -26,9 +26,9 @@
       "translations": [
         {
           "locale_code": "la",
-          "caption_title": "Beneath the canopy",
-          "caption_description": "Layers of green, reaching towards the light.",
-          "alt": "Looking up through tall rainforest trees to a bright patch of sky"
+          "caption_title": "ໃຕ້ຮົ່ມໄມ້",
+          "caption_description": "ຊັ້ນສີຂຽວຫຼາຍຊັ້ນ ຂຶ້ນໄປຫາແສງສະຫວ່າງ.",
+          "alt": "ແນມຂຶ້ນຜ່ານຕົ້ນໄມ້ປ່າຝົນສູງ ເຖິງຜືນຟ້າທີ່ສະຫວ່າງ"
         },
         {
           "locale_code": "en",
@@ -46,9 +46,9 @@
       "translations": [
         {
           "locale_code": "la",
-          "caption_title": "A small unfolding",
-          "caption_description": "The quiet geometry of a fern.",
-          "alt": "Close-up of a fern frond unfurling"
+          "caption_title": "ການຄ່ອຍໆກາງອອກ",
+          "caption_description": "ຮູບຮ່າງອັນງຽບສະຫງົບຂອງໃບເຟີນ.",
+          "alt": "ພາບໃກ້ຂອງໃບເຟີນທີ່ກຳລັງກາງອອກ"
         },
         {
           "locale_code": "en",
@@ -66,9 +66,9 @@
       "translations": [
         {
           "locale_code": "la",
-          "caption_title": "Water over stone",
-          "caption_description": "Moss, ripples and the shapes left by the current.",
-          "alt": "Clear stream running over mossy stones"
+          "caption_title": "ນ້ຳເທິງກ້ອນຫີນ",
+          "caption_description": "ມອສ, ຄື້ນນ້ອຍໆ ແລະ ຮູບຮ່າງທີ່ກະແສນ້ຳເຫຼືອໄວ້.",
+          "alt": "ລຳຫ້ວຍໃສໄຫຼຜ່ານກ້ອນຫີນທີ່ມີມອສ"
         },
         {
           "locale_code": "en",
@@ -86,9 +86,9 @@
       "translations": [
         {
           "locale_code": "la",
-          "caption_title": "A softer path",
-          "caption_description": "An invitation to wander a little further.",
-          "alt": "Narrow misty forest path between tall trees"
+          "caption_title": "ເສັ້ນທາງທີ່ອ່ອນໂຍນກວ່າ",
+          "caption_description": "ຄຳເຊີນໃຫ້ຍ່າງສຳຫຼວດໄກອອກໄປອີກໜ້ອຍ.",
+          "alt": "ທາງເດີນປ່າແຄບໆທີ່ມີໝອກ ລະຫວ່າງຕົ້ນໄມ້ສູງ"
         },
         {
           "locale_code": "en",
@@ -106,9 +106,9 @@
       "translations": [
         {
           "locale_code": "la",
-          "caption_title": "When the light comes through",
-          "caption_description": "The forest changes, one sunbeam at a time.",
-          "alt": "Sunbeams filtering through the misty forest"
+          "caption_title": "ເມື່ອແສງສ່ອງຜ່ານມາ",
+          "caption_description": "ປ່າປ່ຽນໄປ ເທື່ອລະລຳແສງຕາເວັນ.",
+          "alt": "ແສງຕາເວັນສ່ອງຜ່ານປ່າທີ່ມີໝອກ"
         },
         {
           "locale_code": "en",

@@ -14,10 +14,10 @@
   "translations": [
     {
       "locale_code": "la",
-      "title": "Home",
+      "title": "ໜ້າຫຼັກ",
       "seo_title": "Materm",
       "seo_title_absolute": true,
-      "seo_description": "Materm - treehouse and camping at Phou Khao Khouay, Laos.",
+      "seo_description": "Materm - ເຮືອນຕົ້ນໄມ້ ແລະ ການຕັ້ງແຄ້ມທີ່ພູເຂົາຂ່ວຍ, ລາວ.",
       "og_image_id": null,
       "canonical_path": null,
       "is_enabled": true
@@ -43,16 +43,16 @@
       "anchor_id": null,
       "props": {
         "title": {
-          "la": "Discover the Wild\nWithin Your Own Journey",
+          "la": "ຄົ້ນພົບຄວາມປ່າທຳມະຊາດ\nໃນການເດີນທາງຂອງທ່ານເອງ",
           "en": "Discover the Wild\nWithin Your Own Journey"
         },
         "description": {
-          "la": "Travel is all about connecting with the raw beauty of nature. The MATERM logo draws inspiration from majestic mountain peaks, evergreen pine forests, and bold, grounded lines—symbolizing the courage to explore. We invite you to step off the beaten path and immerse yourself in the tranquility, adventure, and freedom of the great outdoors. Start your next adventure with MATERM today.",
+          "la": "ການເດີນທາງຄືການເຊື່ອມຕໍ່ກັບຄວາມງາມດິບຂອງທຳມະຊາດ. ໂລໂກ້ MATERM ໄດ້ແຮງບັນດານໃຈຈາກຍອດພູສູງຕະຫງ່ານ, ປ່າສົນຂຽວຕະຫຼອດປີ ແລະ ເສັ້ນສາຍທີ່ໜັກແໜ້ນ ສະແດງເຖິງຄວາມກ້າຫານໃນການສຳຫຼວດ. ພວກເຮົາເຊີນທ່ານກ້າວອອກຈາກເສັ້ນທາງເດີມ ແລະ ດື່ມດ່ຳກັບຄວາມສະຫງົບ, ການຜະຈົນໄພ ແລະ ອິດສະລະຂອງທຳມະຊາດກວ້າງ. ເລີ່ມການຜະຈົນໄພຄັ້ງຕໍ່ໄປຂອງທ່ານກັບ MATERM ມື້ນີ້.",
           "en": "Travel is all about connecting with the raw beauty of nature. The MATERM logo draws inspiration from majestic mountain peaks, evergreen pine forests, and bold, grounded lines—symbolizing the courage to explore. We invite you to step off the beaten path and immerse yourself in the tranquility, adventure, and freedom of the great outdoors. Start your next adventure with MATERM today."
         },
         "cta": {
           "label": {
-            "la": "Explore Expeditions",
+            "la": "ສຳຫຼວດການເດີນທາງ",
             "en": "Explore Expeditions"
           },
           "link": {
@@ -77,20 +77,20 @@
       "anchor_id": null,
       "props": {
         "eyebrow": {
-          "la": "Our Path",
+          "la": "ເສັ້ນທາງຂອງພວກເຮົາ",
           "en": "Our Path"
         },
         "title": {
-          "la": "From a treehouse idea to a gathering community",
+          "la": "ຈາກແນວຄິດເຮືອນຕົ້ນໄມ້ ສູ່ຊຸມຊົນທີ່ມາລວມຕົວກັນ",
           "en": "From a treehouse idea to a gathering community"
         },
         "body": {
-          "la": "What started as a small treehouse site in 2020 has grown into a place where campers, musicians, food lovers, and first-time visitors return to share the same slope of Phou Khao Khouay. Read the full story of how Materm came together.",
+          "la": "ສິ່ງທີ່ເລີ່ມຈາກເຮືອນຕົ້ນໄມ້ນ້ອຍໆໃນປີ 2020 ໄດ້ເຕີບໃຫຍ່ເປັນສະຖານທີ່ທີ່ນັກຕັ້ງແຄ້ມ, ນັກດົນຕີ, ຄົນຮັກອາຫານ ແລະ ຜູ້ມາຢ້ຽມຢາມຄັ້ງທຳອິດກັບມາແບ່ງປັນເນີນພູເຂົາຂ່ວຍແຫ່ງດຽວກັນ. ອ່ານເລື່ອງລາວເຕັມຂອງການເກີດຂຶ້ນຂອງ Materm.",
           "en": "What started as a small treehouse site in 2020 has grown into a place where campers, musicians, food lovers, and first-time visitors return to share the same slope of Phou Khao Khouay. Read the full story of how Materm came together."
         },
         "cta": {
           "label": {
-            "la": "View more",
+            "la": "ເບິ່ງເພີ່ມເຕີມ",
             "en": "View more"
           },
           "link": {
@@ -102,21 +102,21 @@
           {
             "media_id": 2,
             "alt": {
-              "la": "Two climbers with ice axes ascending a blue glacier crevasse below snow-capped peaks",
+              "la": "ນັກປີນພູສອງຄົນຖືຂວານນ້ຳແຂງປີນຂຶ້ນຮອຍແຍກຂອງແມ່ນ້ຳກ້ອນນ້ຳແຂງສີຟ້າ ໃຕ້ຍອດພູທີ່ປົກຄຸມດ້ວຍຫິມະ",
               "en": "Two climbers with ice axes ascending a blue glacier crevasse below snow-capped peaks"
             }
           },
           {
             "media_id": 3,
             "alt": {
-              "la": "A hiker with an orange backpack standing on a rocky ridge at sunset above a mountain valley",
+              "la": "ນັກຍ່າງປ່າສະພາຍເປ້ສີສົ້ມຢືນຢູ່ເທິງສັນຜາຫີນຕອນຕາເວັນຕົກ ເໜືອຮ່ອມພູ",
               "en": "A hiker with an orange backpack standing on a rocky ridge at sunset above a mountain valley"
             }
           },
           {
             "media_id": 4,
             "alt": {
-              "la": "A woman rock climbing a steep granite wall high above a mountain valley",
+              "la": "ຜູ້ຍິງຄົນໜຶ່ງປີນຜາຫີນແກຣນິດຊັນສູງ ເໜືອຮ່ອມພູ",
               "en": "A woman rock climbing a steep granite wall high above a mountain valley"
             }
           }
@@ -132,20 +132,20 @@
       "anchor_id": null,
       "props": {
         "eyebrow": {
-          "la": "From the Blog",
+          "la": "ຈາກບລັອກ",
           "en": "From the Blog"
         },
         "title": {
-          "la": "Latest from the community",
+          "la": "ລ່າສຸດຈາກຊຸມຊົນ",
           "en": "Latest from the community"
         },
         "description": {
-          "la": "What started as a small treehouse site in 2020 has grown into a place where campers, musicians, food lovers, and first-time visitors return to share the same slope of Phou Khao Khouay. Read the full story of how Materm came together.",
+          "la": "ສິ່ງທີ່ເລີ່ມຈາກເຮືອນຕົ້ນໄມ້ນ້ອຍໆໃນປີ 2020 ໄດ້ເຕີບໃຫຍ່ເປັນສະຖານທີ່ທີ່ນັກຕັ້ງແຄ້ມ, ນັກດົນຕີ, ຄົນຮັກອາຫານ ແລະ ຜູ້ມາຢ້ຽມຢາມຄັ້ງທຳອິດກັບມາແບ່ງປັນເນີນພູເຂົາຂ່ວຍແຫ່ງດຽວກັນ. ອ່ານເລື່ອງລາວເຕັມຂອງການເກີດຂຶ້ນຂອງ Materm.",
           "en": "What started as a small treehouse site in 2020 has grown into a place where campers, musicians, food lovers, and first-time visitors return to share the same slope of Phou Khao Khouay. Read the full story of how Materm came together."
         },
         "cta": {
           "label": {
-            "la": "View more",
+            "la": "ເບິ່ງເພີ່ມເຕີມ",
             "en": "View more"
           },
           "link": {
@@ -160,12 +160,12 @@
             "image": {
               "media_id": 5,
               "alt": {
-                "la": "Snow-capped mountains above a forest lake under storm clouds",
+                "la": "ພູເຂົາປົກຄຸມດ້ວຍຫິມະເໜືອທະເລສາບໃນປ່າ ໃຕ້ເມກພາຍຸ",
                 "en": "Snow-capped mountains above a forest lake under storm clouds"
               }
             },
             "excerpt": {
-              "la": "On one weekend night in September, the slope of Phou Khao Khouay where Materm's treehouses sit turned into an impromptu music stage. Three local bands took turns playing around the",
+              "la": "ໃນຄືນວັນທ້າຍອາທິດໜຶ່ງຂອງເດືອນກັນຍາ, ເນີນພູເຂົາຂ່ວຍບ່ອນທີ່ເຮືອນຕົ້ນໄມ້ຂອງ Materm ຕັ້ງຢູ່ ໄດ້ກາຍເປັນເວທີດົນຕີແບບບໍ່ໄດ້ນັດໝາຍ. ສາມວົງດົນຕີທ້ອງຖິ່ນຜັດປ່ຽນກັນຫຼິ້ນຮອບ",
               "en": "On one weekend night in September, the slope of Phou Khao Khouay where Materm's treehouses sit turned into an impromptu music stage. Three local bands took turns playing around the"
             }
           },
@@ -174,12 +174,12 @@
             "image": {
               "media_id": 6,
               "alt": {
-                "la": "Hikers climbing a volcanic ridge trail",
+                "la": "ນັກຍ່າງປ່າກຳລັງຂຶ້ນເສັ້ນທາງສັນພູໄຟ",
                 "en": "Hikers climbing a volcanic ridge trail"
               }
             },
             "excerpt": {
-              "la": "On one weekend night in September, the slope of Phou Khao Khouay where Materm's treehouses sit turned into an impromptu music stage. Three local bands took turns playing around the",
+              "la": "ໃນຄືນວັນທ້າຍອາທິດໜຶ່ງຂອງເດືອນກັນຍາ, ເນີນພູເຂົາຂ່ວຍບ່ອນທີ່ເຮືອນຕົ້ນໄມ້ຂອງ Materm ຕັ້ງຢູ່ ໄດ້ກາຍເປັນເວທີດົນຕີແບບບໍ່ໄດ້ນັດໝາຍ. ສາມວົງດົນຕີທ້ອງຖິ່ນຜັດປ່ຽນກັນຫຼິ້ນຮອບ",
               "en": "On one weekend night in September, the slope of Phou Khao Khouay where Materm's treehouses sit turned into an impromptu music stage. Three local bands took turns playing around the"
             }
           },
@@ -188,12 +188,12 @@
             "image": {
               "media_id": 7,
               "alt": {
-                "la": "Misty forest trail between tall trees",
+                "la": "ເສັ້ນທາງປ່າທີ່ມີໝອກລະຫວ່າງຕົ້ນໄມ້ສູງ",
                 "en": "Misty forest trail between tall trees"
               }
             },
             "excerpt": {
-              "la": "On one weekend night in September, the slope of Phou Khao Khouay where Materm's treehouses sit turned into an impromptu music stage. Three local bands took turns playing around the",
+              "la": "ໃນຄືນວັນທ້າຍອາທິດໜຶ່ງຂອງເດືອນກັນຍາ, ເນີນພູເຂົາຂ່ວຍບ່ອນທີ່ເຮືອນຕົ້ນໄມ້ຂອງ Materm ຕັ້ງຢູ່ ໄດ້ກາຍເປັນເວທີດົນຕີແບບບໍ່ໄດ້ນັດໝາຍ. ສາມວົງດົນຕີທ້ອງຖິ່ນຜັດປ່ຽນກັນຫຼິ້ນຮອບ",
               "en": "On one weekend night in September, the slope of Phou Khao Khouay where Materm's treehouses sit turned into an impromptu music stage. Three local bands took turns playing around the"
             }
           },
@@ -202,12 +202,12 @@
             "image": {
               "media_id": 8,
               "alt": {
-                "la": "Orange backpack resting in a rainy forest",
+                "la": "ເປ້ສີສົ້ມວາງຢູ່ໃນປ່າທີ່ຝົນຕົກ",
                 "en": "Orange backpack resting in a rainy forest"
               }
             },
             "excerpt": {
-              "la": "On one weekend night in September, the slope of Phou Khao Khouay where Materm's treehouses sit turned into an impromptu music stage. Three local bands took turns playing around the",
+              "la": "ໃນຄືນວັນທ້າຍອາທິດໜຶ່ງຂອງເດືອນກັນຍາ, ເນີນພູເຂົາຂ່ວຍບ່ອນທີ່ເຮືອນຕົ້ນໄມ້ຂອງ Materm ຕັ້ງຢູ່ ໄດ້ກາຍເປັນເວທີດົນຕີແບບບໍ່ໄດ້ນັດໝາຍ. ສາມວົງດົນຕີທ້ອງຖິ່ນຜັດປ່ຽນກັນຫຼິ້ນຮອບ",
               "en": "On one weekend night in September, the slope of Phou Khao Khouay where Materm's treehouses sit turned into an impromptu music stage. Three local bands took turns playing around the"
             }
           }
@@ -223,20 +223,20 @@
       "anchor_id": null,
       "props": {
         "eyebrow": {
-          "la": "Gallery",
+          "la": "ຄັງຮູບພາບ",
           "en": "Gallery"
         },
         "title": {
-          "la": "A visual walk-through is coming",
+          "la": "ການເດີນທາງດ້ວຍພາບຖ່າຍກຳລັງຈະມາເຖິງ",
           "en": "A visual walk-through is coming"
         },
         "description": {
-          "la": "What started as a small treehouse site in 2020 has grown into a place where campers, musicians, food lovers, and first-time visitors return to share the same slope of Phou Khao Khouay. Read the full story of how Materm came together.",
+          "la": "ສິ່ງທີ່ເລີ່ມຈາກເຮືອນຕົ້ນໄມ້ນ້ອຍໆໃນປີ 2020 ໄດ້ເຕີບໃຫຍ່ເປັນສະຖານທີ່ທີ່ນັກຕັ້ງແຄ້ມ, ນັກດົນຕີ, ຄົນຮັກອາຫານ ແລະ ຜູ້ມາຢ້ຽມຢາມຄັ້ງທຳອິດກັບມາແບ່ງປັນເນີນພູເຂົາຂ່ວຍແຫ່ງດຽວກັນ. ອ່ານເລື່ອງລາວເຕັມຂອງການເກີດຂຶ້ນຂອງ Materm.",
           "en": "What started as a small treehouse site in 2020 has grown into a place where campers, musicians, food lovers, and first-time visitors return to share the same slope of Phou Khao Khouay. Read the full story of how Materm came together."
         },
         "cta": {
           "label": {
-            "la": "View more",
+            "la": "ເບິ່ງເພີ່ມເຕີມ",
             "en": "View more"
           },
           "link": {
@@ -254,7 +254,7 @@
             "image": {
               "media_id": 9,
               "alt": {
-                "la": "Jungle waterfall and stream surrounded by palms and tropical trees",
+                "la": "ນ້ຳຕົກ ແລະ ລຳຫ້ວຍໃນປ່າ ອ້ອມຮອບດ້ວຍຕົ້ນປາມ ແລະ ຕົ້ນໄມ້ເຂດຮ້ອນ",
                 "en": "Jungle waterfall and stream surrounded by palms and tropical trees"
               }
             },
@@ -264,7 +264,7 @@
                 "en": "SEP. 05.2026"
               },
               "title": {
-                "la": "THE ORIGIN STORY, SINCE 2020",
+                "la": "ເລື່ອງລາວຕົ້ນກຳເນີດ, ຕັ້ງແຕ່ປີ 2020",
                 "en": "THE ORIGIN STORY, SINCE 2020"
               }
             }
@@ -280,7 +280,7 @@
                 "en": "SEP. 05.2026"
               },
               "title": {
-                "la": "THE ORIGIN STORY, SINCE 2020",
+                "la": "ເລື່ອງລາວຕົ້ນກຳເນີດ, ຕັ້ງແຕ່ປີ 2020",
                 "en": "THE ORIGIN STORY, SINCE 2020"
               }
             }
@@ -296,7 +296,7 @@
                 "en": "SEP. 05.2026"
               },
               "title": {
-                "la": "THE ORIGIN STORY, SINCE 2020",
+                "la": "ເລື່ອງລາວຕົ້ນກຳເນີດ, ຕັ້ງແຕ່ປີ 2020",
                 "en": "THE ORIGIN STORY, SINCE 2020"
               }
             }

@@ -11,12 +11,12 @@
       "is_home": false,
       "resolved_locale": "la",
       "is_fallback": false,
-      "title": "Contact",
+      "title": "ຕິດຕໍ່ພວກເຮົາ",
       "updated_at": "2026-01-01T00:00:00Z",
       "seo": {
-        "title": "Contact",
+        "title": "ຕິດຕໍ່ພວກເຮົາ",
         "title_absolute": false,
-        "description": "Get in touch with Materm — stays, music nights and treks at Phou Khao Khouay.",
+        "description": "ຕິດຕໍ່ Materm — ການພັກແຮມ, ຄືນດົນຕີ ແລະ ການຍ່າງປ່າທີ່ພູເຂົາຂ່ວຍ.",
         "og_image": {
           "media_id": 15
         },
@@ -33,8 +33,8 @@
         "anchor_id": null,
         "is_fallback": false,
         "props": {
-          "title": "Contact",
-          "description": "Questions about a stay, a music night or a trek? Send us a message and we'll help you find your path.",
+          "title": "ຕິດຕໍ່ພວກເຮົາ",
+          "description": "ມີຄຳຖາມກ່ຽວກັບການພັກແຮມ, ຄືນດົນຕີ ຫຼື ການຍ່າງປ່າບໍ? ສົ່ງຂໍ້ຄວາມຫາພວກເຮົາ ແລ້ວພວກເຮົາຈະຊ່ວຍທ່ານຊອກຫາເສັ້ນທາງ.",
           "background": {
             "media_id": 15,
             "alt": "",
@@ -53,28 +53,28 @@
         "anchor_id": null,
         "is_fallback": false,
         "props": {
-          "eyebrow": "GET IN TOUCH",
-          "title": "We'd love to hear from you",
-          "description": "Tell us about your plans — a night in a treehouse, a music evening or a trek. We read every message and reply personally.",
+          "eyebrow": "ຕິດຕໍ່ພວກເຮົາ",
+          "title": "ພວກເຮົາຢາກໄດ້ຍິນຈາກທ່ານ",
+          "description": "ບອກແຜນຂອງທ່ານໃຫ້ພວກເຮົາ — ນອນເຮືອນຕົ້ນໄມ້, ຄືນດົນຕີ ຫຼື ການຍ່າງປ່າ. ພວກເຮົາອ່ານທຸກຂໍ້ຄວາມ ແລະ ຕອບກັບດ້ວຍຕົນເອງ.",
           "info_items": [
             {
               "icon": "map_pin",
-              "label": "Visit us",
+              "label": "ມາຢ້ຽມຢາມ",
               "source": "contact.address"
             },
             {
               "icon": "phone",
-              "label": "Call us",
+              "label": "ໂທຫາພວກເຮົາ",
               "source": "contact.phone"
             },
             {
               "icon": "mail",
-              "label": "Email us",
+              "label": "ສົ່ງອີເມວຫາພວກເຮົາ",
               "source": "contact.email"
             },
             {
               "icon": "clock",
-              "label": "Opening hours",
+              "label": "ເວລາເປີດບໍລິການ",
               "source": "contact.hours"
             }
           ],
@@ -84,25 +84,25 @@
           "info": [
             {
               "icon": "map_pin",
-              "label": "Visit us",
+              "label": "ມາຢ້ຽມຢາມ",
               "value": "Phou Khao Khouay National Park, Vientiane Province, Lao PDR",
               "href": null
             },
             {
               "icon": "phone",
-              "label": "Call us",
+              "label": "ໂທຫາພວກເຮົາ",
               "value": "+856 20 0000 0000",
               "href": "tel:+8562000000000"
             },
             {
               "icon": "mail",
-              "label": "Email us",
+              "label": "ສົ່ງອີເມວຫາພວກເຮົາ",
               "value": "hello@materm.example",
               "href": "mailto:hello@materm.example"
             },
             {
               "icon": "clock",
-              "label": "Opening hours",
+              "label": "ເວລາເປີດບໍລິການ",
               "value": "Every day, 08:00 – 18:00",
               "href": null
             }
@@ -224,8 +224,8 @@
         "anchor_id": null,
         "is_fallback": false,
         "props": {
-          "eyebrow": "GOOD TO KNOW",
-          "title": "Before you come",
+          "eyebrow": "ຄວນຮູ້",
+          "title": "ກ່ອນທ່ານມາ",
           "group_key": "contact",
           "open_first": true
         },
@@ -313,7 +313,7 @@
         "width": 3456,
         "height": 1902,
         "mime": "image/jpeg",
-        "alt": "Rainforest stream flowing past ferns",
+        "alt": "ລຳຫ້ວຍໃນປ່າຝົນໄຫຼຜ່ານຕົ້ນເຟີນ",
         "blurhash": null,
         "focal": null,
         "variants": []

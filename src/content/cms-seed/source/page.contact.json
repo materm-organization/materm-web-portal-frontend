@@ -14,10 +14,10 @@
   "translations": [
     {
       "locale_code": "la",
-      "title": "Contact",
-      "seo_title": "Contact",
+      "title": "ຕິດຕໍ່ພວກເຮົາ",
+      "seo_title": "ຕິດຕໍ່ພວກເຮົາ",
       "seo_title_absolute": false,
-      "seo_description": "Get in touch with Materm — stays, music nights and treks at Phou Khao Khouay.",
+      "seo_description": "ຕິດຕໍ່ Materm — ການພັກແຮມ, ຄືນດົນຕີ ແລະ ການຍ່າງປ່າທີ່ພູເຂົາຂ່ວຍ.",
       "og_image_id": null,
       "canonical_path": null,
       "is_enabled": true
@@ -43,11 +43,11 @@
       "anchor_id": null,
       "props": {
         "title": {
-          "la": "Contact",
+          "la": "ຕິດຕໍ່ພວກເຮົາ",
           "en": "Contact"
         },
         "description": {
-          "la": "Questions about a stay, a music night or a trek? Send us a message and we'll help you find your path.",
+          "la": "ມີຄຳຖາມກ່ຽວກັບການພັກແຮມ, ຄືນດົນຕີ ຫຼື ການຍ່າງປ່າບໍ? ສົ່ງຂໍ້ຄວາມຫາພວກເຮົາ ແລ້ວພວກເຮົາຈະຊ່ວຍທ່ານຊອກຫາເສັ້ນທາງ.",
           "en": "Questions about a stay, a music night or a trek? Send us a message and we'll help you find your path."
         },
         "background": {
@@ -67,22 +67,22 @@
       "anchor_id": null,
       "props": {
         "eyebrow": {
-          "la": "GET IN TOUCH",
+          "la": "ຕິດຕໍ່ພວກເຮົາ",
           "en": "GET IN TOUCH"
         },
         "title": {
-          "la": "We'd love to hear from you",
+          "la": "ພວກເຮົາຢາກໄດ້ຍິນຈາກທ່ານ",
           "en": "We'd love to hear from you"
         },
         "description": {
-          "la": "Tell us about your plans — a night in a treehouse, a music evening or a trek. We read every message and reply personally.",
+          "la": "ບອກແຜນຂອງທ່ານໃຫ້ພວກເຮົາ — ນອນເຮືອນຕົ້ນໄມ້, ຄືນດົນຕີ ຫຼື ການຍ່າງປ່າ. ພວກເຮົາອ່ານທຸກຂໍ້ຄວາມ ແລະ ຕອບກັບດ້ວຍຕົນເອງ.",
           "en": "Tell us about your plans — a night in a treehouse, a music evening or a trek. We read every message and reply personally."
         },
         "info_items": [
           {
             "icon": "map_pin",
             "label": {
-              "la": "Visit us",
+              "la": "ມາຢ້ຽມຢາມ",
               "en": "Visit us"
             },
             "source": "contact.address"
@@ -90,7 +90,7 @@
           {
             "icon": "phone",
             "label": {
-              "la": "Call us",
+              "la": "ໂທຫາພວກເຮົາ",
               "en": "Call us"
             },
             "source": "contact.phone"
@@ -98,7 +98,7 @@
           {
             "icon": "mail",
             "label": {
-              "la": "Email us",
+              "la": "ສົ່ງອີເມວຫາພວກເຮົາ",
               "en": "Email us"
             },
             "source": "contact.email"
@@ -106,7 +106,7 @@
           {
             "icon": "clock",
             "label": {
-              "la": "Opening hours",
+              "la": "ເວລາເປີດບໍລິການ",
               "en": "Opening hours"
             },
             "source": "contact.hours"
@@ -124,11 +124,11 @@
       "anchor_id": null,
       "props": {
         "eyebrow": {
-          "la": "GOOD TO KNOW",
+          "la": "ຄວນຮູ້",
           "en": "GOOD TO KNOW"
         },
         "title": {
-          "la": "Before you come",
+          "la": "ກ່ອນທ່ານມາ",
           "en": "Before you come"
         },
         "group_key": "contact",
