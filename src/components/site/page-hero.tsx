@@ -116,6 +116,7 @@ export function PageHero({
             <Image
               src="/images/site/materm-logo-white.svg"
               alt=""
+              onFailure="remove"
               width={285}
               height={245}
               priority={priority}

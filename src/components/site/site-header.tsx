@@ -132,6 +132,7 @@ export function SiteHeader({ chrome }: { chrome: Pick<SiteChrome, "nav" | "langu
               <Image
                 src="/images/site/materm-emblem.svg"
                 alt=""
+                onFailure="remove"
                 width={78}
                 height={65}
                 className="h-7 w-auto shrink-0"
@@ -229,6 +230,7 @@ export function SiteHeader({ chrome }: { chrome: Pick<SiteChrome, "nav" | "langu
                 <Image
                   src="/images/site/materm-emblem.svg"
                   alt=""
+                  onFailure="remove"
                   width={78}
                   height={65}
                   className="h-9 w-auto shrink-0"

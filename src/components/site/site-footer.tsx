@@ -43,6 +43,7 @@ export function SiteFooter({ chrome }: { chrome: Pick<SiteChrome, "brand" | "foo
               <Image
                 src="/images/site/materm-emblem.svg"
                 alt={brand.emblemAlt}
+                onFailure="remove"
                 width={78}
                 height={65}
                 className="h-auto w-24 shrink-0 lg:w-[78px]"
