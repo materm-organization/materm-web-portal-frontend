@@ -1,4 +1,5 @@
-import Image, { type ImageProps } from "next/image";
+import Image from "@/components/site/site-image";
+import { type ImageProps } from "next/image";
 
 import {
   HeroBackdrop,

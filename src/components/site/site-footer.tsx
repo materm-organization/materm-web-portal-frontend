@@ -1,5 +1,5 @@
 import { useTranslations } from "next-intl";
-import Image from "next/image";
+import Image from "@/components/site/site-image";
 
 import { ChromeAnchor } from "@/components/site/chrome-link";
 import { Button } from "@/components/ui/button";

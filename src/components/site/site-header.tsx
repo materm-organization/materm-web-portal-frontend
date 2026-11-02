@@ -2,7 +2,7 @@
 
 import { ChevronUpIcon, XIcon } from "lucide-react";
 import { useLocale, useTranslations } from "next-intl";
-import Image from "next/image";
+import Image from "@/components/site/site-image";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
 

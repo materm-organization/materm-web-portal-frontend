@@ -7,8 +7,12 @@
 // Runs in the browser and on the server, so it imports nothing.
 import type { ImageLoaderProps } from "next/image";
 
+/** True for a src that is served as is (absolute http(s) URL, SVG): `<Image>` must then be `unoptimized`, see SiteImage. */
+export function servesAsIs(src: string): boolean {
+  return /^https?:\/\//i.test(src) || /\.svg(?:[?#].*)?$/i.test(src);
+}
+
 export default function imageLoader({ src, width, quality }: ImageLoaderProps): string {
-  if (/^https?:\/\//i.test(src)) return src;
-  if (/\.svg(?:[?#].*)?$/i.test(src)) return src;
+  if (servesAsIs(src)) return src;
   return `/_next/image?url=${encodeURIComponent(src)}&w=${width}&q=${quality || 75}`;
 }

@@ -1,4 +1,4 @@
-import Image from "next/image";
+import Image from "@/components/site/site-image";
 
 import { Reveal } from "@/components/site/motion";
 import { AspectRatio } from "@/components/ui/aspect-ratio";

@@ -1,4 +1,4 @@
-import Image from "next/image";
+import Image from "@/components/site/site-image";
 import Link from "next/link";
 
 import type { PostCardData } from "@/components/sections/types";

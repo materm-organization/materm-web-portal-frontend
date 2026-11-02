@@ -1,6 +1,6 @@
 "use client";
 
-import Image from "next/image";
+import Image from "@/components/site/site-image";
 import Link from "next/link";
 import { useId, useMemo, type FocusEvent, type PointerEvent } from "react";
 

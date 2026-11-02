@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import type { PointerEvent } from "react";
-import Image from "next/image";
+import Image from "@/components/site/site-image";
 
 import { cn } from "@/lib/utils";
 
