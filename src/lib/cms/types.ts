@@ -352,7 +352,7 @@ export interface SitemapData {
   entries: SitemapEntry[];
 }
 export interface RobotsData {
-  /** SITE_ENV === "production" || CONTEXT === "production" */
+  /** SITE_ENV === "production" */
   allow: boolean;
   baseUrl: string;
   sitemap: string;

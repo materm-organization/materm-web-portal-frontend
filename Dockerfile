@@ -38,9 +38,18 @@ COPY --from=builder /app/next.config.ts ./next.config.ts
 # whenever next.config.ts loads, including at `next start` — keep it next to
 # the config in the runner stage so that resolution can't fail at runtime.
 COPY --from=builder /app/src/i18n ./src/i18n
+# next.config.ts also points images.loaderFile at src/lib/cms/image-loader.ts and Next checks that the file exists
+# at start ("Specified images.loaderFile does not exist"). Its own imports live in the same folder.
+COPY --from=builder /app/src/lib/cms ./src/lib/cms
 
 RUN npm ci --omit=dev --no-audit --no-fund
 
+# Run as the unprivileged `node` user; Next writes its cache under .next at run time.
+RUN chown -R node:node /app
+USER node
+
 EXPOSE 3000
+HEALTHCHECK --interval=30s --timeout=5s --start-period=20s --retries=3 \
+  CMD wget -q -O /dev/null "http://127.0.0.1:${PORT}/robots.txt" || exit 1
 ENTRYPOINT ["dumb-init", "--"]
 CMD ["npm", "start"]

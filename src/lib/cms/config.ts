@@ -7,7 +7,7 @@
 //   PORTAL_API_KEY           SECRET, sent as X-Portal-Key (server only, never NEXT_PUBLIC)
 //   CMS_FETCH_TIMEOUT_MS     default 2000 (NFR-06)
 //   CMS_MOCK_URL             mock mode base, default http://127.0.0.1:4010/api/v1 (scripts/cms/mock-api.mjs)
-//   SITE_ENV / CONTEXT       robots.ts: "production" = allow
+//   SITE_ENV                 robots.ts: only "production" = allow (set it explicitly; Netlify CONTEXT is build-time only)
 
 export type CmsMode = "mock" | "bundle" | "api";
 

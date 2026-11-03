@@ -229,9 +229,9 @@ export const getSitemap = cache(async (): Promise<SitemapData> => {
   return (r as { data: SitemapData }).data;
 });
 
-/** robots.ts data: env only (FR-SEO-04); production = SITE_ENV or Netlify CONTEXT equals "production" */
+/** robots.ts data: env only (FR-SEO-04); only SITE_ENV=production allows (Netlify's CONTEXT is build-time only, so it is not read) */
 export const getRobots = cache(async (): Promise<RobotsData> => {
-  const allow = process.env.SITE_ENV === "production" || (!process.env.SITE_ENV && process.env.CONTEXT === "production");
+  const allow = process.env.SITE_ENV === "production";
   const { base_url: baseUrl } = await getSitemap();
   return { allow, baseUrl, sitemap: `${baseUrl}/sitemap.xml`, disallow: allow ? ["/api/"] : ["/"] };
 });

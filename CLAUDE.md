@@ -38,8 +38,8 @@ npm run preview:selftest # preview flow (PF-10) + draft sections (B5): token/pat
 ```
 
 Env vars: `CMS_MODE` (`bundle` default | `mock` | `api`), `NEXT_PUBLIC_API_BASE_URL` / `CMS_API_BASE_URL`, `PORTAL_API_KEY`
-(secret), `CMS_FETCH_TIMEOUT_MS`, `SITE_ENV` / `CONTEXT`
-(robots), `REVALIDATE_SECRET` (secret, >= 32 chars; missing = `/api/revalidate` answers 503), `REVALIDATE_SECRET_PREVIOUS` (rotation),
+(secret), `CMS_FETCH_TIMEOUT_MS`, `SITE_ENV`
+(robots: only `SITE_ENV=production` allows crawling; Netlify `CONTEXT` is build-time only and is NOT read; `netlify.toml` sets it for the production context), `REVALIDATE_SECRET` (secret, >= 32 chars; missing = `/api/revalidate` answers 503), `REVALIDATE_SECRET_PREVIOUS` (rotation),
 `REVALIDATE_MAX_SKEW_SECONDS` (default 300), `REVALIDATE_RATE_LIMIT_PER_MINUTE` (default 120), `FORM_RENDER_SECRET` (secret, >= 32 chars, REQUIRED in production for the contact form's signed fill time, see "Contact form"); the endpoint contract is in `README.md`. No secrets in the tracked `.env.*` files (`NEXT_PUBLIC_*` is baked into the client bundle).
 
 ## Code layout

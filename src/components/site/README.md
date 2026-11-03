@@ -94,8 +94,7 @@ All metadata comes from the CMS responses (`src/lib/site-metadata.ts`, doc/08 §
 - CMS page (`(public)/[[...path]]/page.tsx`): `createPageMetadata(page)` = `page.seo` (title, or `{ absolute }` when
   `title_absolute` as on Home, description, `alternates.canonical`, `openGraph.images`, `robots` when `noindex`).
 - article (`blog/[slug]`): `createPostMetadata(post)` = `post.seo` + `openGraph.type = "article"` + `publishedTime`.
-- `app/sitemap.ts` (P-16, default-locale canonical URLs) and `app/robots.ts` (env only: `SITE_ENV=production` or Netlify
-  `CONTEXT=production` allows crawling, anything else disallows everything). No hreflang.
+- `app/sitemap.ts` (P-16, default-locale canonical URLs) and `app/robots.ts` (env only: only `SITE_ENV=production` allows crawling, anything else disallows everything; Netlify `CONTEXT` is build-time only and not read). No hreflang.
 
 Pages no longer export their own `metadata`: edit the SEO fields in the CMS (bundle: `src/content/cms-seed/source`).
 
