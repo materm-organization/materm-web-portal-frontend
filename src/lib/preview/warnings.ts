@@ -7,6 +7,7 @@ export const WARNING_CODES = [
   "post_not_published",
   "section_type_unknown",
   "shared_section_unavailable",
+  "shared_section_not_live",
 ] as const;
 
 export type WarningCode = (typeof WARNING_CODES)[number];

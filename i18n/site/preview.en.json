@@ -8,6 +8,7 @@
     "post_not_published": "A section or a link refers to a post that is not published yet.",
     "section_type_unknown": "A section of an unknown type was skipped.",
     "shared_section_unavailable": "A shared section is not available and was left out.",
+    "shared_section_not_live": "This shared section is not published yet — publishing the page will be blocked until it is.",
     "unknown": "Something in this preview could not be shown."
   },
   "elsewhere": "Your preview session is still active. This page shows the published content.",

@@ -404,7 +404,7 @@ try {
   await test("warning codes -> one readable line each (en + la), unknown codes get the generic line", () => {
     const en = JSON.parse(readFileSync(join(ROOT, "i18n/site/preview.en.json"), "utf8"));
     const la = JSON.parse(readFileSync(join(ROOT, "i18n/site/preview.la.json"), "utf8"));
-    for (const code of ["reference_not_published", "link_page_not_published", "post_not_published", "section_type_unknown", "shared_section_unavailable"]) {
+    for (const code of ["reference_not_published", "link_page_not_published", "post_not_published", "section_type_unknown", "shared_section_unavailable", "shared_section_not_live"]) {
       assert.equal(W.warningMessageKey(code), code);
       for (const f of [en, la]) assert.ok(typeof f.warnings[code] === "string" && f.warnings[code].length > 10 && !f.warnings[code].includes(code), code);
     }
