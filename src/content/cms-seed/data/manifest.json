@@ -68,9 +68,9 @@
     "src/content/cms-seed/source/menus.json": "a2a53d5ec8a30cada65566a5ba27ad5fb2dbcd284a3ee6c35e8e9ff9267f5fc7",
     "src/content/cms-seed/source/page.blog.json": "4fc2cce9a8c61c8d3392e946b23bcf17a6fc569d12e77fe09facd38150fda7f6",
     "src/content/cms-seed/source/page.contact.json": "2ad01064de381cfcfa214fd6c7ef4564643258666c0071bb8dff9ffef50e0ddd",
-    "src/content/cms-seed/source/page.gallery.json": "5259c5412878c24d4715a1268ebf292686c2eb08186c368f329aa5643e02e74b",
-    "src/content/cms-seed/source/page.home.json": "d2f23f94bd23b911b706303ca830adfb2d3143085788a877f798c9a607ee9bc9",
-    "src/content/cms-seed/source/page.our-path.json": "fd790aa6b051844294eb3f628fec1946b79a43046d76a1b078a821958189aa1c",
+    "src/content/cms-seed/source/page.gallery.json": "2945b9cf31fad947261857c0fba3ee5817a1a4f900488b1db8d624e3ccd4ba8e",
+    "src/content/cms-seed/source/page.home.json": "e9277a421c8765178e7dbc3b1d3c0f317b42182465b4387d2ea2651d4bb2a6c4",
+    "src/content/cms-seed/source/page.our-path.json": "4d95d92a4918dd959590cc8c70a6b1028e8d7965aecdcb45ca6b27d1cbe12d98",
     "src/content/cms-seed/source/post.music-night-under-the-stars.json": "818c64c5ba9da9dcf865723db3cb203f6ccb1a43a86fafe17cadb69b0b9d9e94",
     "src/content/cms-seed/source/reference.json": "7b47876c4fde3272b195debd7c03749d51b9bfde7d5ecf5acaeabaa7caf1c4a5"
   }
