@@ -259,16 +259,16 @@
       }
     },
     {
-      "key": "avenger",
+      "key": "adventure",
       "sort_order": 4,
       "translations": {
         "la": {
-          "name": "Avenger",
-          "slug": "avenger"
+          "name": "ການຜະຈົນໄພ",
+          "slug": "adventure"
         },
         "en": {
-          "name": "Avenger",
-          "slug": "avenger"
+          "name": "Adventure",
+          "slug": "adventure"
         }
       }
     },
