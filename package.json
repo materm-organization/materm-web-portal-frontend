@@ -20,6 +20,7 @@
     "cms:snapshot": "node scripts/cms/snapshot.mjs",
     "cms:sync-doc": "node scripts/cms/sync-from-doc.mjs",
     "site:selftest": "node scripts/site/selftest.mjs",
+    "video:selftest": "node scripts/site/video-selftest.mjs",
     "preview:selftest": "node scripts/preview/selftest.mjs",
     "forms:selftest": "node scripts/forms/selftest.mjs",
     "revalidate:demo": "node scripts/cms/revalidate-demo.mjs"

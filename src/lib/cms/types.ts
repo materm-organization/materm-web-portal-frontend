@@ -37,6 +37,10 @@ export interface MediaItem {
   width: number | null;
   height: number | null;
   mime: string | null;
+  /** release 2 (video support), all optional: an older API simply omits them */
+  kind?: "video" | "image" | "document" | null;
+  duration_ms?: number | null;
+  bytes?: number | null;
   alt: string | null;
   blurhash: string | null;
   focal: { x: number; y: number } | null;
@@ -180,7 +184,7 @@ export interface RichTextNode {
   content?: RichTextNode[];
 }
 
-export interface HeroBrandProps { title: Text; description?: Text; cta?: Cta; background: ImageRef; show_logo?: boolean; animate_in?: boolean }
+export interface HeroBrandProps { title: Text; description?: Text; cta?: Cta; background: ImageRef; /** optional looping background video; `background` is its poster / fallback still */ background_video?: { media_id: number } | null; show_logo?: boolean; animate_in?: boolean }
 export interface HeroArticleProps { title: Text; meta_items?: { text: Text }[]; background: ImageRef; animate_in?: boolean }
 export interface IntroHeadingProps { eyebrow: Text; title: Text; description?: Text }
 export interface IntroTextProps { text: RichTextDoc | null }

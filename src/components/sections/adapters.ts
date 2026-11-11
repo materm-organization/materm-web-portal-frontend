@@ -10,7 +10,8 @@
 //    `adaptPage` skips it and logs `section_invalid` (doc/08 §4.5). A throw is treated the same way.
 //  - Text is never trusted to be present: `null`/missing becomes `""` or `null` as the component expects.
 //  - Images go through `resolveImage` (placement alt wins, decorative = "", host guard of `next/image`).
-import { resolveImage } from "@/lib/cms/media";
+import { isRenderableImageUrl } from "@/lib/cms/image-url";
+import { mediaItem, resolveImage } from "@/lib/cms/media";
 import type {
   AboutBlocksProps as ApiAboutBlocks,
   Cta,
@@ -40,6 +41,7 @@ import type {
   ResolvedForm,
   ResolvedImage,
   ResolvedLink,
+  ResolvedVideo,
   RichTextDoc,
   SectionPropsMap,
 } from "./types";
@@ -76,6 +78,24 @@ export function toImage(media: MediaMap, ref: Parameters<typeof resolveImage>[1]
   return r ? { url: r.src, alt: r.alt, width: r.width, height: r.height } : null;
 }
 
+/**
+ * `background_video` -> a playable video or null. Never throws. No media entry, a null / unsafe url or a mime that is
+ * not `video/*` (a mp4 whose `kind` says otherwise too) all mean "no video": the poster image stays on its own.
+ */
+export function toVideo(media: MediaMap, ref: { media_id?: number | null } | null | undefined): ResolvedVideo | null {
+  try {
+    const m = mediaItem(media, ref?.media_id);
+    if (!m || typeof m.url !== "string" || !isRenderableImageUrl(m.url)) return null;
+    const mime = typeof m.mime === "string" ? m.mime.split(";")[0].trim().toLowerCase() : "";
+    if (!/^video\/[a-z0-9.+-]+$/.test(mime)) return null;
+    if (m.kind != null && m.kind !== "video") return null;
+    const num = (v: unknown): number | null => (typeof v === "number" && Number.isFinite(v) && v > 0 ? v : null);
+    return { url: m.url, mime, width: num(m.width), height: num(m.height), durationMs: num(m.duration_ms) };
+  } catch {
+    return null;
+  }
+}
+
 /** `cta` / `link`: no label or no target = no button */
 export function toLink(cta: (Partial<Cta> & Partial<LinkRef>) | null | undefined): ResolvedLink | null {
   const label = strOrNull(cta?.label);
@@ -95,6 +115,7 @@ export function toDoc(v: unknown): RichTextDoc | null {
 // URL with an unsafe scheme also leaves the title readable instead of dropping the whole hero.) Without a title there is nothing to show: null.
 const heroBrand: SectionAdapter<"hero_brand"> = (s, { media, preview }) => {
   const background = toImage(media, s.props.background);
+  const backgroundVideo = toVideo(media, s.props.background_video);
   const title = strOrNull(s.props.title);
   if (!title) return null;
   return {
@@ -102,6 +123,7 @@ const heroBrand: SectionAdapter<"hero_brand"> = (s, { media, preview }) => {
     description: strOrNull(s.props.description),
     cta: toLink(s.props.cta),
     background,
+    ...(backgroundVideo ? { backgroundVideo } : {}),
     ...(preview && !background ? { previewHint: "no_background_image" as const } : {}),
     showLogo: s.props.show_logo ?? true,
     animateIn: s.props.animate_in ?? true,

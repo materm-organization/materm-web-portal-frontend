@@ -58,12 +58,23 @@ export interface RichTextDoc {
 /** Hints only a PREVIEW page carries (editor-only copy, `i18n/site/preview.*.json` `hints.*`). */
 export type PreviewHintCode = "no_background_image" | "no_hero_image";
 
+/** `video` after media resolution (a `video/*` media item with a usable URL). Sizes / duration may be unknown. */
+export interface ResolvedVideo {
+  url: string;
+  mime: string;
+  width: number | null;
+  height: number | null;
+  durationMs: number | null;
+}
+
 export interface HeroBrandProps {
   title: string;
   description: string | null;
   cta: ResolvedLink | null;
   /** `null` = no usable image (a draft in preview; publish requires one): the hero shows a neutral background. */
   background: ResolvedImage | null;
+  /** Optional looping background video (muted, decorative); `background` stays the poster and the fallback. `null`/missing = none. */
+  backgroundVideo?: ResolvedVideo | null;
   /** Set by the adapter in preview mode only, when something is missing that publish would require. */
   previewHint?: PreviewHintCode;
   /** Default true. */

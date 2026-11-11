@@ -17,6 +17,7 @@ export function HeroBrand({
   description,
   cta,
   background,
+  backgroundVideo,
   previewHint,
   showLogo = true,
   animateIn = true,
@@ -30,6 +31,7 @@ export function HeroBrand({
       titleSpacing={variant === "wide" ? "wide" : "normal"}
       image={background?.url ?? null}
       imageAlt={background?.alt ?? ""}
+      video={backgroundVideo ?? null}
       title={title}
       description={description ?? undefined}
       className="[&_h1]:whitespace-pre-line"

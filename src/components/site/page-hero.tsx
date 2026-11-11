@@ -6,6 +6,7 @@ import {
   HeroContent,
   HeroMotionRoot,
 } from "@/components/site/motion/hero-motion";
+import { HeroVideo } from "@/components/site/hero-video";
 import { TornEdge } from "@/components/site/torn-edge";
 import { cn } from "@/lib/utils";
 
@@ -13,6 +14,11 @@ interface PageHeroProps {
   /** `null`/missing = no photo: the hero keeps its solid `bg-site-green-900` and still shows title and text (only a draft in preview gets here). */
   image?: ImageProps["src"] | null;
   imageAlt: string;
+  /**
+   * `brand` only, optional: a looping background video drawn over the photo (`HeroVideo`). The photo stays the poster /
+   * fallback and the LCP element. While a video is configured the backdrop parallax is off.
+   */
+  video?: { url: string; mime?: string | null } | null;
   title: string;
   /** `brand` only: paragraph under the title. */
   description?: string;
@@ -57,6 +63,7 @@ const ENTER =
 export function PageHero({
   image,
   imageAlt,
+  video,
   title,
   description,
   variant,
@@ -77,6 +84,7 @@ export function PageHero({
   const Root: React.ElementType = animated ? HeroMotionRoot : "section";
   const Content: React.ElementType = animated ? HeroContent : "div";
 
+  const hasVideo = variant === "brand" && Boolean(video?.url);
   const photo = image ? (
     <Image
       src={image}
@@ -87,6 +95,23 @@ export function PageHero({
       className={cn("object-cover", !animated && "-z-20")}
     />
   ) : null;
+  // The video sits right after the poster in the same box, so it covers it exactly. Without an image there is no
+  // poster: the video still plays over the solid green.
+  const clip =
+    hasVideo && video ? (
+      <HeroVideo
+        src={video.url}
+        mime={video.mime}
+        posterUrl={typeof image === "string" ? image : null}
+      />
+    ) : null;
+  const backdrop =
+    photo || clip ? (
+      <>
+        {photo}
+        {clip}
+      </>
+    ) : null;
 
   return (
     <Root
@@ -99,7 +124,15 @@ export function PageHero({
         className,
       )}
     >
-      {photo ? (animated ? <HeroBackdrop>{photo}</HeroBackdrop> : photo) : null}
+      {backdrop ? (
+        animated ? (
+          <HeroBackdrop parallax={!hasVideo}>{backdrop}</HeroBackdrop>
+        ) : hasVideo ? (
+          <div className="absolute inset-0 -z-20">{backdrop}</div>
+        ) : (
+          photo
+        )
+      ) : null}
       <div
         aria-hidden="true"
         className={cn(

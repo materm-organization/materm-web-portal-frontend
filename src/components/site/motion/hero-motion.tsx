@@ -84,8 +84,8 @@ export function HeroMotionRoot({
   );
 }
 
-/** Photo layer: 12% taller than the hero (extra on top), slides down 12% of the hero height. */
-export function HeroBackdrop({ children }: { children: ReactNode }) {
+/** Photo layer (+ the optional video over it): 12% taller than the hero (extra on top), slides down 12% of the hero height. */
+export function HeroBackdrop({ children, parallax = true }: { children: ReactNode; /** false = the layer stays put (a hero with a background video: a transformed video layer costs paint) */ parallax?: boolean }) {
   const { progress, enabled } = useHeroMotion();
   // Percentages are relative to the layer itself (112% of the hero).
   const travelPct = (BACKDROP_TRAVEL / (1 + BACKDROP_TRAVEL)) * 100;
@@ -94,7 +94,7 @@ export function HeroBackdrop({ children }: { children: ReactNode }) {
   return (
     <motion.div
       className="absolute inset-x-0 bottom-0 -z-20"
-      style={{ top: `-${BACKDROP_OVERSCAN_PCT}%`, y: enabled ? y : 0 }}
+      style={{ top: parallax ? `-${BACKDROP_OVERSCAN_PCT}%` : 0, y: enabled && parallax ? y : 0 }}
     >
       {children}
     </motion.div>

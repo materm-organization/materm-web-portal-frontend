@@ -32,7 +32,8 @@
 // Same routes/status codes as src/lib/cms/bundle.ts; scripts/cms/selftest.mjs asserts both agree.
 import { createServer } from "node:http";
 import { existsSync, readFileSync } from "node:fs";
-import { join } from "node:path";
+import { dirname, join } from "node:path";
+import { fileURLToPath } from "node:url";
 import { DATA_DIR, isMain, parseArgs } from "./lib/util.mjs";
 
 const PAGE_PATH_RE = /^\/([a-z0-9-]+(\/[a-z0-9-]+)*)?$/;
@@ -48,7 +49,20 @@ const invalid = (field) => ({
   body: { success: false, message: "validation failed", code: "VALIDATION_FAILED", errors: [{ in: "query", path: `/${field}` }] },
 });
 
+// Video support (release 2): hero_brand `background_video`. Fixture pages (resolve P-06) built from the home page:
+//   /video-hero          background_video -> a real tiny MP4 served by this mock at /mock-media/hero-video.mp4
+//   /video-hero-404      background_video -> a URL that answers 404 (exercises the poster fallback)
+//   /video-hero-notvideo background_video -> media whose mime is image/png (adapter: no video)
+//   /video-hero-nomedia  background_video -> a media_id missing from the media map (adapter: no video)
+// The media URLs are absolute and point back at this server (Host header), like file-service URLs. Preview token
+// `video` (below) answers the home page with the working video as a draft.
+export const VIDEO_FIXTURE_PATHS = ["/video-hero", "/video-hero-404", "/video-hero-notvideo", "/video-hero-nomedia"];
+const MOCK_MEDIA_DIR = join(dirname(fileURLToPath(import.meta.url)), "fixtures");
+export const MOCK_VIDEO_FILE = join(MOCK_MEDIA_DIR, "hero-video.mp4");
+const VIDEO_MEDIA_ID = 9001;
+
 export const PREVIEW_TOKENS = {
+  video: "mock-preview-video-token-0123456789abcdefg",
   valid: "mock-preview-valid-token-0123456789abcdef",
   home: "mock-preview-home-token-0123456789abcdefgh",
   warnings: "mock-preview-warnings-token-0123456789abcdef",
@@ -121,8 +135,37 @@ export function createMockApi(dataDir = DATA_DIR) {
     return { status: 308, location, body: { success: true, data: { redirect: { location, status: 308 } } } };
   }
 
+  /** home page snapshot with a `background_video` of the given flavour (see VIDEO_FIXTURE_PATHS) */
+  function withVideo(data, flavour, base) {
+    const hero = data.sections.find((x) => x.key === "hero_brand");
+    if (!hero) return data;
+    if (flavour === "nomedia") {
+      hero.props.background_video = { media_id: VIDEO_MEDIA_ID };
+      return data;
+    }
+    const entry = {
+      url: `${base}/mock-media/${flavour === "404" ? "missing-video.mp4" : "hero-video.mp4"}`,
+      width: 320, height: 180, mime: "video/mp4", kind: "video", duration_ms: 2000, bytes: 12535,
+      alt: null, blurhash: null, focal: null, variants: [],
+    };
+    if (flavour === "notvideo") Object.assign(entry, { url: `${base}/mock-media/hero-video.mp4`, mime: "image/png", kind: "image" });
+    data.media[String(VIDEO_MEDIA_ID)] = entry;
+    hero.props.background_video = { media_id: VIDEO_MEDIA_ID };
+    return data;
+  }
+  const mediaBase = (headers) => `http://${headers?.host ?? "127.0.0.1:4010"}`;
+
   // fixture token -> { path, mutate(page snapshot), warnings }
   const previewFixtures = {
+    [PREVIEW_TOKENS.video]: {
+      path: "/",
+      mutate: (data, headers) => {
+        withVideo(data, "ok", mediaBase(headers));
+        const hero = data.sections.find((x) => x.key === "hero_brand");
+        if (hero) hero.props.title = `${hero.props.title} - DRAFT VIDEO`;
+      },
+      warnings: [],
+    },
     [PREVIEW_TOKENS.valid]: {
       path: "/our-path",
       mutate: (data) => {
@@ -236,7 +279,7 @@ export function createMockApi(dataDir = DATA_DIR) {
     const env = key ? file(`${loc}/pages/${key}.json`) : null;
     if (!env) return invalidToken();
     const data = structuredClone(env.data);
-    fx.mutate(data);
+    fx.mutate(data, headers);
     const warnings = typeof fx.warnings === "function" ? fx.warnings(data) : fx.warnings;
     return {
       status: 200,
@@ -280,6 +323,14 @@ export function createMockApi(dataDir = DATA_DIR) {
         if (arg !== "resolve") return notFound();
         const p = q.path ?? "";
         if (p.length > 200 || !PAGE_PATH_RE.test(p)) return invalid("path");
+        if (VIDEO_FIXTURE_PATHS.includes(p)) {
+          const home = file(`${loc}/pages/${manifest.pages["/"]}.json`);
+          if (!home) return notFound();
+          const env = structuredClone(home);
+          withVideo(env.data, p.slice("/video-hero".length + 1) || "ok", mediaBase(headers));
+          env.data.page.path = p;
+          return ok(env);
+        }
         const key = own(manifest.pages, p);
         const f = key ? file(`${loc}/pages/${key}.json`) : null;
         return f ? ok(f) : notFound();
@@ -340,6 +391,24 @@ export function createMockServer({ dataDir = DATA_DIR, key = process.env.MOCK_PO
       server.submissions.push({ slug: m[1], body, headers: { "x-portal-key": req.headers["x-portal-key"], "x-client-ip": req.headers["x-client-ip"], "x-client-user-agent": req.headers["x-client-user-agent"], "content-type": req.headers["content-type"] } });
       reply(200, { success: true, data: { status: "received" } }, NS);
     };
+    // tiny generated MP4 for the hero video fixtures (no key, no auth: it stands in for a public file-service URL)
+    const sendVideo = (rq, rs) => {
+      const buf = readFileSync(MOCK_VIDEO_FILE);
+      const range = /^bytes=(\d*)-(\d*)$/.exec(String(rq.headers.range ?? ""));
+      const base = { "Content-Type": "video/mp4", "Accept-Ranges": "bytes", "Cache-Control": "no-store", "X-Mock": "1" };
+      if (range) {
+        const start = range[1] === "" ? Math.max(0, buf.length - Number(range[2])) : Number(range[1]);
+        const end = range[1] === "" || range[2] === "" ? buf.length - 1 : Math.min(Number(range[2]), buf.length - 1);
+        if (start > end || start >= buf.length) {
+          rs.writeHead(416, { ...base, "Content-Range": `bytes */${buf.length}` });
+          return rs.end();
+        }
+        rs.writeHead(206, { ...base, "Content-Range": `bytes ${start}-${end}/${buf.length}`, "Content-Length": end - start + 1 });
+        return rs.end(buf.subarray(start, end + 1));
+      }
+      rs.writeHead(200, { ...base, "Content-Length": buf.length });
+      rs.end(buf);
+    };
     const run = () => {
       if (req.method === "POST") {
         const chunks = [];
@@ -352,6 +421,7 @@ export function createMockServer({ dataDir = DATA_DIR, key = process.env.MOCK_PO
         return;
       }
       if (req.method !== "GET") return reply(405, { success: false, code: "METHOD_NOT_ALLOWED" });
+      if (url.pathname === "/mock-media/hero-video.mp4") return sendVideo(req, res);
       const path = url.pathname.replace(/^\/api\/v1/, "");
       if (failStatus && !path.startsWith("/health")) return reply(failStatus, { success: false, code: "SERVICE_UNAVAILABLE" });
       if (key && !path.startsWith("/health") && req.headers["x-portal-key"] !== key) {
