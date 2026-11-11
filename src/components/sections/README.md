@@ -35,7 +35,7 @@ Pages are no longer hand-assembled: a page is a list of `SectionData` handed to 
 
 | key | component | variants | notes |
 |---|---|---|---|
-| `hero_brand` | `hero-brand.tsx` | `normal`, `wide` | `PageHero variant="brand"`, title keeps `\n` |
+| `hero_brand` | `hero-brand.tsx` | `normal`, `wide` | `PageHero variant="brand"`, title keeps `\n`; optional `background_video` (adapter `toVideo` -> `backgroundVideo` -> `PageHero video`, see "Hero video" below) |
 | `hero_article` | `hero-article.tsx` | - | `PageHero variant="article"` |
 | `intro_heading` | `intro-heading.tsx` | - | |
 | `intro_text` | `intro-text.tsx` | - | frame `page-column` |
@@ -47,6 +47,18 @@ Pages are no longer hand-assembled: a page is a list of `SectionData` handed to 
 | `contact_section` | `contact-section.tsx` | - | form widgets fixed, text from `form` prop |
 | `faq` | `faq.tsx` | `soft`, `white` | single-paragraph answer = bare text |
 | `post_list` | `post-list.tsx` | - | no pagination yet (PF-5) |
+
+## Hero video (`hero_brand.background_video`, 2026-11-11)
+
+- API: `props.background_video = { media_id }` (optional); the media entry is `data.media[id]` with `url`, `mime`, `kind`, `duration_ms`, `bytes`.
+  The poster image `background` stays required and is what shows first, on reduced motion / Save-Data / slow networks and when the video fails.
+- Adapter `toVideo(media, ref)` returns `ResolvedVideo { url, mime, width, height, durationMs }` or `null` and never throws. `null` for: no ref,
+  no media entry, a null / unsafe url, a mime that is not `video/*`, or a `kind` that is set and is not `video`. `heroBrand` adds `backgroundVideo`
+  to the props ONLY when `toVideo` gave one (a page without a video has the same props as before).
+- `HeroBrand` passes `video={backgroundVideo ?? null}` to `PageHero`; `PageHero` mounts `HeroVideo` over the photo and turns the backdrop parallax off
+  (rules and behaviour: `src/components/site/README.md`, `HeroVideo`).
+- Checks: `npm run video:selftest` (14 cases: adapter, `HeroVideo` server markup, policy, and the mock API fixtures `/video-hero`, `/video-hero-404`,
+  `/video-hero-notvideo`, `/video-hero-nomedia` run through `adaptPage`). Preview: mock token `mock-preview-video-token-0123456789abcdefg`.
 
 ## Adapters (`adapters.ts`, `adapt-page.ts`) - API -> props
 
