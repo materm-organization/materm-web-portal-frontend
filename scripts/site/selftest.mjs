@@ -333,9 +333,21 @@ try {
   });
   await test("brand/footer come from settings, the i18n bundle is the fallback per key", () => {
     const c = C.buildSiteChrome(site(), t);
-    assert.deepEqual(c.brand, { name: "MATERM", statement: "S", emblemAlt: "E", copyright: "C" });
+    const F = { logo: C.BRAND_FALLBACK.logo, emblem: C.BRAND_FALLBACK.emblem };
+    assert.deepEqual(c.brand, { name: "MATERM", statement: "S", emblemAlt: "E", copyright: "C", ...F });
     const partial = C.buildSiteChrome(site({ settings: { brand: { name: "  ", statement: null }, footer: {} } }), t);
-    assert.deepEqual(partial.brand, { name: "i18n:brand", statement: "i18n:footer.statement", emblemAlt: "i18n:footer.emblemAlt", copyright: "i18n:footer.copyright" });
+    assert.deepEqual(partial.brand, { name: "i18n:brand", statement: "i18n:footer.statement", emblemAlt: "i18n:footer.emblemAlt", copyright: "i18n:footer.copyright", ...F });
+  });
+  await test("brand logo / emblem: the media the editors picked, the bundled file when unusable", () => {
+    const pick = (brand, media) => C.buildSiteChrome(site({ settings: { brand }, media }), t).brand;
+    const m = (url, w = 300, h = 100) => ({ url, width: w, height: h, mime: "image/svg+xml", alt: null, blurhash: null, focal: null, variants: [] });
+    const ok = pick({ logo_media_id: 5, emblem_media_id: "6" }, { 5: m("https://files.example/l.svg"), 6: m("/images/x.svg", null, null) });
+    assert.deepEqual(ok.logo, { url: "https://files.example/l.svg", width: 300, height: 100 });
+    assert.deepEqual(ok.emblem, { url: "/images/x.svg", width: C.BRAND_FALLBACK.emblem.width, height: C.BRAND_FALLBACK.emblem.height });
+    for (const bad of [undefined, { 5: m("javascript:alert(1)") }, { 5: m("//evil.example/x.svg") }, { 7: m("/a.svg") }]) {
+      assert.deepEqual(pick({ logo_media_id: 5 }, bad).logo, C.BRAND_FALLBACK.logo);
+    }
+    assert.deepEqual(pick({}, { 5: m("/a.svg") }).logo, C.BRAND_FALLBACK.logo);
   });
   await test("new-tab links always carry noopener noreferrer; social needs an external href and an icon", () => {
     const s = site();

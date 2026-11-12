@@ -329,10 +329,10 @@
     "storage_key": "static/images/site/materm-logo-white.svg",
     "kind": "brand",
     "mime_type": "image/svg+xml",
-    "bytes": 4766,
-    "width": 285,
-    "height": 245,
-    "checksum_sha256": "c753736e5e331978bb6126cdec9049c3578c4b2a3b81dd0c868e5be4c9b0843d",
+    "bytes": 4626,
+    "width": 286,
+    "height": 230,
+    "checksum_sha256": "a1b8c2bfb1283d20f8c7c9256d214a37cc1f5993d35629374e292c749ea5cf90",
     "alt": {
       "la": "ໂລໂກ້ MATERM",
       "en": "MATERM logo"
@@ -344,10 +344,10 @@
     "storage_key": "static/images/site/materm-emblem.svg",
     "kind": "brand",
     "mime_type": "image/svg+xml",
-    "bytes": 4802,
-    "width": 78,
-    "height": 65,
-    "checksum_sha256": "ee920321e72a0e6c47182e381817a3b37fdc53637b39c6ed46a9d346ee44b192",
+    "bytes": 3026,
+    "width": 286,
+    "height": 195,
+    "checksum_sha256": "d033c434833fcc6df3f8fde92e94debde94ddd3da6f4c8929191fd6ddf82a88d",
     "alt": {
       "la": "ສັນຍາລັກ MATERM",
       "en": "MATERM emblem"

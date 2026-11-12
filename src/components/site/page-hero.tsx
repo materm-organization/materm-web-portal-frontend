@@ -8,6 +8,7 @@ import {
 } from "@/components/site/motion/hero-motion";
 import { HeroVideo } from "@/components/site/hero-video";
 import { TornEdge } from "@/components/site/torn-edge";
+import { BRAND_FALLBACK } from "@/lib/cms/site-chrome";
 import { cn } from "@/lib/utils";
 
 interface PageHeroProps {
@@ -43,6 +44,8 @@ interface PageHeroProps {
   priority?: boolean;
   /** `brand` only: show the white logo above the title (default true). */
   showLogo?: boolean;
+  /** `brand` only: the logo image (from the CMS `brand.logo_media_id`, see `brandImage`); default = the bundled file. */
+  logo?: { url: string; width: number; height: number };
   /** Preview only: a small non-blocking note for the editor (see `PreviewHint`), drawn in the top-left corner. */
   hint?: React.ReactNode;
   /** DOM id of the hero `<section>` (section anchor). */
@@ -73,6 +76,7 @@ export function PageHero({
   animateIn = false,
   priority = true,
   showLogo = true,
+  logo = BRAND_FALLBACK.logo,
   hint,
   id,
   className,
@@ -147,11 +151,11 @@ export function PageHero({
         <Content className="flex w-full max-w-[933px] flex-col items-center gap-6 sm:gap-8">
           {showLogo ? (
             <Image
-              src="/images/site/materm-logo-white.svg"
+              src={logo.url}
               alt=""
               onFailure="remove"
-              width={285}
-              height={245}
+              width={logo.width}
+              height={logo.height}
               priority={priority}
               className={cn(
                 "h-auto w-40 sm:w-52 lg:w-[285px]",

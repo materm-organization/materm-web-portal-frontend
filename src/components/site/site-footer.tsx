@@ -41,11 +41,11 @@ export function SiteFooter({ chrome }: { chrome: Pick<SiteChrome, "brand" | "foo
           <div className="flex flex-col items-center gap-9 lg:flex-row lg:items-start lg:justify-between lg:gap-10">
             <div className="flex flex-col items-center gap-5 text-center lg:flex-row lg:gap-[38px] lg:text-left">
               <Image
-                src="/images/site/materm-emblem.svg"
+                src={brand.emblem.url}
                 alt={brand.emblemAlt}
                 onFailure="remove"
-                width={78}
-                height={65}
+                width={brand.emblem.width}
+                height={brand.emblem.height}
                 className="h-auto w-24 shrink-0 lg:w-[78px]"
               />
               <div className="flex max-w-[400px] flex-col items-center gap-3 lg:items-start lg:gap-6">

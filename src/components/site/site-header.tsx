@@ -130,11 +130,11 @@ export function SiteHeader({ chrome }: { chrome: Pick<SiteChrome, "nav" | "langu
               aria-label={t("nav.currentPage", { page: currentLabel })}
             >
               <Image
-                src="/images/site/materm-emblem.svg"
+                src={chrome.brand.emblem.url}
                 alt=""
                 onFailure="remove"
-                width={78}
-                height={65}
+                width={chrome.brand.emblem.width}
+                height={chrome.brand.emblem.height}
                 className="h-7 w-auto shrink-0"
               />
               <span className="min-w-0 truncate font-site-display text-lg leading-none uppercase">
@@ -228,11 +228,11 @@ export function SiteHeader({ chrome }: { chrome: Pick<SiteChrome, "nav" | "langu
                   <span />
                 )}
                 <Image
-                  src="/images/site/materm-emblem.svg"
+                  src={chrome.brand.emblem.url}
                   alt=""
                   onFailure="remove"
-                  width={78}
-                  height={65}
+                  width={chrome.brand.emblem.width}
+                  height={chrome.brand.emblem.height}
                   className="h-9 w-auto shrink-0"
                 />
               </div>

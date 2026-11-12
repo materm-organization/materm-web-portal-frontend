@@ -49,7 +49,7 @@
     "social"
   ],
   "source_checksums": {
-    "src/content/cms-seed/exports/media-manifest.json": "2cb9997a440e33f814760c8f9314b601c92d9690b7bfb1f13a680a1d43d87f00",
+    "src/content/cms-seed/exports/media-manifest.json": "67f93f9f73bfef25dac94628f75ccc83baf11e320d51eeb941728e2a59215787",
     "src/content/cms-seed/exports/ui-strings.json": "3afcdeb09408a38b40d94cf1877ed3eccc8910add7fb10b5737dae437e1cf9a2",
     "src/content/cms-seed/schemas/about_blocks.json": "61d4c21e0da61890b04c46e8b09c643e123566385851583fe564f86b587f4e0d",
     "src/content/cms-seed/schemas/blog_strip.json": "8b8601f48bb4de5d0fdb2409849b10890b6851a74be001bdf1566cee4dc571b2",

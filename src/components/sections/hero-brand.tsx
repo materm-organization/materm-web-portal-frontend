@@ -1,3 +1,6 @@
+import { getSite } from "@/lib/cms/loaders";
+import { getRequestLocale } from "@/lib/cms/locale";
+import { brandImage } from "@/lib/cms/site-chrome";
 import { CtaLink } from "@/components/site/cta-link";
 import { PageHero } from "@/components/site/page-hero";
 
@@ -9,7 +12,7 @@ import type { SectionComponentProps } from "./types";
 // `hero_brand` (variants `normal` | `wide`; `wide` = the wide letter-spacing title of Our Path
 // and Contact). Provides the page's only <h1>. The title keeps its hard line breaks
 // (`pre-line`), which collapse to normal wrapping on narrow screens.
-export function HeroBrand({
+export async function HeroBrand({
   domId,
   variant,
   priority,
@@ -23,6 +26,8 @@ export function HeroBrand({
   animateIn = true,
 }: SectionComponentProps<"hero_brand">) {
   const link = ctaLinkProps(cta);
+  // the logo is the one the editors picked in the admin (settings brand.logo_media_id); `getSite` is cached per render
+  const logo = showLogo ? brandImage(await getSite(await getRequestLocale()), "logo") : undefined;
 
   return (
     <PageHero
@@ -36,6 +41,7 @@ export function HeroBrand({
       description={description ?? undefined}
       className="[&_h1]:whitespace-pre-line"
       showLogo={showLogo}
+      logo={logo}
       animateIn={animateIn}
       priority={priority}
       hint={previewHint ? <PreviewHint code={previewHint} /> : undefined}

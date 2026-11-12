@@ -274,8 +274,8 @@
     "media": {
       "23": {
         "url": "/images/site/materm-logo-white.svg",
-        "width": 285,
-        "height": 245,
+        "width": 286,
+        "height": 230,
         "mime": "image/svg+xml",
         "alt": "ໂລໂກ້ MATERM",
         "blurhash": null,
@@ -284,8 +284,8 @@
       },
       "24": {
         "url": "/images/site/materm-emblem.svg",
-        "width": 78,
-        "height": 65,
+        "width": 286,
+        "height": 195,
         "mime": "image/svg+xml",
         "alt": "ສັນຍາລັກ MATERM",
         "blurhash": null,

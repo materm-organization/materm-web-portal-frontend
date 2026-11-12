@@ -34,8 +34,11 @@ export interface ChromeLanguage {
   name: string;
 }
 
+/** An image of the brand (logo / emblem): URL and intrinsic size, for `next/image`. */
+export interface BrandImage { url: string; width: number; height: number }
+
 export interface SiteChrome {
-  brand: { name: string; statement: string; emblemAlt: string; copyright: string };
+  brand: { name: string; statement: string; emblemAlt: string; copyright: string; logo: BrandImage; emblem: BrandImage };
   nav: ChromeLink[];
   footerNav: ChromeLink[];
   social: ChromeLink[];
@@ -98,6 +101,28 @@ export function isActiveLink(pathname: string, link: Pick<ChromeLink, "href" | "
   return pathname === path || pathname.startsWith(`${path}/`);
 }
 
+// Bundled artwork (public/images/site): used when the CMS names no logo / emblem, the media row is missing or its URL is unsafe.
+export const BRAND_FALLBACK = {
+  logo: { url: "/images/site/materm-logo-white.svg", width: 286, height: 230 },
+  emblem: { url: "/images/site/materm-emblem.svg", width: 286, height: 195 },
+} as const satisfies Record<string, BrandImage>;
+
+const SAFE_IMAGE_URL = /^(?:\/(?![/\\])[^\s]*|https?:\/\/[^\s/]+[^\s]*)$/i;
+
+/**
+ * The logo / emblem the editors picked in the admin (settings `brand.logo_media_id` / `brand.emblem_media_id` -> the
+ * `media` map of the same response), or the bundled file when that is not usable.
+ */
+export function brandImage(site: SiteData | undefined, which: keyof typeof BRAND_FALLBACK): BrandImage {
+  const fallback = BRAND_FALLBACK[which];
+  const id = site?.settings?.brand?.[`${which}_media_id`];
+  const m = typeof id === "number" || typeof id === "string" ? site?.media?.[String(id)] : undefined;
+  if (!m || typeof m.url !== "string" || !SAFE_IMAGE_URL.test(m.url)) return fallback;
+  const w = m.width && m.width > 0 ? m.width : null;
+  const h = m.height && m.height > 0 ? m.height : null;
+  return { url: m.url, width: w ?? fallback.width, height: h ?? fallback.height };
+}
+
 function setting(settings: SettingsGroups | undefined, group: string, key: string): string | undefined {
   const v = settings?.[group]?.[key];
   return typeof v === "string" && v.trim() !== "" ? v.trim() : undefined;
@@ -123,6 +148,8 @@ export function buildSiteChrome(site: SiteData | undefined, t: Translate): SiteC
       statement: setting(s, "brand", "statement") ?? t("footer.statement"),
       emblemAlt: setting(s, "brand", "emblem_alt") ?? t("footer.emblemAlt"),
       copyright: setting(s, "footer", "copyright") ?? t("footer.copyright"),
+      logo: brandImage(site, "logo"),
+      emblem: brandImage(site, "emblem"),
     },
     nav: nav.length > 0 ? nav : fallbackLinks(NAV_FALLBACK, t),
     footerNav: footerNav.length > 0 ? footerNav : fallbackLinks(FOOTER_FALLBACK, t),
